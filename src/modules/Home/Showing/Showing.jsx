@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { getMovies } from "../../../APIs/movieAPI";
+import { getMovies } from "../../../apis/movieAPI";
 
 export default function Showing() {
   const { data = [], isLoading } = useQuery({
@@ -16,7 +16,7 @@ export default function Showing() {
       <ul>
         {data.map((movie) => {
           return (
-            <li key={movie.tenPhim}>
+            <li key={movie.maPhim}>
               <span>{movie.tenPhim}</span>
               <button onClick={() => navigate(`/movies/${movie.maPhim}`)}>
                 Mua vé

@@ -1,5 +1,7 @@
-import React from "react";
+import React from 'react'
 
 export default function MovieProfile() {
-  return <div>MovieProfile</div>;
+  return (
+    <div>MovieProfile</div>
+  )
 }

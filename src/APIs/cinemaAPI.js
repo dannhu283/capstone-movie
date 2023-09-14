@@ -7,6 +7,7 @@ export async function getMovieShowtimes(movieId) {
         MaPhim: movieId,
       },
     });
+
     return response.data.content;
   } catch (error) {
     throw error.response.data.content;

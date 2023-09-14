@@ -11,9 +11,9 @@ export async function getBanners() {
 
 export async function getMovies() {
   try {
-    const response = fetcher.get("/QuanLyPhim/LayDanhSachPhim", {
+    const response = await fetcher.get("/QuanLyPhim/LayDanhSachPhim", {
       params: {
-        maNhom: "GP15",
+        maNhom: "GP01",
       },
     });
     return response.data.content;
@@ -24,7 +24,7 @@ export async function getMovies() {
 
 export async function getMovieDetails(movieId) {
   try {
-    const response = fetcher.get("/QuanLyPhim/LayThongTinPhim", {
+    const response = await fetcher.get("/QuanLyPhim/LayThongTinPhim", {
       params: {
         MaPhim: movieId,
       },
