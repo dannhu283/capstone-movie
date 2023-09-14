@@ -1,5 +1,30 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { getMovies } from "../../../APIs/movieAPI";
 
 export default function Showing() {
-  return <div>Showing</div>;
+  const { data = [], isLoading } = useQuery({
+    queryKey: ["movies"],
+    queryFn: getMovies,
+  });
+
+  const navigate = useNavigate();
+
+  return (
+    <div>
+      <ul>
+        {data.map((movie) => {
+          return (
+            <li key={movie.tenPhim}>
+              <span>{movie.tenPhim}</span>
+              <button onClick={() => navigate(`/movies/${movie.maPhim}`)}>
+                Mua vé
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
