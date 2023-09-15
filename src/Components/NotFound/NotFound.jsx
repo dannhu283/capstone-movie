@@ -1,13 +1,25 @@
+import { Button } from "@mui/material";
 import React from "react";
+import Error from "./Error.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function NotFound() {
-  const navigate = useNavigate();
-
+  const nagigate = useNavigate();
   return (
-    <div>
-      <h1>Not Found</h1>
-      <button onClick={() => navigate("/")}>Go to Home</button>
+    <div className={Error.bg}>
+      <Button
+        className={Error.local}
+        sx={{
+          color: "primary",
+          position: "absolute",
+          bottom: "10%",
+          left: "47%",
+        }}
+        variant="contained"
+        onClick={() => nagigate("/")}
+      >
+        Về Trang chủ
+      </Button>
     </div>
   );
 }

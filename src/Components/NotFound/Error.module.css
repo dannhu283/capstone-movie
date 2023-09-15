@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.bg {
+  background-image: url("https://i.pinimg.com/originals/0e/c0/db/0ec0dbf1e9a008acb9955d3246970e15.gif");
+  height: 100vh;
+  background-size: 50% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.local:hover {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  color: #ff9f1a;
+  font-weight: bold;
+}

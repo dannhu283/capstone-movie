@@ -4,9 +4,10 @@ import Home from "./modules/Home";
 import Details from "./modules/Details";
 import Signin from "./modules/Auth/pages/Signin";
 import Signup from "./modules/Auth/pages/Signup";
-import NotFound from "./components/NotFound";
+
 import MainLayout from "./layouts/MainLayout";
 import "./indexx.css";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   return (

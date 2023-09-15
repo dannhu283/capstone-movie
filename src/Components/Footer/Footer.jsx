@@ -28,7 +28,6 @@ export default function Footer() {
       sx={{
         flexGrow: 1,
         p: 2,
-        borderRadius: { xs: 0, sm: "sm" },
         backgroundColor: "#2f2e2c",
       }}
     >
