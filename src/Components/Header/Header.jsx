@@ -1,13 +1,3 @@
-// import React from "react";
-
-// export default function Header() {
-//   return (
-//     <div>
-//       <h1>Đây là Header</h1>
-//     </div>
-//   );
-// }
-
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
 
 import Button from "@mui/material/Button";
 
@@ -42,7 +33,7 @@ export default function Header() {
         <Toolbar disableGutters>
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
-            width={200}
+            width={220}
             alt=""
           />
 
@@ -83,24 +74,6 @@ export default function Header() {
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Movie
-          </Typography>
           <Box
             sx={{
               flexGrow: 1,
@@ -111,20 +84,44 @@ export default function Header() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  "&:hover": {
+                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                    fontSize: "12px",
+                  },
+                }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Button sx={{ color: "white" }}>Đăng Nhập</Button>
-            <Button sx={{ color: "white" }}>Đăng Kí</Button>
+          <Box>
+            <Button
+              sx={{
+                color: "white",
+                "&:hover": {
+                  boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                  fontSize: "15px",
+                },
+              }}
+            >
+              <PersonPinIcon /> Đăng Nhập
+            </Button>
+            <Button
+              sx={{
+                color: "white",
+                "&:hover": {
+                  boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                  fontSize: "15px",
+                },
+              }}
+            >
+              <PersonPinIcon />
+              Đăng Kí
+            </Button>
           </Box>
         </Toolbar>
       </Container>
