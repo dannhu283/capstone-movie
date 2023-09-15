@@ -13,3 +13,12 @@ export async function getMovieShowtimes(movieId) {
     throw error.response.data.content;
   }
 }
+
+export async function getLogo() {
+  try {
+    const response = await fetcher.get("QuanLyRap/LayThongTinHeThongRap");
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}

@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { Link } from "react-router-dom";
 
 const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
 
@@ -31,11 +32,13 @@ export default function Header() {
     <AppBar position="static" sx={{ backgroundColor: "#2f2e2c" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
-            width={220}
-            alt=""
-          />
+          <Link to="/">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
+              width={220}
+              alt=""
+            />
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -99,29 +102,34 @@ export default function Header() {
             ))}
           </Box>
           <Box>
-            <Button
-              sx={{
-                color: "white",
-                "&:hover": {
-                  boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                  fontSize: "15px",
-                },
-              }}
-            >
-              <PersonPinIcon /> Đăng Nhập
-            </Button>
-            <Button
-              sx={{
-                color: "white",
-                "&:hover": {
-                  boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                  fontSize: "15px",
-                },
-              }}
-            >
-              <PersonPinIcon />
-              Đăng Kí
-            </Button>
+            <Link to="/sign-in">
+              <Button
+                sx={{
+                  color: "white",
+                  "&:hover": {
+                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                    fontSize: "15px",
+                  },
+                }}
+              >
+                <PersonPinIcon /> Đăng Nhập
+              </Button>
+            </Link>
+
+            <Link to="/sign-up">
+              <Button
+                sx={{
+                  color: "white",
+                  "&:hover": {
+                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                    fontSize: "15px",
+                  },
+                }}
+              >
+                <PersonPinIcon />
+                Đăng Kí
+              </Button>
+            </Link>
           </Box>
         </Toolbar>
       </Container>

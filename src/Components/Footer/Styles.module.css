@@ -1,0 +1,11 @@
+.icon,
+.color {
+  color: #ff9f1a;
+}
+.link {
+  text-decoration: none;
+  color: white;
+}
+.link:hover {
+  color: #ff9f1a;
+}

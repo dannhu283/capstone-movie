@@ -1,0 +1,96 @@
+[
+    {
+        "biDanh": "bhd-star-cineplex",
+        "logo": "https://movienew.cybersoft.edu.vn/hinhanh/bhd-star-cineplex.png",
+        "link":"https://www.bhdstar.vn/"
+    },
+    {
+        "biDanh": "cgv",
+      "logo": "https://movienew.cybersoft.edu.vn/hinhanh/cgv.png",
+      "link":"https://www.cgv.vn/"
+    },
+    {
+        "biDanh": "cinestar",
+        "logo": "https://movienew.cybersoft.edu.vn/hinhanh/cinestar.png",
+        "link":"https://cinestar.com.vn/"
+    },
+    {
+        "biDanh": "galaxy-cinema",
+      "logo": "https://movienew.cybersoft.edu.vn/hinhanh/galaxy-cinema.png",
+      "link":"https://www.galaxycine.vn/"
+    },
+    {
+        "biDanh": "lotte-cinema",
+        "logo": "https://movienew.cybersoft.edu.vn/hinhanh/lotte-cinema.png",
+        "link":"https://www.lottecinemavn.com/LCHS/Contents/Movie/Movie-List.aspx"
+    },
+    {
+        "biDanh": "megags",
+        "logo": "https://movienew.cybersoft.edu.vn/hinhanh/megags.png",
+        "link":"https://www.megagscinemas.vn/"
+    },
+    {
+        "biDanh":"startlight",
+        "logo":"https://roonghome.files.wordpress.com/2020/06/starlight-logo.png?w=400",
+        "link":"https://starlight.vn/"
+    },
+    {
+        "biDanh":"beta",
+        "logo":"https://www.betacinemas.vn/Assets/Common/logo/logo.png",
+        "link":"https://www.betacinemas.vn/home.htm"
+    },
+    {
+        "biDanh":"dongda",
+        "logo":"http://ddcinema.vn/Content/Img/logo.png",
+        "link":"http://ddcinema.vn/"
+    },
+    {
+        "biDanh":"touch",
+        "logo":"https://touchcinema.com/images/touchcinema.png",
+        "link":"https://touchcinema.com/"
+    },
+    {
+        "biDanh":"dcine",
+        "logo":"https://www.dcine.vn/Content/img/logo.png",
+        "link":"https://www.dcine.vn/"
+    },
+    {
+        "biDanh":"cinemas",
+        "logo":"https://theme.hstatic.net/1000296517/1000449871/14/logo.png?v=7333",
+        "link":"https://cinemaxvn.com/"
+    },
+    {
+        "biDanh":"vcb",
+        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtgcVwwI0BC6xzw6c0Wg81uoypiN1dNO4lBg&usqp=CAU",
+        "link":"https://www.vietcombank.com.vn/"
+    },
+   
+   
+    {
+        "biDanh":"momo",
+        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrwYa9CSzDOdZy2tHng3-0_yF0Gqq9wuVrFA&usqp=CAU",
+        "link":"https://momo.vn/"
+    },
+    {
+        "biDanh":"tpbank",
+        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk48UTtfMje_WFGDCCMS0iAEJXAfqpLoFuPw&usqp=CAU",
+        "link":"https://tpb.vn/ca-nhan"
+    },
+    {
+        "biDanh":"zaloPay",
+        "logo":"https://simg.zalopay.com.vn/zlp-website/assets/logo1_ff390716a5.svg",
+        "link":"https://zalopay.vn/"
+    },
+    
+    {
+        "biDanh":"payyoo",
+        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTheUmALrf7ja2gXouNm_Gx9IzzrPmYrX95Tw&usqp=CAU",
+        "link":"https://www.payoo.vn/"
+    },
+  
+    {
+        "biDanh":"MUI",
+        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6CY5okaihNPZJIw5tK0cCZd1JaiSsmcSRAA&usqp=CAU",
+        "link":"#"
+    }
+]
