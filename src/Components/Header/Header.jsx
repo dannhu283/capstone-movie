@@ -31,7 +31,7 @@ export default function Header() {
           <Link to="/">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
-              width={220}
+              width={150}
               alt=""
             />
           </Link>
