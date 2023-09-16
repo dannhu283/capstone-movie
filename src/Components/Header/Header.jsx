@@ -8,13 +8,9 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
-
 import Button from "@mui/material/Button";
-
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
-
 const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
 
 export default function Header() {
@@ -76,7 +72,7 @@ export default function Header() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+
           <Box
             sx={{
               flexGrow: 1,
@@ -94,6 +90,7 @@ export default function Header() {
                   "&:hover": {
                     boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
                     fontSize: "12px",
+                    color: "#ff9f1a",
                   },
                 }}
               >
@@ -109,6 +106,7 @@ export default function Header() {
                   "&:hover": {
                     boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
                     fontSize: "15px",
+                    color: "#ff9f1a",
                   },
                 }}
               >
@@ -123,6 +121,7 @@ export default function Header() {
                   "&:hover": {
                     boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
                     fontSize: "15px",
+                    color: "#ff9f1a",
                   },
                 }}
               >
