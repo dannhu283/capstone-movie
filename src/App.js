@@ -8,6 +8,7 @@ import Signup from "./modules/Auth/pages/Signup";
 import MainLayout from "./layouts/MainLayout";
 import "./indexx.css";
 import NotFound from "./components/NotFound/NotFound";
+import Loading from "./components/Loading";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
 
           <Route path="/sign-in" element={<Signin />} />
           <Route path="/sign-up" element={<Signup />} />
+
+          {/* tamj thời để dễ css */}
+          <Route path="/loading" element={<Loading />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
