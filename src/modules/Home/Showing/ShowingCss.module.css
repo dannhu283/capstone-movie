@@ -1,0 +1,27 @@
+.item {
+  width: 250px; /* Đặt chiều rộng cố định cho mỗi Grid item */
+  height: 400px; /* Đặt chiều cao cố định cho mỗi Grid item */
+}
+.title {
+  height: 7vh;
+  color: #ff9f1a;
+  font-weight: bold;
+}
+.desc {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  overflow: hidden;
+}
+.buttonBuy {
+  background-color: #3ae374;
+  color: #3d3d3d;
+  transition: all 0.5s;
+}
+.buttonBuy:hover {
+  color: white;
+  background-color: #ff9f1a;
+}
+/* .slick-dots li button:before {
+  font-size: 100px !important;
+} */
