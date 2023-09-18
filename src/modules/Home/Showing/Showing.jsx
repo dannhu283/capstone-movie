@@ -13,7 +13,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
+import { ButtonBuy } from "./index";
 import ShowingCss from "./ShowingCss.module.css";
 
 export default function Showing() {
@@ -88,12 +88,12 @@ export default function Showing() {
                 </CardContent>
                 <CardActions>
                   <Button size="small">Xem Trailer</Button>
-                  <Button
+                  <ButtonBuy
                     className={ShowingCss.buttonBuy}
                     onClick={() => navigate(`/movies/${movie.maPhim}`)}
                   >
                     Mua Vé
-                  </Button>
+                  </ButtonBuy>
                 </CardActions>
               </Card>
             </Grid>

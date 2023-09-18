@@ -9,8 +9,9 @@ import ListSubheader from "@mui/joy/ListSubheader";
 import ListItemButton from "@mui/joy/ListItemButton";
 import Sheet from "@mui/joy/Sheet";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import Styles from "./Styles.module.css";
+import { LiFooter } from "./index";
 import data from "../data.json";
+
 import {
   Container,
   Grid,
@@ -40,6 +41,7 @@ export default function Footer() {
             gap: 3,
           }}
         >
+          {/* cho nao khong an css em? */}
           <Typography
             sx={{ fontSize: "20px", color: "#ff9f1a", fontWeight: "bold" }}
           >
@@ -62,94 +64,72 @@ export default function Footer() {
         <Divider sx={{ my: 2 }} />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader className={Styles.color}>Giới Thiệu</ListSubheader>
+            <ListSubheader sx={{ color: "#ff9f1a" }}>Giới Thiệu</ListSubheader>
             <List>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Về chúng tôi
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Về chúng tôi</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Thoả thuận sử dụng
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Thoả thuận sử dụng</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Quy chế hoạt động
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Quy chế hoạt động</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Chính sách bảo mật
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Chính sách bảo mật</LiFooter>
               </ListItem>
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader className={Styles.color}>Góc Điện Ảnh</ListSubheader>
+            <ListSubheader sx={{ color: "#ff9f1a" }}>
+              Góc Điện Ảnh
+            </ListSubheader>
             <List>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Thể loại phim
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Thể loại phim</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Bình luận phim
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Bình luận phim</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Blog điện ảnh
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Blog điện ảnh</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Phim hay tháng
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Phim hay tháng</LiFooter>
               </ListItem>
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader className={Styles.color}>Hỗ Trợ</ListSubheader>
+            <ListSubheader sx={{ color: "#ff9f1a" }}>Hỗ Trợ</ListSubheader>
             <List>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Góp ý
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Góp ý</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Sale & Services
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Sale & Services</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Rạp / giá vé
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Rạp / giá vé</LiFooter>
               </ListItem>
               <ListItem>
-                <KeyboardDoubleArrowRightIcon className={Styles.icon} />
-                <Link href="#" className={Styles.link}>
-                  Tuyển dụng
-                </Link>
+                <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
+                <LiFooter href="#">Tuyển dụng</LiFooter>
               </ListItem>
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader className={Styles.color}>
+            <ListSubheader sx={{ color: "#ff9f1a" }}>
               Liên hệ với chúng tôi
             </ListSubheader>
             <List
