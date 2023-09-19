@@ -1,10 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { getMovieShowtimes } from "../../../apis/cinemaAPI";
+import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
+import { ShowTime, ButtonCustom, DivNote } from "./index";
+import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 
 export default function Showtimes({ movieId }) {
+  const navigate = useNavigate();
   const [cinemas, setCinemas] = useState([]);
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const { data, isLoading } = useQuery({
     queryKey: ["movieShowtimes", movieId],
@@ -28,40 +34,85 @@ export default function Showtimes({ movieId }) {
     }
   }, [cinemaSystems]);
 
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+    const selectedCinemaSystem = cinemaSystems[newValue];
+    handleGetCinemaSystem(selectedCinemaSystem.maHeThongRap);
+  };
+
   return (
-    <div>
-      {/* Render hệ thống rạp */}
-      {cinemaSystems.map((cinemaSystem) => {
-        return (
-          <div key={cinemaSystem.maHeThongRap}>
+    <Container>
+      <ShowTime>
+        {/* Neếu không có phim thì render ra DivNote */}
+        {cinemas.length === 0 ? (
+          <DivNote>
             <img
-              src={cinemaSystem.logo}
-              alt=""
-              width={50}
-              height={50}
-              onClick={() => handleGetCinemaSystem(cinemaSystem.maHeThongRap)}
+              src="/img/animation_lmpy84nt_small.gif"
+              alt="empty"
+              width={200}
             />
-          </div>
-        );
-      })}
+            <Typography variant="h5">Chưa công chiếu..</Typography>
+            <Button
+              variant="contained"
+              startIcon={<MovieFilterIcon />}
+              color="success"
+              sx={{ margin: "10% 0" }}
+              onClick={() => navigate("/")}
+            >
+              Chọn Phim Khác
+            </Button>
+          </DivNote>
+        ) : (
+          <>
+            {/* Render MUI Tabs for cinema systems */}
+            <Tabs
+              value={selectedTab}
+              onChange={handleTabChange}
+              orientation="vertical"
+              variant="scrollable"
+              scrollButtons="auto"
+              aria-label="Cinema Systems"
+              sx={{ width: "20%" }}
+            >
+              {cinemaSystems.map((cinemaSystem, index) => (
+                <Tab
+                  key={cinemaSystem.maHeThongRap}
+                  label={
+                    <img
+                      src={cinemaSystem.logo}
+                      alt="logo"
+                      width={50}
+                      height={50}
+                      style={{ cursor: "pointer" }}
+                    />
+                  }
+                />
+              ))}
+            </Tabs>
 
-      {/* Render danh sách rạp */}
-      {cinemas.map((cinema) => {
-        return (
-          <div>
-            <h3>{cinema.tenCumRap}</h3>
-            {/* Render lịch chiếu */}
-            {cinema.lichChieuPhim.map((showtime) => {
-              const time = dayjs(showtime.ngayChieuGioChieu).format(
-                "DD-MM-YYYY ~ HH:mm"
-              );
-
-              // onClick={() => navigate(`/tickets/${showtime.maLichChieu}`)}
-              return <button>{time}</button>;
-            })}
-          </div>
-        );
-      })}
-    </div>
+            {/* Render selected cinema's showtimes */}
+            <Box sx={{ width: "80%", margin: "15px 20px" }}>
+              {cinemas.map((cinema) => (
+                <div key={cinema.maCumRap}>
+                  <Typography variant="h5" color={"#3ae374"}>
+                    {cinema.tenCumRap}
+                  </Typography>
+                  {cinema.lichChieuPhim.map((showtime) => {
+                    const time = dayjs(showtime.ngayChieuGioChieu).format(
+                      "DD-MM-YYYY ~ HH:mm"
+                    );
+                    return (
+                      <ButtonCustom key={showtime.maLichChieu}>
+                        {time}
+                      </ButtonCustom>
+                    );
+                  })}
+                </div>
+              ))}
+            </Box>
+          </>
+        )}
+      </ShowTime>
+    </Container>
   );
 }
