@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,10 +11,14 @@ import PersonPinIcon from "@mui/icons-material/PersonPin";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
+import { Divider } from "@mui/material";
+import { useUserContext } from "../../context/UserContext/UserContext";
+
 const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
 
 export default function Header() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const { currentUser, handleSignOut } = useUserContext();
+  const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -23,6 +27,7 @@ export default function Header() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+  // useLocation
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#2f2e2c" }}>
@@ -98,38 +103,43 @@ export default function Header() {
               </Button>
             ))}
           </Box>
-          <Box>
-            <Link to="/sign-in">
-              <Button
-                sx={{
-                  color: "white",
-                  "&:hover": {
-                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                    fontSize: "15px",
-                    color: "#ff9f1a",
-                  },
-                }}
-              >
-                <PersonPinIcon /> Đăng Nhập
-              </Button>
-            </Link>
+          {currentUser ? (
+            <p>{currentUser.hoTen}</p>
+          ) : (
+            <Box>
+              <Link to="/sign-in">
+                <Button
+                  sx={{
+                    color: "white",
+                    marginRight: "20px",
+                    "&:hover": {
+                      boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                      fontSize: "15px",
+                      color: "#ff9f1a",
+                    },
+                  }}
+                >
+                  <PersonPinIcon /> Đăng Nhập
+                </Button>
+              </Link>
 
-            <Link to="/sign-up">
-              <Button
-                sx={{
-                  color: "white",
-                  "&:hover": {
-                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                    fontSize: "15px",
-                    color: "#ff9f1a",
-                  },
-                }}
-              >
-                <PersonPinIcon />
-                Đăng Kí
-              </Button>
-            </Link>
-          </Box>
+              <Link to="/sign-up">
+                <Button
+                  sx={{
+                    color: "white",
+                    "&:hover": {
+                      boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                      fontSize: "15px",
+                      color: "#ff9f1a",
+                    },
+                  }}
+                >
+                  <PersonPinIcon />
+                  Đăng Kí
+                </Button>
+              </Link>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

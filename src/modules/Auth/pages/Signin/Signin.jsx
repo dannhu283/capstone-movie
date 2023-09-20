@@ -1,5 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { object, string } from "yup";
+import { Navigate, useLocation } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -12,19 +16,53 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { Link } from "react-router-dom";
 import SigninCss from "./Singin.module.css";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { signin } from "../../../../apis/userAPI";
+import { useUserContext } from "../../../../context/UserContext/UserContext";
+
+const signinShema = object({
+  taiKhoan: string().required("Tài khoản không được để trống"),
+  matKhau: string()
+    .required("Mật khấu không được để trống")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+      "Mật khẩu ít nhất 8 kí tự, 1 kí tự hoa, 1 kí tự thường và 1 số"
+    ),
+});
 
 export default function Signin() {
+  const { currentUser, handleSignin: onSigninSuccess } = useUserContext();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      taiKhoan: "",
+      matKhau: "",
+    },
+    resolver: yupResolver(signinShema),
+    mode: "onTouched",
+  });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const {
+    mutate: handleSignin,
+    isLoading,
+    error,
+  } = useMutation({
+    mutationFn: (payload) => signin(payload),
+    onSuccess: (data) => {
+      onSigninSuccess(data);
+    },
+  });
 
-    // Gọi API đăng nhập
+  const onSubmit = (values) => {
+    handleSignin(values);
   };
+  //currentUser khác null có nghĩ là user đã đăng nhập=> điều hướng về Home
+  if (currentUser) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className={SigninCss.position}>
@@ -47,9 +85,7 @@ export default function Signin() {
                     color="success"
                     variant="outlined"
                     fullWidth
-                    {...register("taiKhoan", {
-                      required: "Tài khoản không được để trống",
-                    })}
+                    {...register("taiKhoan")}
                     error={!!errors.taiKhoan}
                     helperText={errors.taiKhoan && errors.taiKhoan.message}
                   />
@@ -61,17 +97,11 @@ export default function Signin() {
                     type="password"
                     variant="outlined"
                     fullWidth
-                    {...register("matKhau", {
-                      required: "Mật khẩu không được để trống",
-                      pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-                        message:
-                          "Mật khẩu ít nhất 8 kí tự, 1 kí tự hoa, 1 kí tự thường và 1 số",
-                      },
-                    })}
+                    {...register("matKhau")}
                     error={!!errors.matKhau}
                     helperText={errors.matKhau && errors.matKhau.message}
                   />
+                  {error && <Typography color="red">{error}</Typography>}
                 </Grid>
                 <Grid item xs={12}>
                   <FormControlLabel
@@ -85,6 +115,7 @@ export default function Signin() {
                 fullWidth
                 variant="contained"
                 className={SigninCss.submit}
+                disabled={isLoading}
               >
                 Đăng Nhập
               </Button>
