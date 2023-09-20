@@ -8,17 +8,38 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
-import { Divider } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Backdrop from "@mui/material/Backdrop";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
 import { useUserContext } from "../../context/UserContext/UserContext";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "50%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
 
 export default function Header() {
   const { currentUser, handleSignOut } = useUserContext();
+  //useState MUI
   const [anchorElNav, setAnchorElNav] = useState(null);
+  //useState modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -27,7 +48,6 @@ export default function Header() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-  // useLocation
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#2f2e2c" }}>
@@ -104,7 +124,71 @@ export default function Header() {
             ))}
           </Box>
           {currentUser ? (
-            <p>{currentUser.hoTen}</p>
+            <Box>
+              <Button>
+                <div>
+                  <Button
+                    sx={{
+                      color: "white",
+                      "&:hover": {
+                        boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                        fontSize: "15px",
+                        color: "#ff9f1a",
+                      },
+                    }}
+                    onClick={handleOpen}
+                  >
+                    <AdminPanelSettingsIcon />
+                    {currentUser.hoTen}
+                  </Button>
+                  <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    slots={{ backdrop: Backdrop }}
+                    slotProps={{
+                      backdrop: {
+                        timeout: 500,
+                      },
+                    }}
+                  >
+                    <Fade in={open}>
+                      <Box sx={style}>
+                        <Typography
+                          id="transition-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Cài đặt tài khoản chung
+                        </Typography>
+                        <Typography
+                          id="transition-modal-description"
+                          sx={{ mt: 2 }}
+                        >
+                          textfield in here
+                        </Typography>
+                      </Box>
+                    </Fade>
+                  </Modal>
+                </div>
+              </Button>
+
+              <Button
+                onClick={handleSignOut}
+                sx={{
+                  color: "white",
+                  "&:hover": {
+                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                    fontSize: "15px",
+                    color: "#ff9f1a",
+                  },
+                }}
+              >
+                <LogoutIcon /> Đăng Xuất
+              </Button>
+            </Box>
           ) : (
             <Box>
               <Link to="/sign-in">
