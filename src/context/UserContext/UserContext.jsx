@@ -1,11 +1,10 @@
 import { useState, createContext, useContext } from "react";
 
-const UserConText = createContext();
+const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(() => {
-    const user = JSON.parse(localStorage.getItem("currrentUser"));
-
+    const user = JSON.parse(localStorage.getItem("currentUser"));
     return user || null;
   });
 
@@ -14,20 +13,20 @@ const UserProvider = ({ children }) => {
     localStorage.setItem("currentUser", JSON.stringify(user));
   };
 
-  const handleSignOut = () => {
+  const handleSignout = () => {
     setCurrentUser(null);
     localStorage.removeItem("currentUser");
   };
 
   return (
-    <UserConText.Provider value={{ currentUser, handleSignin, handleSignOut }}>
+    <UserContext.Provider value={{ currentUser, handleSignin, handleSignout }}>
       {children}
-    </UserConText.Provider>
+    </UserContext.Provider>
   );
 };
 
 export const useUserContext = () => {
-  const value = useContext(UserConText);
+  const value = useContext(UserContext);
   return value;
 };
 

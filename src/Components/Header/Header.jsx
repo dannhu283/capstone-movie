@@ -33,7 +33,7 @@ const style = {
 const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
 
 export default function Header() {
-  const { currentUser, handleSignOut } = useUserContext();
+  const { currentUser, handleSignout } = useUserContext();
   //useState MUI
   const [anchorElNav, setAnchorElNav] = useState(null);
   //useState modal
@@ -176,7 +176,7 @@ export default function Header() {
               </Button>
 
               <Button
-                onClick={handleSignOut}
+                onClick={handleSignout}
                 sx={{
                   color: "white",
                   "&:hover": {
