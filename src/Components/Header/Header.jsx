@@ -11,12 +11,20 @@ import PersonPinIcon from "@mui/icons-material/PersonPin";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
+import {
+  Fade,
+  Backdrop,
+  Modal,
+  DialogActions,
+  DialogTitle,
+  Dialog,
+  DialogContent,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
 import { useUserContext } from "../../context/UserContext/UserContext";
+
+const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
 
 const style = {
   position: "absolute",
@@ -24,13 +32,12 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "50%",
+  height: "50%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
-
-const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
 
 export default function Header() {
   const { currentUser, handleSignout } = useUserContext();
@@ -38,13 +45,24 @@ export default function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   //useState modal
   const [open, setOpen] = React.useState(false);
+  const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] =
+    useState(false);
+
+  //modal info
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  //modal log out
+  const handleOpenLogoutConfirmation = () => {
+    setIsLogoutConfirmationOpen(true);
+  };
+  const handleCloseLogoutConfirmation = () => {
+    setIsLogoutConfirmationOpen(false);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -125,58 +143,54 @@ export default function Header() {
           </Box>
           {currentUser ? (
             <Box>
-              <Button>
-                <div>
-                  <Button
-                    sx={{
-                      color: "white",
-                      "&:hover": {
-                        boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                        fontSize: "15px",
-                        color: "#ff9f1a",
-                      },
-                    }}
-                    onClick={handleOpen}
-                  >
-                    <AdminPanelSettingsIcon />
-                    {currentUser.hoTen}
-                  </Button>
-                  <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                    slots={{ backdrop: Backdrop }}
-                    slotProps={{
-                      backdrop: {
-                        timeout: 500,
-                      },
-                    }}
-                  >
-                    <Fade in={open}>
-                      <Box sx={style}>
-                        <Typography
-                          id="transition-modal-title"
-                          variant="h6"
-                          component="h2"
-                        >
-                          Cài đặt tài khoản chung
-                        </Typography>
-                        <Typography
-                          id="transition-modal-description"
-                          sx={{ mt: 2 }}
-                        >
-                          textfield in here
-                        </Typography>
-                      </Box>
-                    </Fade>
-                  </Modal>
-                </div>
+              <Button
+                sx={{
+                  color: "white",
+                  "&:hover": {
+                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                    fontSize: "15px",
+                    color: "#ff9f1a",
+                  },
+                }}
+                onClick={handleOpen}
+              >
+                <AdminPanelSettingsIcon />
+                {currentUser.hoTen}
               </Button>
+              <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                  backdrop: {
+                    timeout: 500,
+                  },
+                }}
+              >
+                <Fade in={open}>
+                  <Box sx={style}>
+                    <Typography id="transition-modal-title" variant="h5">
+                      Cài đặt tài khoản chung
+                    </Typography>
+                    <Typography variant="p">
+                      Thông tin có thể được thay đổi
+                    </Typography>
+
+                    <Typography
+                      id="transition-modal-description"
+                      sx={{ mt: 2 }}
+                    >
+                      textfield in here
+                    </Typography>
+                  </Box>
+                </Fade>
+              </Modal>
 
               <Button
-                onClick={handleSignout}
+                onClick={handleOpenLogoutConfirmation}
                 sx={{
                   color: "white",
                   "&:hover": {
@@ -188,6 +202,30 @@ export default function Header() {
               >
                 <LogoutIcon /> Đăng Xuất
               </Button>
+              {currentUser && (
+                <Dialog
+                  open={isLogoutConfirmationOpen}
+                  onClose={handleCloseLogoutConfirmation}
+                  fullWidth
+                  maxWidth="xs"
+                >
+                  <DialogTitle>Xác nhận đăng xuất</DialogTitle>
+                  <DialogContent>
+                    <Typography>Bạn có chắc chắn muốn đăng xuất?</Typography>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      onClick={handleCloseLogoutConfirmation}
+                      color="primary"
+                    >
+                      Hủy
+                    </Button>
+                    <Button onClick={handleSignout} color="primary">
+                      Đăng Xuất
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              )}
             </Box>
           ) : (
             <Box>

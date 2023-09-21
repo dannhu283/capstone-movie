@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,6 +13,10 @@ import {
   Typography,
 } from "@mui/material";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import Css from "./Signup.module.css";
 import { signup } from "../../../../apis/userAPI";
@@ -34,6 +38,7 @@ const signupShema = object({
 });
 
 export default function Signup() {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -99,12 +104,25 @@ export default function Signup() {
                   <TextField
                     label="Mật khẩu"
                     color="success"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     variant="outlined"
                     fullWidth
                     {...register("matKhau")}
                     error={!!errors.matKhau}
                     helperText={errors.matKhau && errors.matKhau.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="Toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12}>

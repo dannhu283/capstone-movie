@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -16,6 +16,10 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { Link } from "react-router-dom";
 import SigninCss from "./Singin.module.css";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
 import { signin } from "../../../../apis/userAPI";
 import { useUserContext } from "../../../../context/UserContext/UserContext";
 
@@ -30,6 +34,7 @@ const signinShema = object({
 });
 
 export default function Signin() {
+  const [showPassword, setShowPassword] = useState(false);
   const { currentUser, handleSignin: onSigninSuccess } = useUserContext();
 
   const {
@@ -94,12 +99,25 @@ export default function Signin() {
                   <TextField
                     label="Mật khẩu"
                     color="success"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     variant="outlined"
                     fullWidth
                     {...register("matKhau")}
                     error={!!errors.matKhau}
                     helperText={errors.matKhau && errors.matKhau.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="Toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                   {error && <Typography color="red">{error}</Typography>}
                 </Grid>
