@@ -19,6 +19,7 @@ import {
   DialogTitle,
   Dialog,
   DialogContent,
+  Divider,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -35,6 +36,7 @@ const style = {
   height: "50%",
   bgcolor: "background.paper",
   border: "2px solid #000",
+  borderRadius: 2,
   boxShadow: 24,
   p: 4,
 };
@@ -172,13 +174,17 @@ export default function Header() {
               >
                 <Fade in={open}>
                   <Box sx={style}>
-                    <Typography id="transition-modal-title" variant="h5">
+                    <Typography
+                      id="transition-modal-title"
+                      variant="h5"
+                      color={"#ff9f1a"}
+                    >
                       Cài đặt tài khoản chung
                     </Typography>
                     <Typography variant="p">
                       Thông tin có thể được thay đổi
                     </Typography>
-
+                    <Divider />
                     <Typography
                       id="transition-modal-description"
                       sx={{ mt: 2 }}

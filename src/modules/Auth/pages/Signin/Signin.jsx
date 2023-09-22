@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
-import { Navigate } from "react-router-dom";
+import { Navigate, useSearchParams, Link } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -11,11 +11,11 @@ import {
   Grid,
   Paper,
   Typography,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
-import { Link } from "react-router-dom";
 import SigninCss from "./Singin.module.css";
-import { Checkbox, FormControlLabel } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -36,6 +36,8 @@ const signinShema = object({
 export default function Signin() {
   const [showPassword, setShowPassword] = useState(false);
   const { currentUser, handleSignin: onSigninSuccess } = useUserContext();
+
+  const [searchParams] = useSearchParams();
 
   const {
     register,
@@ -66,7 +68,8 @@ export default function Signin() {
   };
   //currentUser khác null có nghĩ là user đã đăng nhập=> điều hướng về Home
   if (currentUser) {
-    return <Navigate to="/" replace />;
+    const redirectTo = searchParams.get("redirectTo");
+    return <Navigate to={redirectTo || "/"} replace />;
   }
 
   return (
