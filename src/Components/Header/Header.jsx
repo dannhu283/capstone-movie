@@ -62,6 +62,7 @@ export default function Header() {
     setIsLogoutConfirmationOpen(false);
   };
 
+  //MUI
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

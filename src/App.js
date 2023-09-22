@@ -9,12 +9,14 @@ import MainLayout from "./layouts/MainLayout";
 import "./indexx.css";
 import NotFound from "./components/NotFound/NotFound";
 import ProtectedRoute from "./routers/ProtectedRoute";
+import AdminMovie from "./modules/AdminMovie/AdminMovie";
 
 function App() {
   return (
     <UserProvider>
       <BrowserRouter>
         <Routes>
+          {/* user */}
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="movies/:movieId" element={<Details />} />
@@ -36,6 +38,15 @@ function App() {
             <Route path="/sign-in" element={<Signin />} />
             <Route path="/sign-up" element={<Signup />} />
           </Route>
+
+          {/* admin */}
+          {/* <Route element={<AdminProtectedRoute />} > */}
+          <Route path="/admin">
+            <Route path="movies" element={<AdminMovie />} />
+            {/* <Route path="users" element={<AdminUser />} />
+          <Route path="tikets" element={<AdminTicker />} /> */}
+          </Route>
+          {/* </Route> */}
 
           <Route path="*" element={<NotFound />} />
         </Routes>
