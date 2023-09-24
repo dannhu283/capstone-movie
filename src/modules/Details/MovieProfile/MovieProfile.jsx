@@ -75,7 +75,7 @@ export default function MovieProfile({ movieId }) {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6} md={8}>
-            <Typography variant="h6" color=" #ff9f1a">
+            <Typography variant="h5" color=" #ff9f1a">
               {data.tenPhim}
               {data?.hot && (
                 <Chip

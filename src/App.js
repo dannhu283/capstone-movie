@@ -10,6 +10,7 @@ import "./indexx.css";
 import NotFound from "./components/NotFound/NotFound";
 import ProtectedRoute from "./routers/ProtectedRoute";
 import AdminMovie from "./modules/AdminMovie/AdminMovie";
+import TicketPage from "./modules/Details/TicketPage/TicketPage";
 
 function App() {
   return (
@@ -20,19 +21,9 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path="movies/:movieId" element={<Details />} />
-            {/* <Route
-              path="tickets/:showtimeId"
-              element={
-                <ProtectedRoute>
-                  <div>Ticket Page</div>
-                </ProtectedRoute>
-              }
-            /> */}
+
             <Route element={<ProtectedRoute />}>
-              <Route
-                path="tickets/:showtimeId"
-                element={<div>Page Ticket</div>}
-              />
+              <Route path="tickets/:showtimeId" element={<TicketPage />} />
             </Route>
 
             <Route path="/sign-in" element={<Signin />} />

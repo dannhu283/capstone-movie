@@ -8,7 +8,7 @@ export const ShowTime = styled.div`
   background-color: white;
   min-height: 30vh;
   width: 80%;
-  margin: 10% 5%;
+  margin: 5%;
 `;
 
 export const ButtonCustom = styled.button`
@@ -17,7 +17,7 @@ export const ButtonCustom = styled.button`
   border: 2px solid #ffcccc;
   border-radius: 7px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin: 10px;
   font-size: 15px;
   &:hover {
     color: #ff3838;

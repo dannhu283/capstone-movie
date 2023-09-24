@@ -10,6 +10,7 @@ import Loading from "../../../components/Loading";
 
 export default function Showtimes({ movieId }) {
   const navigate = useNavigate();
+
   const [cinemas, setCinemas] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
 
