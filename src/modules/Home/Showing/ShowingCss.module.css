@@ -14,6 +14,39 @@
   overflow: hidden;
 }
 
-/* .slick-dots li button:before {
-  font-size: 100px !important;
-} */
+.imageContainer {
+  position: relative;
+}
+.overlay {
+  position: absolute;
+  inset: 0;
+}
+.playButton {
+  font-size: 70px !important;
+  position: absolute;
+  top: 25%;
+  left: 35%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  cursor: pointer;
+}
+
+.imageContainer:hover .playButton {
+  opacity: 999;
+}
+
+.modalContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.icon {
+  color: aliceblue;
+  position: absolute;
+  inset: 25% 0 0 65%;
+  font-size: 40px;
+  cursor: pointer;
+}

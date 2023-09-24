@@ -12,14 +12,7 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 import { LiFooter } from "./index";
 import data from "../data.json";
 
-import {
-  Container,
-  Grid,
-  Link,
-  Typography,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Container, Grid, Typography, List, ListItem } from "@mui/material";
 
 export default function Footer() {
   return (
