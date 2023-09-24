@@ -17,6 +17,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ReactPlayer from "react-player";
 import { Movieprofile } from "./index";
 import StylesProfile from "./StylesProfile.module.css";
+import dayjs from "dayjs";
 
 export default function MovieProfile({ movieId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -74,7 +75,7 @@ export default function MovieProfile({ movieId }) {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6} md={8}>
-            <Typography variant="h6" color="white">
+            <Typography variant="h6" color=" #ff9f1a">
               {data.tenPhim}
               {data?.hot && (
                 <Chip
@@ -99,14 +100,17 @@ export default function MovieProfile({ movieId }) {
                 ĐẶT VÉ NGAY
               </Button>
             </Link>
+
             <Typography variant="h6" sx={{ mt: 2, color: "white" }}>
-              Khởi chiếu:
+              Khởi chiếu: {dayjs(data.ngayKhoiChieu).format("DD/MM/YYYY")}
             </Typography>
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: "bold", color: "white" }}
-            >
-              {data.ngayKhoiChieu}
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h5" color={"white"}>
+              Giới thiệu:
+            </Typography>
+            <Typography variant="h6" sx={{ mt: 2, color: " #17c0eb" }}>
+              {data.moTa}
             </Typography>
           </Grid>
         </Grid>
