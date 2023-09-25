@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getMovieDetails } from "../../../APIs/movieAPI";
-import Loading from "../../../components/Loading";
+import Loading from "../../../Components/Loading";
 import {
   Container,
   Typography,

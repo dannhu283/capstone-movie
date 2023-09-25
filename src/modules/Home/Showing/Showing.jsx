@@ -5,7 +5,7 @@ import { getMovies } from "../../../APIs/movieAPI";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Loading from "../../../components/Loading";
+import Loading from "../../../Components/Loading";
 import { Container, Grid, Modal } from "@mui/material";
 import Card from "@mui/material/Card";
 import ReactPlayer from "react-player";

@@ -6,7 +6,7 @@ import { getMovieShowtimes } from "../../../APIs/cinemaAPI";
 import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
 import { ShowTime, ButtonCustom, DivNote } from "./index";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
-import Loading from "../../../components/Loading";
+import Loading from "../../../Components/Loading";
 
 export default function Showtimes({ movieId }) {
   const navigate = useNavigate();

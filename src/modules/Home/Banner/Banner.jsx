@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Styles from "./Styles.module.css";
-import Loading from "../../../components/Loading";
+import Loading from "../../../Components/Loading";
 
 export default function Banner() {
   const { data: banners = [], isLoading } = useQuery({

@@ -6,11 +6,11 @@ import Signin from "./modules/Auth/pages/Signin";
 import Signup from "./modules/Auth/pages/Signup";
 import UserProvider from "./context/UserContext/UserContext";
 import MainLayout from "./layouts/MainLayout";
-import "./indexx.css";
-import NotFound from "./components/NotFound";
+import NotFound from "./Components/NotFound";
 import ProtectedRoute from "./routers/ProtectedRoute";
-import AdminMovie from "./modules/AdminMovie/AdminMovie";
-import TicketPage from "./modules/Details/TicketPage/TicketPage";
+import AdminMovie from "./modules/AdminMovie";
+import TicketPage from "./modules/Details/TicketPage";
+import "./indexx.css";
 
 function App() {
   return (
