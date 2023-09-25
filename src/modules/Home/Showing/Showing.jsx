@@ -15,8 +15,10 @@ import CardMedia from "@mui/material/CardMedia";
 import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import Typography from "@mui/material/Typography";
-import { ButtonBuy } from "./index";
+
 import ShowingCss from "./ShowingCss.module.css";
+import SearchFilm from "../SearchFilm/SearchFilm";
+import { ButtonMain } from "../../../Components/ButtonMain";
 
 export default function Showing() {
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -88,7 +90,10 @@ export default function Showing() {
     ],
   };
   return (
-    <Container>
+    <Container
+      style={{ position: "relative", padding: "0", marginTop: "60px" }}
+    >
+      <SearchFilm movies={data} />
       <Slider {...settings}>
         {data.map((movie) => (
           <Grid className={ShowingCss.item}>
@@ -127,12 +132,12 @@ export default function Showing() {
                   </div>
                 </CardContent>
                 <CardActions>
-                  <ButtonBuy
+                  <ButtonMain
                     className={ShowingCss.buttonBuy}
                     onClick={() => navigate(`/movies/${movie.maPhim}`)}
                   >
                     Mua Vé
-                  </ButtonBuy>
+                  </ButtonMain>
                 </CardActions>
               </Card>
             </Grid>

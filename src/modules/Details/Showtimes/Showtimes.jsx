@@ -108,7 +108,12 @@ export default function Showtimes({ movieId }) {
                       "DD-MM-YYYY ~ HH:mm"
                     );
                     return (
-                      <ButtonCustom key={showtime.maLichChieu}>
+                      <ButtonCustom
+                        onClick={() =>
+                          navigate(`/tickets/${showtime.maLichChieu}`)
+                        }
+                        key={showtime.maLichChieu}
+                      >
                         {time}
                       </ButtonCustom>
                     );

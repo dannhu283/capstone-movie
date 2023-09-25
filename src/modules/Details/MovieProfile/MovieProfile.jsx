@@ -18,6 +18,7 @@ import ReactPlayer from "react-player";
 import { Movieprofile } from "./index";
 import StylesProfile from "./StylesProfile.module.css";
 import dayjs from "dayjs";
+import { ButtonMain } from "../../../Components/ButtonMain";
 
 export default function MovieProfile({ movieId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -91,14 +92,7 @@ export default function MovieProfile({ movieId }) {
               Rating: {data?.danhGia}/10
             </Typography>
             <Link>
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                sx={{ mt: 2, fontWeight: "bold" }}
-              >
-                ĐẶT VÉ NGAY
-              </Button>
+              <ButtonMain>ĐẶT VÉ NGAY</ButtonMain>
             </Link>
 
             <Typography variant="h6" sx={{ mt: 2, color: "white" }}>
