@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { getMovieShowtimes } from "../../../apis/cinemaAPI";
+import { getMovieShowtimes } from "../../../APIs/cinemaAPI";
 import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
 import { ShowTime, ButtonCustom, DivNote } from "./index";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";

@@ -7,7 +7,7 @@ import Signup from "./modules/Auth/pages/Signup";
 import UserProvider from "./context/UserContext/UserContext";
 import MainLayout from "./layouts/MainLayout";
 import "./indexx.css";
-import NotFound from "./components/NotFound/NotFound";
+import NotFound from "./components/NotFound";
 import ProtectedRoute from "./routers/ProtectedRoute";
 import AdminMovie from "./modules/AdminMovie/AdminMovie";
 import TicketPage from "./modules/Details/TicketPage/TicketPage";

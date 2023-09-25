@@ -19,7 +19,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import { Link } from "react-router-dom";
 import Css from "./Signup.module.css";
-import { signup } from "../../../../apis/userAPI";
+import { signup } from "../../../../APIs/userAPI";
 
 //yup validation
 const signupShema = object({
