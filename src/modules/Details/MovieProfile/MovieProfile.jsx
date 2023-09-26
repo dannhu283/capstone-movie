@@ -2,15 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getMovieDetails } from "../../../APIs/movieAPI";
 import Loading from "../../../Components/Loading";
-import {
-  Container,
-  Typography,
-  Button,
-  Chip,
-  Grid,
-  Paper,
-  Modal,
-} from "@mui/material";
+import { Container, Typography, Chip, Grid, Paper, Modal } from "@mui/material";
 import { Link } from "react-router-dom";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
