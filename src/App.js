@@ -9,9 +9,8 @@ import MainLayout from "./layouts/MainLayout";
 import NotFound from "./Components/NotFound";
 import ProtectedRoute from "./routers/ProtectedRoute";
 import AdminMovie from "./modules/AdminMovie";
-
 import "./indexx.css";
-import TicketPage from "./modules/TicketMovie/TicketPage";
+import TicketMovie from "./modules/TicketMovie/TicketMovie";
 
 function App() {
   return (
@@ -24,7 +23,7 @@ function App() {
             <Route path="movies/:movieId" element={<Details />} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path="tickets/:showtimeId" element={<TicketPage />} />
+              <Route path="tickets/:showtimeId" element={<TicketMovie />} />
             </Route>
 
             <Route path="/sign-in" element={<Signin />} />

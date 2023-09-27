@@ -1,6 +1,6 @@
 import fetcher from "./fetcher";
 
-export async function getTicketShowtimes(showtimeId) {
+export async function getTicketMovie(showtimeId) {
   try {
     const response = await fetcher.get("/QuanLyDatVe/LayDanhSachPhongVe", {
       params: {
