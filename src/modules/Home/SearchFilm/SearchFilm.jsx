@@ -19,6 +19,7 @@ export default function SearchFilm({ movies }) {
   const [date, setDate] = useState("");
   const [dateCinemas, setDateCinemas] = useState([]);
   const [codeTimeCinema, setCodeTimeCinema] = useState("");
+  const [errors, setErrors] = useState(false);
 
   const { data: cinemas = [] } = useQuery({
     queryKey: ["listCinema", movie],
@@ -63,6 +64,7 @@ export default function SearchFilm({ movies }) {
             id="demo-simple-select-autowidth"
             value={movie}
             onChange={handleChangeMovie}
+            error={!!errors}
             autoWidth
             label="Phim"
           >
@@ -85,16 +87,17 @@ export default function SearchFilm({ movies }) {
             id="demo-simple-select-autowidth"
             value={cinema}
             onChange={handleChangeCinema}
+            error={!!errors}
             autoWidth
             label="Rạp"
           >
             <MenuItem value="">
               <em>Rạp</em>
             </MenuItem>
-            {cinemas.heThongRapChieu?.map((cinemaItem) => {
+            {cinemas.heThongRapChieu?.map((cinema) => {
               return (
-                <MenuItem key={cinemaItem.maHeThongRap} value={cinemaItem}>
-                  {cinemaItem.tenHeThongRap}
+                <MenuItem key={cinema.maHeThongRap} value={cinema}>
+                  {cinema.tenHeThongRap}
                 </MenuItem>
               );
             })}
@@ -109,6 +112,7 @@ export default function SearchFilm({ movies }) {
             id="demo-simple-select-autowidth"
             value={date}
             onChange={handleChangeDate}
+            error={!!errors}
             autoWidth
             label="Ngày giờ chiếu"
           >
@@ -139,7 +143,16 @@ export default function SearchFilm({ movies }) {
             })}
           </Select>
         </FormControl>
-        <ButtonMain onClick={() => navigate(`/tickets/${codeTimeCinema}`)}>
+        <ButtonMain
+          onClick={() => {
+            if (!codeTimeCinema) {
+              setErrors(true);
+              navigate("/");
+            } else {
+              navigate(`tickets/${codeTimeCinema}`);
+            }
+          }}
+        >
           mua vé ngay
         </ButtonMain>
       </Box>

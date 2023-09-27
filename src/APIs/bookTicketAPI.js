@@ -1,14 +1,14 @@
 import fetcher from "./fetcher";
 
-export async function getTicketShowtimes(ticketId) {
+export async function getTicketShowtimes(showtimeId) {
   try {
     const response = await fetcher.get("/QuanLyDatVe/LayDanhSachPhongVe", {
       params: {
-        MaLichChieu: ticketId,
+        MaLichChieu: showtimeId,
       },
     });
     return response.data.content;
   } catch (error) {
-    return error.response.data.content;
+    throw error.response.data.content;
   }
 }

@@ -9,8 +9,9 @@ import MainLayout from "./layouts/MainLayout";
 import NotFound from "./Components/NotFound";
 import ProtectedRoute from "./routers/ProtectedRoute";
 import AdminMovie from "./modules/AdminMovie";
-import TicketPage from "./modules/Details/TicketPage";
+
 import "./indexx.css";
+import TicketPage from "./modules/TicketMovie/TicketPage";
 
 function App() {
   return (

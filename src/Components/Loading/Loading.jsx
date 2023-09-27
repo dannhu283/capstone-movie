@@ -7,7 +7,7 @@ const Loading = () => {
     <Container className={LoadingCss.container}>
       <div className={LoadingCss.position}>
         <img
-          src="./img/animation_lmnjb4q6_small.gif"
+          src="/img/animation_lmnjb4q6_small.gif"
           alt="Loading-animation"
           className={LoadingCss.img}
         />
