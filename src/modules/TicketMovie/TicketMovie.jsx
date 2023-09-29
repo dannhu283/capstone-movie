@@ -38,10 +38,10 @@ export default function TicketMovie() {
         <Box>
           <Container sx={{ paddingTop: "50px" }}>
             <Grid container spacing={12}>
-              <Grid item md={8}>
+              <Grid item xs={7}>
                 <TicketPage showtimeId={showtimeId} />
               </Grid>
-              <Grid item md={4}>
+              <Grid item xs={5}>
                 <Ticket ticketInfo={ticketInfo} />
               </Grid>
             </Grid>

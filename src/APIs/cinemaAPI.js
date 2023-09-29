@@ -13,9 +13,29 @@ export async function getMovieShowtimes(movieId) {
   }
 }
 
-export async function getLogo() {
+export async function getLogo(theaterId) {
   try {
-    const response = await fetcher.get("QuanLyRap/LayThongTinHeThongRap");
+    const response = await fetcher.get("QuanLyRap/LayThongTinHeThongRap", {
+      params: {
+        maHeThongRap: theaterId,
+      },
+    });
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
+
+export async function getInforTheater(theaterId) {
+  try {
+    const response = await fetcher.get(
+      "QuanLyRap/LayThongTinCumRapTheoHeThong",
+      {
+        params: {
+          maHeThongRap: theaterId,
+        },
+      }
+    );
     return response.data.content;
   } catch (error) {
     throw error.response.data.content;

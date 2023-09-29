@@ -18,7 +18,7 @@ export default function Ticket({ ticketInfo }) {
         <Divider sx={{ marginY: "16px" }} />
         <Row>
           <Text>Địa chỉ:</Text>
-          <TextColor>{ticketInfo.diachi}</TextColor>
+          <TextColor>{ticketInfo.diaChi}</TextColor>
         </Row>
         <Divider sx={{ marginY: "16px" }} />
         <Row>

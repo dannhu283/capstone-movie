@@ -18,7 +18,6 @@ export default function TicketPage({ showtimeId }) {
     return <Loading />;
   }
 
-  console.log(listSeat);
   return (
     <Grid>
       <Grid item xs={12} marginBottom={5}>

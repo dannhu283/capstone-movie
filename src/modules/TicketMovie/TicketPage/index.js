@@ -18,7 +18,7 @@ export const GridCustom = styled.div`
 export const ButtonSeat = styled.button`
   text-align: center;
   border-radius: 7px;
-  padding: 10px;
+  padding: 8px;
   margin: 3px;
   cursor: pointer;
   border: 1px solid white;
