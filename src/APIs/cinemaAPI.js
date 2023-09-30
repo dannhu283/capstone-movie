@@ -41,3 +41,20 @@ export async function getInforTheater(theaterId) {
     throw error.response.data.content;
   }
 }
+
+export async function getTheaterShowtimes(theaterId) {
+  try {
+    const response = await fetcher.get(
+      "QuanLyRap/LayThongTinLichChieuHeThongRap",
+      {
+        params: {
+          maHeThongRap: theaterId,
+          maNhom: "GP09",
+        },
+      }
+    );
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}

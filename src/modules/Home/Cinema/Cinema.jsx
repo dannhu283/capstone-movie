@@ -1,53 +1,95 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getInforTheater, getLogo } from "../../../APIs/cinemaAPI";
+import {
+  getLogo,
+  getInforTheater,
+  getTheaterShowtimes,
+} from "../../../APIs/cinemaAPI";
 import Loading from "../../../Components/Loading";
-import { Container, Tab, Tabs } from "@mui/material";
+import { Container } from "@mui/material";
 
 export default function Cinema({ theaterId }) {
-  const { data, isLoading } = useQuery({
+  const [inforTheaters, setInforTheater] = useState([]);
+
+  const [listMovies, setListMovies] = useState([]);
+
+  const { data = {}, isLoading } = useQuery({
     queryKey: ["logo", theaterId],
     queryFn: () => getLogo(theaterId),
   });
 
-  //Save the theaterId value from the getLogo query
-  const theaterIdFromLogo =
-    data && data.length > 0 ? data[0].maHeThongRap : null;
+  const theaterSystems = data || [];
 
-  const { data: infor, isLoading: isInforLoading } = useQuery({
-    queryKey: ["inforTheater", theaterIdFromLogo],
-    queryFn: () => getInforTheater(theaterIdFromLogo),
-    enabled: !!theaterIdFromLogo,
-  });
+  const handleChangeTab = async (theaterSystemsId) => {
+    try {
+      const inforTheaters = await getInforTheater(theaterSystemsId);
+      setInforTheater(inforTheaters);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  if (isLoading || isInforLoading) {
+  const handleGetListMovie = async (inforTheaterId) => {
+    try {
+      const listMovies = await getTheaterShowtimes(inforTheaterId);
+      setListMovies(listMovies);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (isLoading) {
     return <Loading />;
   }
 
   return (
     <Container>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        scrollButtons="auto"
-        aria-label="Cinema Systems"
-        sx={{ width: "20%" }}
-      >
-        {data.map((item) => (
-          <Tab
+      <div>
+        {theaterSystems.map((item) => (
+          <img
             key={item.maHeThongRap}
-            label={
-              <img
-                src={item.logo}
-                alt="logo"
-                width={50}
-                height={50}
-                style={{ cursor: "pointer" }}
-              />
-            }
+            onClick={() => handleChangeTab(item.maHeThongRap)}
+            src={item.logo}
+            alt="logo"
+            width={50}
+            height={50}
+            style={{ cursor: "pointer" }}
           />
         ))}
-      </Tabs>
+      </div>
+      {inforTheaters.map((inforTheater) => (
+        <div
+          onClick={() => handleGetListMovie(inforTheater.maHeThongRap)}
+          style={{ cursor: "pointer", border: "2px solid red", margin: "10px" }}
+          key={inforTheater.maCumRap}
+        >
+          <p>{inforTheater.tenCumRap}</p>
+          <p>{inforTheater.diaChi}</p>
+        </div>
+      ))}
+
+      <div>
+        {listMovies.map((rap) =>
+          rap.lstCumRap.map((cumRap) =>
+            cumRap.danhSachPhim.map((phim) => (
+              <div>
+                <img
+                  src={phim.hinhAnh}
+                  alt="hinhAnh"
+                  width={100}
+                  height={100}
+                />
+                <p>{phim.tenPhim}</p>
+                {phim.lstLichChieuTheoPhim.map((lichChieu) => (
+                  <p key={lichChieu.maLichChieu}>
+                    Ngày giờ chiếu: {lichChieu.ngayChieuGioChieu}
+                  </p>
+                ))}
+              </div>
+            ))
+          )
+        )}
+      </div>
     </Container>
   );
 }
