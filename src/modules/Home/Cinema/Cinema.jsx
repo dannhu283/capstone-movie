@@ -6,7 +6,18 @@ import {
   getTheaterShowtimes,
 } from "../../../APIs/cinemaAPI";
 import Loading from "../../../Components/Loading";
-import { Container } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Paper,
+  Typography,
+  Box,
+  Divider,
+  Chip,
+} from "@mui/material";
+import { ButtonCustom } from "../../../Components/ButtonMain";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 export default function Cinema({ theaterId }) {
   const [inforTheaters, setInforTheater] = useState([]);
@@ -14,6 +25,10 @@ export default function Cinema({ theaterId }) {
   const [listMovies, setListMovies] = useState([]);
 
   const [selectedTenCumRap, setSelectedTenCumRap] = useState(0);
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const navigate = useNavigate();
 
   const { data = {}, isLoading } = useQuery({
     queryKey: ["logo", theaterId],
@@ -26,6 +41,7 @@ export default function Cinema({ theaterId }) {
     try {
       const inforTheaters = await getInforTheater(theaterSystemsId);
       setInforTheater(inforTheaters);
+      setSelectedTab(theaterSystemsId);
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +57,13 @@ export default function Cinema({ theaterId }) {
     }
   };
 
+  //Set default value when no value has been selected
+  useEffect(() => {
+    if (theaterSystems.length > 0) {
+      handleChangeTab(theaterSystems[0].maHeThongRap);
+    }
+  }, [theaterSystems]);
+
   useEffect(() => {
     if (inforTheaters.length > 0) {
       handleGetListMovie(
@@ -55,64 +78,146 @@ export default function Cinema({ theaterId }) {
   }
 
   return (
-    <Container>
-      <div>
-        {theaterSystems.map((item) => (
-          <img
-            key={item.maHeThongRap}
-            onClick={() => handleChangeTab(item.maHeThongRap)}
-            src={item.logo}
-            alt="logo"
-            width={50}
-            height={50}
-            style={{ cursor: "pointer" }}
-          />
-        ))}
-      </div>
-      {inforTheaters.map((inforTheater) => (
-        <div
-          id="mid"
-          onClick={() =>
-            handleGetListMovie(
-              inforTheater.maHeThongRap,
-              inforTheater.tenCumRap
-            )
-          }
-          style={{ cursor: "pointer", border: "2px solid red", margin: "10px" }}
-          key={inforTheater.maCumRap}
-        >
-          <p>{inforTheater.tenCumRap}</p>
-          <p>{inforTheater.diaChi}</p>
-        </div>
-      ))}
-      <div id="last">
-        {listMovies.map((rap) =>
-          rap.lstCumRap.map((cumRap) =>
-            cumRap.danhSachPhim.map(
-              (phim) =>
-                // Normalize strings before comparing
-                selectedTenCumRap &&
-                selectedTenCumRap.toLowerCase() ===
-                  cumRap.tenCumRap.toLowerCase() && (
-                  <div key={phim.maPhim}>
-                    <img
-                      src={phim.hinhAnh}
-                      alt="hinhAnh"
-                      width={100}
-                      height={100}
-                    />
-                    <p>{phim.tenPhim}</p>
-                    {phim.lstLichChieuTheoPhim.map((lichChieu) => (
-                      <p key={lichChieu.maLichChieu}>
-                        Ngày giờ chiếu: {lichChieu.ngayChieuGioChieu}
-                      </p>
-                    ))}
-                  </div>
+    <Container
+      style={{
+        margin: "100px auto",
+        borderRadius: "5px",
+        height: "80vh",
+        overflow: "hidden",
+        boxShadow: " rgba(0, 0, 0, 0.56) 0px 22px 70px 4px",
+      }}
+    >
+      <Grid container>
+        <Grid item xs={1}>
+          <Box sx={{ marginTop: "10px" }}>
+            <Grid container>
+              {theaterSystems.map((item) => (
+                <Grid item key={item.maHeThongRap} xs={12}>
+                  <Paper
+                    onClick={() => handleChangeTab(item.maHeThongRap)}
+                    style={{
+                      cursor: "pointer",
+                      padding: "10px",
+                      backgroundColor:
+                        selectedTab === item.maHeThongRap
+                          ? "#dfe4ea"
+                          : "transparent",
+                    }}
+                  >
+                    <img src={item.logo} alt="logo" style={{ width: "80%" }} />
+                  </Paper>
+                  <Divider />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={4} style={{ height: "80vh", overflowY: "scroll" }}>
+          <Box>
+            <Grid container>
+              {inforTheaters.map((inforTheater) => (
+                <Grid item key={inforTheater.maCumRap} xs={12}>
+                  <Paper
+                    onClick={() =>
+                      handleGetListMovie(
+                        inforTheater.maHeThongRap,
+                        inforTheater.tenCumRap
+                      )
+                    }
+                    style={{
+                      cursor: "pointer",
+                      padding: "16px",
+                      margin: "2px 10px",
+                      background:
+                        selectedTenCumRap === inforTheater.tenCumRap
+                          ? "#dfe4ea"
+                          : "transparent",
+                    }}
+                  >
+                    <Typography sx={{ color: "#3ae374", fontWeight: "bold" }}>
+                      {inforTheater.tenCumRap}
+                    </Typography>
+                    <Typography variant="body2">
+                      {inforTheater.diaChi}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={7} style={{ height: "80vh", overflowY: "scroll" }}>
+          <Box>
+            {listMovies.map((rap) =>
+              rap.lstCumRap.map((cumRap) =>
+                cumRap.danhSachPhim.map(
+                  (phim) =>
+                    // Normalize strings before comparing
+                    selectedTenCumRap &&
+                    selectedTenCumRap.toLowerCase() ===
+                      cumRap.tenCumRap.toLowerCase() && (
+                      <Grid
+                        container
+                        sx={{
+                          borderBottom: "1px dashed #cd84f1",
+                        }}
+                      >
+                        <Grid
+                          item
+                          xs={4}
+                          key={phim.maPhim}
+                          sx={{ padding: "15px" }}
+                        >
+                          <img
+                            src={phim.hinhAnh}
+                            alt="hinhAnh"
+                            style={{ width: "100%" }}
+                          />
+                        </Grid>
+                        <Grid item xs={8}>
+                          <Box sx={{ marginLeft: "10px" }}>
+                            <Typography
+                              sx={{
+                                color: "#3ae374",
+                                fontSize: "25px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {phim.tenPhim}
+                              {phim.hot && (
+                                <Chip
+                                  label="HOT"
+                                  color="secondary"
+                                  variant="outlined"
+                                  size="small"
+                                  sx={{ fontWeight: "bold", ml: 2 }}
+                                />
+                              )}
+                            </Typography>
+
+                            {phim.lstLichChieuTheoPhim.map((lichChieu) => (
+                              <ButtonCustom
+                                onClick={() =>
+                                  navigate(`/tickets/${lichChieu.maLichChieu}`)
+                                }
+                                key={lichChieu.maLichChieu}
+                                variant="body2"
+                              >
+                                {dayjs(lichChieu.ngayChieuGioChieu).format(
+                                  "DD-MM-YYYY ~ HH:mm"
+                                )}
+                              </ButtonCustom>
+                            ))}
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    )
                 )
-            )
-          )
-        )}
-      </div>
+              )
+            )}
+          </Box>
+        </Grid>
+      </Grid>
     </Container>
   );
 }

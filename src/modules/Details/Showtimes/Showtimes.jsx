@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { getMovieShowtimes } from "../../../APIs/cinemaAPI";
 import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
-import { ShowTime, ButtonCustom, DivNote } from "./index";
+import { ShowTime, DivNote } from "./index";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import Loading from "../../../Components/Loading";
+import { ButtonCustom } from "../../../Components/ButtonMain";
 
 export default function Showtimes({ movieId }) {
   const navigate = useNavigate();
