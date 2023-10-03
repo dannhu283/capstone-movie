@@ -16,3 +16,9 @@ export const Row = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const TextSeat = styled.p`
+  display: inline;
+  color: #ff3838;
+  font-weight: bold;
+`;

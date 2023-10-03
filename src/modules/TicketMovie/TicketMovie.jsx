@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { Box, Container, Grid } from "@mui/material";
 import TicketPage from "./TicketPage/TicketPage";
 import Ticket from "./Ticket/Ticket";
-import { Overlay } from "./index";
+import TicketProvider from "../../context/TicketContext/TicketContext";
 
 export default function TicketMovie() {
   const { showtimeId } = useParams();
@@ -24,30 +24,56 @@ export default function TicketMovie() {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${ticketInfo.hinhAnh})`,
-        height: "100vh",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        position: "relative",
-      }}
-    >
-      <Overlay>
-        <Box>
-          <Container sx={{ paddingTop: "50px" }}>
-            <Grid container spacing={12}>
-              <Grid item xs={7}>
-                <TicketPage showtimeId={showtimeId} />
-              </Grid>
-              <Grid item xs={5}>
-                <Ticket ticketInfo={ticketInfo} />
-              </Grid>
+    <TicketProvider>
+      <Box
+        sx={{
+          backgroundImage: `url(${ticketInfo.hinhAnh})`,
+          height: "100%",
+          position: "relative",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          paddingBottom: "100px",
+
+          "&::after": {
+            backgroundColor: "#000000bd",
+            display: "block",
+            content: "''",
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "100%",
+            height: "100%",
+          },
+        }}
+      >
+        <Container
+          sx={{ paddingTop: "64px", zIndex: "100", position: "relative" }}
+        >
+          <Grid
+            container
+            spacing={10}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Grid
+              item
+              xs={12}
+              md={8}
+              sx={{ overflow: "hidden", maxWidth: "100%" }}
+            >
+              <TicketPage showtimeId={showtimeId} />
             </Grid>
-          </Container>
-        </Box>
-      </Overlay>
-    </div>
+            <Grid item xs={12} md={4}>
+              <Ticket ticketInfo={ticketInfo} />
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    </TicketProvider>
   );
 }

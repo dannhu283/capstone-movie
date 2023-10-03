@@ -1,11 +1,15 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
+import { MapInteractionCSS } from "react-map-interaction";
 import { getTicketMovie } from "../../../APIs/bookTicketAPI";
 import Loading from "../../../Components/Loading";
 import { Grid, Box, Typography, Paper } from "@mui/material";
 import { GridCustom, ButtonSeat } from "./index";
+import { useTicketContext } from "../../../context/TicketContext/TicketContext";
 
 export default function TicketPage({ showtimeId }) {
+  const { selectedSeats, handleSelect } = useTicketContext();
+
   const { data, isLoading } = useQuery({
     queryKey: ["ticketShowtimes"],
     queryFn: () => getTicketMovie(showtimeId),
@@ -33,30 +37,41 @@ export default function TicketPage({ showtimeId }) {
           Màn hình
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <GridCustom>
-          {/* render depends on condition */}
-          {listSeat.map((seat) => {
-            let isDisable = seat.daDat;
-            let color = "";
-            if (seat.daDat) {
-              color = "#767676";
-            } else if (seat.loaiGhe === "Thuong") {
-              color = "#dfe4ea";
-            } else {
-              color = "#ff9f1a";
-            }
-            return (
-              <ButtonSeat
-                disabled={isDisable}
-                style={{ backgroundColor: color }}
-                key={seat.tenGhe}
-              >
-                {seat.daDat ? "X" : seat.tenGhe}
-              </ButtonSeat>
-            );
-          })}
-        </GridCustom>
+      <Grid item xs={12} sx={{ border: "2px dashed white" }}>
+        <MapInteractionCSS>
+          <GridCustom>
+            {/* render depends on condition */}
+            {listSeat.map((seat) => {
+              const isSelected = selectedSeats.find(
+                (chair) => chair.maGhe === seat.maGhe
+              );
+              let isDisable = seat.daDat;
+              let color = "";
+              if (seat.daDat) {
+                color = "#767676";
+              } else if (isSelected) {
+                color = "#3ae374";
+              } else if (seat.loaiGhe === "Thuong") {
+                color = "#7d5fff";
+              } else {
+                color = "#ff3838";
+              }
+              return (
+                <ButtonSeat
+                  onClick={() => {
+                    // setIsSelected(!isSelected);
+                    handleSelect({ ...seat, isSelected: !isSelected });
+                  }}
+                  disabled={isDisable || isLoading}
+                  style={{ backgroundColor: color }}
+                  key={seat.tenGhe}
+                >
+                  {seat.daDat ? "X" : seat.tenGhe}
+                </ButtonSeat>
+              );
+            })}
+          </GridCustom>
+        </MapInteractionCSS>
       </Grid>
       <Grid item xs={12}>
         <div
@@ -74,17 +89,32 @@ export default function TicketPage({ showtimeId }) {
           </Paper>
           <Paper
             elevation={4}
-            sx={{ padding: "15px", backgroundColor: "#dfe4ea" }}
+            sx={{ padding: "15px", backgroundColor: "#7d5fff" }}
           >
             Ghế thuờng
           </Paper>
           <Paper
             elevation={4}
-            sx={{ padding: "15px", backgroundColor: "#ff9f1a" }}
+            sx={{ padding: "15px", backgroundColor: "#ff3838" }}
           >
             Ghế VIP
           </Paper>
+          <Paper
+            elevation={4}
+            sx={{ padding: "15px", backgroundColor: "#3ae374" }}
+          >
+            Đang chọn
+          </Paper>
         </div>
+        <Typography
+          sx={{
+            fontSize: "20px",
+            color: "#ffaf4087",
+            fontStyle: "italic",
+          }}
+        >
+          Note: Có Thể Zoom khu vực ghế ngồi đề dễ dàng lựa chọn ghế phù hợp
+        </Typography>
       </Grid>
     </Grid>
   );
