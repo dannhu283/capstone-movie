@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 export { default } from "./Ticket";
 
 export const Text = styled.p`
-  font-size: 18px;
   font-weight: bold;
+  color: white;
 `;
 
 export const TextColor = styled.p`
   font-weight: bold;
-  color: #ff9f1a;
+  color: #ffcccc;
 `;
 
 export const Row = styled.div`

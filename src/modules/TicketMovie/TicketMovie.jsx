@@ -49,7 +49,7 @@ export default function TicketMovie() {
         }}
       >
         <Container
-          sx={{ paddingTop: "64px", zIndex: "100", position: "relative" }}
+          sx={{ paddingTop: "30px", zIndex: "100", position: "relative" }}
         >
           <Grid
             container
