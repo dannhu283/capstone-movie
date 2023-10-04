@@ -24,10 +24,10 @@ export default function TicketPage({ showtimeId }) {
 
   return (
     <Grid>
-      <Grid item xs={12} marginBottom={5}>
+      <Grid item xs={12} marginBottom={10}>
         <Box
           sx={{
-            backgroundColor: "#ff3838",
+            backgroundColor: "white",
             width: "100%",
             height: "10px",
             borderRadius: "3px",
@@ -60,6 +60,9 @@ export default function TicketPage({ showtimeId }) {
                 <ButtonSeat
                   onClick={() => {
                     // setIsSelected(!isSelected);
+                    handleSelect({ ...seat, isSelected: !isSelected });
+                  }}
+                  onTouchEnd={() => {
                     handleSelect({ ...seat, isSelected: !isSelected });
                   }}
                   disabled={isDisable || isLoading}

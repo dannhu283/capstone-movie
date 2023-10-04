@@ -22,13 +22,10 @@ export default function Ticket({ ticketInfo }) {
   };
   return (
     <>
-      <Paper elevation={3} sx={{ padding: "15px", backgroundColor: "#4b4b4b" }}>
-        <img
-          src={ticketInfo.hinhAnh}
-          alt="film"
-          style={{ width: "100%", marginBottom: "20px" }}
-        />
-
+      <Paper
+        elevation={3}
+        sx={{ marginTop: "40px", padding: "15px", backgroundColor: "#4b4b4b" }}
+      >
         <Row>
           <Text>Tên Phim:</Text>
           <TextColor>{ticketInfo.tenPhim}</TextColor>

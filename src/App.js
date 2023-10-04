@@ -8,7 +8,7 @@ import UserProvider from "./context/UserContext/UserContext";
 import MainLayout from "./layouts/MainLayout";
 import NotFound from "./Components/NotFound";
 import ProtectedRoute from "./routers/ProtectedRoute";
-import AdminMovie from "./modules/AdminMovie";
+import AdminLayout from "./modules/AdminLayout";
 import "./indexx.css";
 import TicketMovie from "./modules/TicketMovie/TicketMovie";
 
@@ -32,8 +32,8 @@ function App() {
 
           {/* admin */}
           {/* <Route element={<AdminProtectedRoute />} > */}
-          <Route path="/admin">
-            <Route path="movies" element={<AdminMovie />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            {/* <Route path="movies" element={<AdminLayout />} /> */}
             {/* <Route path="users" element={<AdminUser />} />
           <Route path="tikets" element={<AdminTicker />} /> */}
           </Route>

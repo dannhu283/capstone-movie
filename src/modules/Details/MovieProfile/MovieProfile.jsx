@@ -42,7 +42,7 @@ export default function MovieProfile({ movieId }) {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ padding: "20px" }}>
+    <Container maxWidth="lg" sx={{ marginTop: "50px", padding: "20px" }}>
       <Movieprofile>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={4}>

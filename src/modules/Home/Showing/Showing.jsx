@@ -91,6 +91,7 @@ export default function Showing() {
   };
   return (
     <Container
+      id="showing"
       style={{ position: "relative", padding: "0", marginTop: "60px" }}
     >
       <SearchFilm movies={data} />

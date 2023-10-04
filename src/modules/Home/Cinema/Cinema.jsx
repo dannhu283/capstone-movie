@@ -96,7 +96,9 @@ export default function Cinema({ theaterId }) {
                   <Paper
                     onClick={() => handleChangeTab(item.maHeThongRap)}
                     style={{
+                      marginBottom: "5px",
                       cursor: "pointer",
+                      transition: "all 0.5s",
                       padding: "10px",
                       backgroundColor:
                         selectedTab === item.maHeThongRap
@@ -126,8 +128,9 @@ export default function Cinema({ theaterId }) {
                     }
                     style={{
                       cursor: "pointer",
+                      transition: "all 0.5s",
                       padding: "16px",
-                      margin: "2px 10px",
+                      margin: "10px  10px 0",
                       background:
                         selectedTenCumRap === inforTheater.tenCumRap
                           ? "#dfe4ea"

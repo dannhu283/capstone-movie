@@ -1,276 +1,281 @@
-import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 import {
-  Fade,
-  Backdrop,
-  Modal,
-  DialogActions,
-  DialogTitle,
-  Dialog,
-  DialogContent,
-  Divider,
+  AppBar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Tooltip,
+  Typography,
+  useScrollTrigger,
+  Link,
 } from "@mui/material";
-import { Link } from "react-router-dom";
-import LogoutIcon from "@mui/icons-material/Logout";
+import MenuIcon from "@mui/icons-material/Menu";
+import React, { useState } from "react";
+import MovieFilterIcon from "@mui/icons-material/MovieFilter";
+import { AccountCircle, ExitToApp } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { SigninAndSignup, SpanHeader } from "./index";
 import { useUserContext } from "../../context/UserContext/UserContext";
+import PropTypes from "prop-types";
+function ElevationScroll(props) {
+  const { children, window } = props;
 
-const pages = ["Lịch Chiếu", "Cụm Rạp", "Tin Tức", "Ứng Dụng"];
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+  });
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "50%",
-  height: "50%",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  borderRadius: 2,
-  boxShadow: 24,
-  p: 4,
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
+}
+
+ElevationScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+
+  window: PropTypes.func,
 };
 
-export default function Header() {
-  const { currentUser, handleSignout } = useUserContext();
-  //useState MUI
+export default function Header(props) {
+  const pages = [
+    { id: "showing", label: "Lịch chiếu" },
+    { id: "cinema", label: "Cụm rạp" },
+    { id: "tintuc", label: "Tin tức" },
+    { id: "ungdung", label: "Ứng dụng" },
+  ];
+  const settings = ["Profile", "Account", "Dashboard", "Logout"];
   const [anchorElNav, setAnchorElNav] = useState(null);
-  //useState modal
-  const [open, setOpen] = React.useState(false);
-  const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] =
-    useState(false);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
-  //modal info
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const { currentUser, handleSignout } = useUserContext();
 
-  //modal log out
-  const handleOpenLogoutConfirmation = () => {
-    setIsLogoutConfirmationOpen(true);
-  };
-  const handleCloseLogoutConfirmation = () => {
-    setIsLogoutConfirmationOpen(false);
-  };
-
-  //MUI
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleCloseNavMenu = () => {
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
+    navigate(`/`);
+
+    // Check if the element exists before scrolling
+    const element = document.getElementById(`${page.id}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleCloseUserMenu = (setting) => {
+    setAnchorElUser(null);
+    if (setting === "Logout") {
+      handleSignout();
+    }
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#2f2e2c" }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Link to="/">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
-              width={150}
-              alt=""
-            />
-          </Link>
+    <>
+      <CssBaseline />
+      <ElevationScroll {...props}>
+        <AppBar sx={{ backgroundColor: "#2f2e2c" }}>
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <Link to="/" sx={{ cursor: "pointer" }}>
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
+                  width={150}
+                  alt=""
+                />
+              </Link>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={handleOpenNavMenu} // Mở Menu
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                  }}
+                >
+                  {pages.map((page) => (
+                    <MenuItem
+                      key={page.id}
+                      onClick={() => handleCloseNavMenu(page)}
+                    >
+                      <Typography>{page.label}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+              <MovieFilterIcon
+                sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+                color="error"
+              />
+              <Typography
+                variant="h5"
+                noWrap
+                component="a"
+                href="/"
+                sx={{
+                  mr: 2,
+                  display: { xs: "flex", md: "none" },
+                  flexGrow: 1,
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "#d32f2f",
+                  textDecoration: "none",
+                }}
+              >
+                Movie
+              </Typography>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                }}
+                justifyContent="center"
+              >
+                {pages.map((page) => (
+                  <Button
+                    key={page.id}
+                    onClick={() => handleCloseNavMenu(page)}
+                    sx={{
+                      my: 2,
+                      margin: "0 10px",
+                      color: "white",
+                      display: "block",
+                      "&:hover": {
+                        boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
+                        fontSize: "12px",
+                        color: "#ff9f1a",
+                      },
+                    }}
+                  >
+                    {page.label}
+                  </Button>
+                ))}
+              </Box>
 
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex", justifyContent: "center" },
-            }}
-          >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  "&:hover": {
-                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                    fontSize: "12px",
-                    color: "#ff9f1a",
-                  },
-                }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          {currentUser ? (
-            <Box>
-              <Button
-                sx={{
-                  color: "white",
-                  "&:hover": {
-                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                    fontSize: "15px",
-                    color: "#ff9f1a",
-                  },
-                }}
-                onClick={handleOpen}
-              >
-                <AdminPanelSettingsIcon />
-                {currentUser.hoTen}
-              </Button>
-              <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                slots={{ backdrop: Backdrop }}
-                slotProps={{
-                  backdrop: {
-                    timeout: 500,
-                  },
-                }}
-              >
-                <Fade in={open}>
-                  <Box sx={style}>
-                    <Typography
-                      id="transition-modal-title"
-                      variant="h5"
-                      color={"#ff9f1a"}
+              {/* Account */}
+              {currentUser ? (
+                <>
+                  <Box
+                    sx={{ flexGrow: 0, borderRight: 1, pr: 2 }}
+                    display={"inline-block"}
+                  >
+                    <Tooltip title="User">
+                      <IconButton
+                        onClick={handleOpenUserMenu}
+                        sx={{
+                          color: "white",
+                          p: 0,
+                          "&:hover": {
+                            color: "#ff9f1a",
+                          },
+                        }}
+                      >
+                        <AccountCircle fontSize="large" />
+                        <Typography>{currentUser.hoTen}</Typography>
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
                     >
-                      Cài đặt tài khoản chung
-                    </Typography>
-                    <Typography variant="p">
-                      Thông tin có thể được thay đổi
-                    </Typography>
-                    <Divider />
-                    <Typography
-                      id="transition-modal-description"
-                      sx={{ mt: 2 }}
-                    >
-                      textfield in here
-                    </Typography>
+                      {settings.map((setting) => (
+                        <MenuItem
+                          key={setting}
+                          onClick={() => handleCloseUserMenu(setting)}
+                        >
+                          <Typography textAlign="center">{setting}</Typography>
+                        </MenuItem>
+                      ))}
+                    </Menu>
                   </Box>
-                </Fade>
-              </Modal>
 
-              <Button
-                onClick={handleOpenLogoutConfirmation}
-                sx={{
-                  color: "white",
-                  "&:hover": {
-                    boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                    fontSize: "15px",
-                    color: "#ff9f1a",
-                  },
-                }}
-              >
-                <LogoutIcon /> Đăng Xuất
-              </Button>
-              {currentUser && (
-                <Dialog
-                  open={isLogoutConfirmationOpen}
-                  onClose={handleCloseLogoutConfirmation}
-                  fullWidth
-                  maxWidth="xs"
-                >
-                  <DialogTitle>Xác nhận đăng xuất</DialogTitle>
-                  <DialogContent>
-                    <Typography>Bạn có chắc chắn muốn đăng xuất?</Typography>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      onClick={handleCloseLogoutConfirmation}
-                      color="primary"
+                  <IconButton
+                    sx={{
+                      color: "white",
+                      "&:hover": {
+                        color: "#ff9f1a",
+                      },
+                    }}
+                    onClick={handleSignout}
+                  >
+                    <ExitToApp />
+                    <Typography>Đăng xuất</Typography>
+                  </IconButton>
+                </>
+              ) : (
+                <>
+                  {/* Signin */}
+                  <Box sx={{ flexGrow: 0 }}>
+                    <SigninAndSignup
+                      onClick={() => navigate(`/sign-in`)}
+                      borderRight="1px solid #9e9e9e"
                     >
-                      Hủy
-                    </Button>
-                    <Button onClick={handleSignout} color="primary">
-                      Đăng Xuất
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-              )}
-            </Box>
-          ) : (
-            <Box>
-              <Link to="/sign-in">
-                <Button
-                  sx={{
-                    color: "white",
-                    marginRight: "20px",
-                    "&:hover": {
-                      boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                      fontSize: "15px",
-                      color: "#ff9f1a",
-                    },
-                  }}
-                >
-                  <PersonPinIcon /> Đăng Nhập
-                </Button>
-              </Link>
+                      <Tooltip title="Đăng nhập">
+                        <AccountCircle fontSize="large" />
+                      </Tooltip>
+                      <SpanHeader>Đăng nhập</SpanHeader>
+                    </SigninAndSignup>
+                  </Box>
 
-              <Link to="/sign-up">
-                <Button
-                  sx={{
-                    color: "white",
-                    "&:hover": {
-                      boxShadow: "0px 20px 30px -10px rgb(38, 57, 77)",
-                      fontSize: "15px",
-                      color: "#ff9f1a",
-                    },
-                  }}
-                >
-                  <PersonPinIcon />
-                  Đăng Kí
-                </Button>
-              </Link>
-            </Box>
-          )}
-        </Toolbar>
-      </Container>
-    </AppBar>
+                  {/* Signup */}
+                  <Box sx={{ flexGrow: 0 }}>
+                    <SigninAndSignup onClick={() => navigate(`/sign-up`)}>
+                      <Tooltip title="Đăng kí">
+                        <AccountCircle fontSize="large" />
+                      </Tooltip>
+                      <SpanHeader>Đăng kí</SpanHeader>
+                    </SigninAndSignup>
+                  </Box>
+                </>
+              )}
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </ElevationScroll>
+    </>
   );
 }
