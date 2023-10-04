@@ -32,11 +32,7 @@ function App() {
 
           {/* admin */}
           {/* <Route element={<AdminProtectedRoute />} > */}
-          <Route path="/admin" element={<AdminLayout />}>
-            {/* <Route path="movies" element={<AdminLayout />} /> */}
-            {/* <Route path="users" element={<AdminUser />} />
-          <Route path="tikets" element={<AdminTicker />} /> */}
-          </Route>
+          <Route path="/admin" element={<AdminLayout />}></Route>
           {/* </Route> */}
 
           <Route path="*" element={<NotFound />} />
