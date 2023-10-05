@@ -19,8 +19,11 @@ import ListItemText from "@mui/material/ListItemText";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import User from "./User/User";
-import Movie from "./Movie/Movie";
+import Collapse from "@mui/material/Collapse";
+import User from "./User";
+import Movie from "./Movie";
+import { Link, Outlet } from "react-router-dom";
+import AdminStyle from "./AdminStyle.module.css";
 
 const drawerWidth = 240;
 
@@ -89,13 +92,33 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function MiniDrawer() {
+export default function AdminLayout() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
-  const [menuData, setMenuData] = useState("User");
+  const [menuData, setMenuData] = useState({
+    selectedMenu: "User",
+    userMenuOpen: false,
+    movieMenuOpen: false,
+  });
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleUserClick = () => {
+    setMenuData((prevState) => ({
+      ...prevState,
+      selectedMenu: "User",
+      userMenuOpen: !prevState.userMenuOpen,
+    }));
+  };
+
+  const handleMovieClick = () => {
+    setMenuData((prevState) => ({
+      ...prevState,
+      selectedMenu: "Movie",
+      movieMenuOpen: !prevState.movieMenuOpen,
+    }));
   };
 
   return (
@@ -105,7 +128,7 @@ export default function MiniDrawer() {
         <AppBar
           position="fixed"
           elevation={5}
-          sx={{ backgroundColor: "#ffb8b8", color: "white" }}
+          sx={{ backgroundColor: "#130f40" }}
         >
           <Toolbar>
             <IconButton
@@ -118,7 +141,7 @@ export default function MiniDrawer() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h5" noWrap component="div" color={"#3d3d3d"}>
+            <Typography variant="h5" noWrap component="div" color={"white"}>
               QUẢN TRỊ HỆ THỐNG
             </Typography>
           </Toolbar>
@@ -134,18 +157,17 @@ export default function MiniDrawer() {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List sx={{ backgroundColor: "#ffb8b8", height: "100%" }}>
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => setMenuData("User")}
-            >
+          <List
+            sx={{ backgroundColor: "#130f40", height: "100%", color: "white" }}
+          >
+            <ListItem disablePadding>
               <ListItemButton
                 sx={{
                   minHeight: 60,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                onClick={handleUserClick}
               >
                 <ListItemIcon
                   sx={{
@@ -158,6 +180,7 @@ export default function MiniDrawer() {
                     sx={{
                       fontSize: open ? "40px" : "50px",
                       marginLeft: open ? "20px" : "12px",
+                      color: "#ffb8b8",
                     }}
                   />
                 </ListItemIcon>
@@ -167,18 +190,31 @@ export default function MiniDrawer() {
                 />
               </ListItemButton>
             </ListItem>
+            <Collapse in={menuData.userMenuOpen}>
+              <List>
+                <ListItemButton sx={{ minHeight: 60 }}>
+                  <ChevronRightIcon />
+                  <Link to="/admin/adduser" className={AdminStyle.link}>
+                    <ListItemText primary="Thêm User" />
+                  </Link>
+                </ListItemButton>
+                <ListItemButton sx={{ minHeight: 60 }}>
+                  <ChevronRightIcon />
+                  <Link to="/admin/usermanagement" className={AdminStyle.link}>
+                    <ListItemText primary=" Quản Lý User" />
+                  </Link>
+                </ListItemButton>
+              </List>
+            </Collapse>
 
-            <ListItem
-              disablePadding
-              sx={{ display: "block" }}
-              onClick={() => setMenuData("Movie")}
-            >
+            <ListItem disablePadding>
               <ListItemButton
                 sx={{
                   minHeight: 60,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
+                onClick={handleMovieClick}
               >
                 <ListItemIcon
                   sx={{
@@ -191,6 +227,7 @@ export default function MiniDrawer() {
                     sx={{
                       fontSize: open ? "40px" : "50px",
                       marginLeft: open ? "20px" : "12px",
+                      color: "#ffb8b8",
                     }}
                   />
                 </ListItemIcon>
@@ -200,12 +237,29 @@ export default function MiniDrawer() {
                 />
               </ListItemButton>
             </ListItem>
+            <Collapse in={menuData.movieMenuOpen}>
+              <List>
+                <ListItemButton sx={{ minHeight: 60 }}>
+                  <ChevronRightIcon />
+                  <Link to="/admin/addmovie" className={AdminStyle.link}>
+                    <ListItemText primary="Thêm Phim" />
+                  </Link>
+                </ListItemButton>
+                <ListItemButton sx={{ minHeight: 60 }}>
+                  <ChevronRightIcon />
+                  <Link to="/admin/moviemanagement" className={AdminStyle.link}>
+                    <ListItemText primary=" Quản lí Phim" />
+                  </Link>
+                </ListItemButton>
+              </List>
+            </Collapse>
           </List>
           <Divider />
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          {menuData === "User" && <User />}
-          {menuData === "Movie" && <Movie />}
+          {menuData.selectedMenu === "User" && <User />}
+          {menuData.selectedMenu === "Movie" && <Movie />}
+          <Outlet />
         </Box>
       </Box>
     </>

@@ -11,6 +11,10 @@ import ProtectedRoute from "./routers/ProtectedRoute";
 import AdminLayout from "./modules/AdminLayout";
 import "./indexx.css";
 import TicketMovie from "./modules/TicketMovie/TicketMovie";
+import AddMovie from "./modules/AdminLayout/Movie/AddMovie";
+import MovieManagement from "./modules/AdminLayout/Movie/MovieManagement";
+import AddUser from "./modules/AdminLayout/User/AddUser";
+import UserManagement from "./modules/AdminLayout/User/UserManagement";
 
 function App() {
   return (
@@ -32,7 +36,12 @@ function App() {
 
           {/* admin */}
           {/* <Route element={<AdminProtectedRoute />} > */}
-          <Route path="/admin" element={<AdminLayout />}></Route>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="addmovie" element={<AddMovie />} />
+            <Route path="moviemanagement" element={<MovieManagement />} />
+            <Route path="adduser" element={<AddUser />} />
+            <Route path="usermanagement" element={<UserManagement />} />
+          </Route>
           {/* </Route> */}
 
           <Route path="*" element={<NotFound />} />

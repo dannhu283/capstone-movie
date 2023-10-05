@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import React, { useState } from "react";
-import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import { AccountCircle, ExitToApp } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { SigninAndSignup, SpanHeader } from "./index";
@@ -134,28 +133,7 @@ export default function Header(props) {
                   ))}
                 </Menu>
               </Box>
-              <MovieFilterIcon
-                sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-                color="error"
-              />
-              <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href="/"
-                sx={{
-                  mr: 2,
-                  display: { xs: "flex", md: "none" },
-                  flexGrow: 1,
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "#d32f2f",
-                  textDecoration: "none",
-                }}
-              >
-                Movie
-              </Typography>
+
               <Box
                 sx={{
                   flexGrow: 1,

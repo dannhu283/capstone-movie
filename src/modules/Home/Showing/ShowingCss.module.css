@@ -4,7 +4,7 @@
 }
 .title {
   height: 7vh;
-  color: #ff9f1a;
+  color: #ff3838;
   font-weight: bold;
 }
 .desc {
@@ -18,17 +18,19 @@
   position: relative;
 }
 .overlay {
+  background-color: rgba(0, 0, 0, 0.203);
   position: absolute;
   inset: 0;
 }
 .playButton {
   font-size: 70px !important;
   position: absolute;
-  top: 25%;
+  top: 30%;
   left: 35%;
   opacity: 0;
   transition: opacity 0.5s ease;
   cursor: pointer;
+  color: white;
 }
 
 .imageContainer:hover .playButton {

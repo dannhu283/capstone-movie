@@ -14,8 +14,9 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CloseIcon from "@mui/icons-material/Close";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Typography from "@mui/material/Typography";
-
 import ShowingCss from "./ShowingCss.module.css";
 import SearchFilm from "../SearchFilm/SearchFilm";
 import { ButtonMain } from "../../../Components/ButtonMain";
@@ -54,12 +55,36 @@ export default function Showing() {
 
   var settings = {
     dots: true,
-    infinite: false,
+    infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 4,
     initialSlide: 0,
     rows: 2,
+    nextArrow: (
+      <ChevronRightIcon
+        sx={{
+          color: "#3d3d3d",
+          fontSize: "80px",
+          right: "-8%",
+          "&:hover": {
+            color: "#3ae374",
+          },
+        }}
+      />
+    ),
+    prevArrow: (
+      <ChevronLeftIcon
+        sx={{
+          color: "#3d3d3d",
+          fontSize: "80px",
+          left: "-8%",
+          "&:hover": {
+            color: "#3ae374",
+          },
+        }}
+      />
+    ),
     responsive: [
       {
         breakpoint: 1024,
@@ -98,7 +123,12 @@ export default function Showing() {
       <Slider {...settings}>
         {data.map((movie) => (
           <Grid className={ShowingCss.item}>
-            <Grid item sx={{ margin: "10px" }}>
+            <Grid
+              item
+              sx={{ margin: "10px" }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <Card key={movie.maPhim}>
                 <div
                   className={ShowingCss.imageContainer}
@@ -107,16 +137,15 @@ export default function Showing() {
                   onClick={() => handleOpenModal(movie.maPhim)}
                 >
                   <CardMedia sx={{ height: 280 }} image={movie.hinhAnh} />
-                  {isButtonVisible && (
-                    <div className={ShowingCss.overlay}>
+                  <div className={ShowingCss.overlay}>
+                    {isButtonVisible && (
                       <PlayCircleOutlineIcon
                         variant="contained"
-                        color="warning"
                         className={ShowingCss.playButton}
                         onClick={handleOpenModal}
                       />
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
                 <CardContent>
                   <Typography
@@ -134,6 +163,7 @@ export default function Showing() {
                 </CardContent>
                 <CardActions>
                   <ButtonMain
+                    style={{ width: "100%" }}
                     className={ShowingCss.buttonBuy}
                     onClick={() => navigate(`/movies/${movie.maPhim}`)}
                   >

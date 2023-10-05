@@ -5,7 +5,7 @@ export default function Movie() {
   return (
     <>
       <Box height={100} />
-      <div>Movie</div>
+      Movie
     </>
   );
 }
