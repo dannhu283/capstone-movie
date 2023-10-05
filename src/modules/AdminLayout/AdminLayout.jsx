@@ -20,8 +20,6 @@ import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Collapse from "@mui/material/Collapse";
-import User from "./User";
-import Movie from "./Movie";
 import { Link, Outlet } from "react-router-dom";
 import AdminStyle from "./AdminStyle.module.css";
 
@@ -257,8 +255,6 @@ export default function AdminLayout() {
           <Divider />
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          {menuData.selectedMenu === "User" && <User />}
-          {menuData.selectedMenu === "Movie" && <Movie />}
           <Outlet />
         </Box>
       </Box>

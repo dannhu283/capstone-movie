@@ -11,13 +11,12 @@ import {
   Tooltip,
   Typography,
   useScrollTrigger,
-  Link,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import React, { useState } from "react";
 import { AccountCircle, ExitToApp } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { SigninAndSignup, SpanHeader } from "./index";
+import { SigninAndSignup } from "./index";
 import { useUserContext } from "../../context/UserContext/UserContext";
 import PropTypes from "prop-types";
 function ElevationScroll(props) {
@@ -86,13 +85,13 @@ export default function Header(props) {
         <AppBar sx={{ backgroundColor: "#2f2e2c" }}>
           <Container maxWidth="xl">
             <Toolbar disableGutters>
-              <Link to="/" sx={{ cursor: "pointer" }}>
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
-                  width={150}
-                  alt=""
-                />
-              </Link>
+              <img
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/")}
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUspkDZ2CKVG0awSKJKPTwzQIGH1yAIr_WVb90Lm_Y2a-sq9O-6B1dFRR_ImOkQ4YJNzs&usqp=CAU"
+                width={150}
+                alt=""
+              />
 
               <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                 <IconButton
@@ -235,7 +234,7 @@ export default function Header(props) {
                       <Tooltip title="Đăng nhập">
                         <AccountCircle fontSize="large" />
                       </Tooltip>
-                      <SpanHeader>Đăng nhập</SpanHeader>
+                      <Typography>Đăng nhập</Typography>
                     </SigninAndSignup>
                   </Box>
 
@@ -245,7 +244,7 @@ export default function Header(props) {
                       <Tooltip title="Đăng kí">
                         <AccountCircle fontSize="large" />
                       </Tooltip>
-                      <SpanHeader>Đăng kí</SpanHeader>
+                      <Typography>Đăng kí</Typography>
                     </SigninAndSignup>
                   </Box>
                 </>

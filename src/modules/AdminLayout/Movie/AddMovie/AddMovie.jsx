@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { addMovie } from "../../../../APIs/movieAPI";
-import { useEffect } from "react";
-import { useState } from "react";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 export default function AddMovie() {
   const { register, handleSubmit, watch } = useForm({
@@ -52,40 +58,78 @@ export default function AddMovie() {
       // Sử dụng queryClient.invalidateQueries để gọi lại API get danh sách phim
     },
   });
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <input type="text" placeholder="Tên phim" {...register("tenPhim")} />
-      </div>
-      <div>
-        <input type="text" placeholder="Bí danh" {...register("biDanh")} />
-      </div>
-      <div>
-        <input type="text" placeholder="Mô tả" {...register("moTa")} />
-      </div>
-      <div>
-        <input type="file" placeholder="Hình ảnh" {...register("hinhAnh")} />
-        {imgPreview && (
-          <div>
-            <img src={imgPreview} alt="preview" width={200} height={200} />
-          </div>
-        )}
-      </div>
-      <div>
-        <input type="text" placeholder="Trailer" {...register("trailer")} />
-      </div>
-      <div>
-        <input
-          type="date"
-          placeholder="Ngày khởi chiếu"
-          {...register("ngayKhoiChieu", {
-            setValueAs: (values) => {
-              return dayjs(values).format("DD/MM/YYYY");
-            },
-          })}
-        />
-      </div>
-      <button type="submit">Thêm Phim</button>
-    </form>
+    <Container>
+      <Box mt={7}>
+        <Typography variant="h4" gutterBottom>
+          Add Movie
+        </Typography>
+      </Box>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Tên phim"
+              {...register("tenPhim")}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Bí danh"
+              {...register("biDanh")}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Mô tả"
+              {...register("moTa")}
+              multiline
+              rows={4}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <input type="file" {...register("hinhAnh")} />
+            {imgPreview && (
+              <div>
+                <img src={imgPreview} alt="preview" width={200} height={200} />
+              </div>
+            )}
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Trailer"
+              {...register("trailer")}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Ngày khởi chiếu"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              {...register("ngayKhoiChieu", {
+                setValueAs: (values) => {
+                  return dayjs(values).format("YYYY-MM-DD");
+                },
+              })}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit">
+              Thêm Phim
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+    </Container>
   );
 }

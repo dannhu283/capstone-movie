@@ -19,7 +19,3 @@ export const SigninAndSignup = styled.button`
     box-shadow: 0px 20px 30px -10px rgb(38, 57, 77);
   }
 `;
-
-export const SpanHeader = styled.span`
-  margin-left: 5px;
-`;

@@ -1,5 +1,11 @@
 import React from "react";
+import { Box } from "@mui/material";
 
 export default function AddUser() {
-  return <div>AddUser</div>;
+  return (
+    <>
+      <Box height={100} />
+      <div>AddUser</div>
+    </>
+  );
 }

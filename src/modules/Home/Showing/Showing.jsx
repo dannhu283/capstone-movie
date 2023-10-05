@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import ShowingCss from "./ShowingCss.module.css";
 import SearchFilm from "../SearchFilm/SearchFilm";
 import { ButtonMain } from "../../../Components/ButtonMain";
+import { CustomDot } from "./index";
 
 export default function Showing() {
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,6 +56,9 @@ export default function Showing() {
 
   var settings = {
     dots: true,
+    customPaging: function () {
+      return <CustomDot></CustomDot>;
+    },
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -114,10 +118,16 @@ export default function Showing() {
       },
     ],
   };
+
   return (
     <Container
       id="showing"
-      style={{ position: "relative", padding: "0", marginTop: "60px" }}
+      sx={{
+        position: "relative",
+        padding: "0",
+        marginTop: "60px",
+        boxShadow: "rgba(0, 0, 0, 0.45) 0px 25px 20px -20px",
+      }}
     >
       <SearchFilm movies={data} />
       <Slider {...settings}>
