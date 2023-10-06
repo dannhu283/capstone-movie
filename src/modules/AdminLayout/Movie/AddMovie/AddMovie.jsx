@@ -1,19 +1,97 @@
 import React, { useEffect, useState } from "react";
+import { styled } from "@mui/material/styles";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { addMovie } from "../../../../APIs/movieAPI";
 import {
   Box,
-  Button,
   Container,
   Grid,
   TextField,
   Typography,
+  FormControlLabel,
+  Rating,
 } from "@mui/material";
+import Switch from "@mui/material/Switch";
+import { ButtonMain } from "../../../../Components/ButtonMain";
+import { object, string } from "yup";
+
+//MUI switch
+const IOSSwitch = styled((props) => (
+  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+))(({ theme }) => ({
+  width: 42,
+  height: 26,
+  padding: 0,
+  "& .MuiSwitch-switchBase": {
+    padding: 0,
+    margin: 2,
+    transitionDuration: "300ms",
+    "&.Mui-checked": {
+      transform: "translateX(16px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
+        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
+        opacity: 1,
+        border: 0,
+      },
+      "&.Mui-disabled + .MuiSwitch-track": {
+        opacity: 0.5,
+      },
+    },
+    "&.Mui-focusVisible .MuiSwitch-thumb": {
+      color: "#33cf4d",
+      border: "6px solid #fff",
+    },
+    "&.Mui-disabled .MuiSwitch-thumb": {
+      color:
+        theme.palette.mode === "light"
+          ? theme.palette.grey[100]
+          : theme.palette.grey[600],
+    },
+    "&.Mui-disabled + .MuiSwitch-track": {
+      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxSizing: "border-box",
+    width: 22,
+    height: 22,
+  },
+  "& .MuiSwitch-track": {
+    borderRadius: 26 / 2,
+    backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
+    opacity: 1,
+    transition: theme.transitions.create(["background-color"], {
+      duration: 500,
+    }),
+  },
+}));
 
 export default function AddMovie() {
-  const { register, handleSubmit, watch } = useForm({
+  const [isHot, setIsHot] = useState(false);
+  const [isNowShowing, setIsNowShowing] = useState(false);
+  const [isComingSoon, setIsComingSoon] = useState(false);
+  const [rating, setRating] = useState(2);
+
+  const addmovieShema = object({
+    tenPhim: string().required("Tên phim không được để trống"),
+    biDanh: string().required("Bí danh không được để trống"),
+    moTa: string().required(
+      "Mô tả phim để khán giả có thể dễ dàng nắm bắt được nội dung"
+    ),
+    trailer: string().required("Vui lòng cung cấp trailer của phim"),
+    ngayKhoiChieu: string().required("Vui lòng chọn ngày"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       tenPhim: "",
       biDanh: "",
@@ -22,9 +100,12 @@ export default function AddMovie() {
       trailer: "",
       ngayKhoiChieu: "",
     },
+    resolver: yupResolver(addmovieShema),
+    mode: "onTouched",
   });
 
   const hinhAnh = watch("hinhAnh");
+
   const [imgPreview, setImgPreview] = useState("");
   useEffect(() => {
     // Chạy vào useEffect callback khi giá trị của hinhAnh bị thay đổi
@@ -50,6 +131,10 @@ export default function AddMovie() {
       formData.append("trailer", values.trailer);
       formData.append("ngayKhoiChieu", values.ngayKhoiChieu);
       formData.append("maNhom", "GP01");
+      formData.append("hot", isHot);
+      formData.append("dangChieu", isNowShowing);
+      formData.append("sapChieu", isComingSoon);
+      formData.append("danhGia", rating);
 
       return addMovie(formData);
     },
@@ -63,37 +148,118 @@ export default function AddMovie() {
     <Container>
       <Box mt={7}>
         <Typography variant="h4" gutterBottom>
-          Add Movie
+          🎬🎬 Add Movie
         </Typography>
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
+          {/* ten */}
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Tên phim"
-              {...register("tenPhim")}
               variant="outlined"
+              color="success"
+              {...register("tenPhim")}
+              error={!!errors.tenPhim}
+              helperText={errors.tenPhim && errors.tenPhim.message}
             />
           </Grid>
+          {/* bidanh */}
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Bí danh"
+              color="success"
               {...register("biDanh")}
               variant="outlined"
+              error={!!errors.biDanh}
+              helperText={errors.biDanh && errors.biDanh.message}
             />
           </Grid>
+          {/* trailer */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Trailer"
+              variant="outlined"
+              color="success"
+              {...register("trailer")}
+              error={!!errors.trailer}
+              helperText={errors.trailer && errors.trailer.message}
+            />
+          </Grid>
+          {/* ngaykhoichieu */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Ngày khởi chiếu"
+              color="success"
+              variant="outlined"
+              type="date"
+              InputLabelProps={{ shrink: true }}
+              {...register("ngayKhoiChieu", {
+                setValueAs: (values) => {
+                  return dayjs(values).format("DD-MM-yyyy");
+                },
+              })}
+              error={!!errors.ngayKhoiChieu}
+              helperText={errors.ngayKhoiChieu && errors.ngayKhoiChieu.message}
+            />
+          </Grid>
+          {/* mota */}
           <Grid item xs={12}>
             <TextField
               fullWidth
               label="Mô tả"
+              variant="outlined"
+              color="success"
               {...register("moTa")}
               multiline
-              rows={4}
-              variant="outlined"
+              error={!!errors.moTa}
+              helperText={errors.moTa && errors.moTa.message}
             />
           </Grid>
+          {/* hot */}
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  sx={{ m: 1 }}
+                  onChange={() => setIsHot(!isHot)}
+                  checked={isHot}
+                />
+              }
+              label="Hot"
+            />
+          </Grid>
+          {/* đang chiếu */}
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  sx={{ m: 1 }}
+                  onChange={() => setIsNowShowing(!isNowShowing)}
+                  checked={isNowShowing}
+                />
+              }
+              label="Đang chiếu"
+            />
+          </Grid>
+          {/* Sắp chiếu */}
+          <Grid item xs={4}>
+            <FormControlLabel
+              control={
+                <IOSSwitch
+                  sx={{ m: 1 }}
+                  onChange={() => setIsComingSoon(!isComingSoon)}
+                  checked={isComingSoon}
+                />
+              }
+              label="Sắp chiếu"
+            />
+          </Grid>
+          {/* hinhanh */}
           <Grid item xs={12}>
             <input type="file" {...register("hinhAnh")} />
             {imgPreview && (
@@ -102,31 +268,23 @@ export default function AddMovie() {
               </div>
             )}
           </Grid>
+          {/* rating */}
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Trailer"
-              {...register("trailer")}
-              variant="outlined"
+            <Typography component="legend">Đánh Giá</Typography>
+            <Rating
+              name="customized-10"
+              defaultValue={2}
+              value={rating}
+              max={10}
+              onChange={(evt, value) => {
+                setRating(value);
+              }}
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Ngày khởi chiếu"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              {...register("ngayKhoiChieu", {
-                setValueAs: (values) => {
-                  return dayjs(values).format("YYYY-MM-DD");
-                },
-              })}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" color="primary" type="submit">
+            <ButtonMain variant="contained" color="primary" type="submit">
               Thêm Phim
-            </Button>
+            </ButtonMain>
           </Grid>
         </Grid>
       </form>
