@@ -130,7 +130,7 @@ export default function AddMovie() {
       formData.append("hinhAnh", values.hinhAnh[0]);
       formData.append("trailer", values.trailer);
       formData.append("ngayKhoiChieu", values.ngayKhoiChieu);
-      formData.append("maNhom", "GP01");
+      formData.append("maNhom", "GP09");
       formData.append("hot", isHot);
       formData.append("dangChieu", isNowShowing);
       formData.append("sapChieu", isComingSoon);
@@ -199,7 +199,7 @@ export default function AddMovie() {
               InputLabelProps={{ shrink: true }}
               {...register("ngayKhoiChieu", {
                 setValueAs: (values) => {
-                  return dayjs(values).format("DD-MM-yyyy");
+                  return dayjs(values).format("DD/MM/YYYY");
                 },
               })}
               error={!!errors.ngayKhoiChieu}
