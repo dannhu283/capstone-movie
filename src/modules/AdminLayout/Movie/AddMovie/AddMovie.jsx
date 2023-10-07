@@ -196,7 +196,6 @@ export default function AddMovie() {
               label="Ngày khởi chiếu"
               color="success"
               variant="outlined"
-              type="date"
               InputLabelProps={{ shrink: true }}
               {...register("ngayKhoiChieu", {
                 setValueAs: (values) => {
