@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
@@ -21,6 +20,7 @@ import TableHead from "@mui/material/TableHead";
 import { StyledTableCell, StyledTableRow } from "./styledTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import Loading from "../../../../Components/Loading";
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -132,6 +132,10 @@ export default function UserManagement() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>

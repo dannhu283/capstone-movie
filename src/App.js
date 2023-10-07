@@ -15,6 +15,7 @@ import AddMovie from "./modules/AdminLayout/Movie/AddMovie";
 import MovieManagement from "./modules/AdminLayout/Movie/MovieManagement";
 import AddUser from "./modules/AdminLayout/User/AddUser";
 import UserManagement from "./modules/AdminLayout/User/UserManagement";
+import CreateShowtimes from "./modules/AdminLayout/Movie/CreateShowtimes";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="addmovie" element={<AddMovie />} />
             <Route path="moviemanagement" element={<MovieManagement />} />
+            <Route path="showtime/:movieId" element={<CreateShowtimes />} />
             <Route path="adduser" element={<AddUser />} />
             <Route path="usermanagement" element={<UserManagement />} />
           </Route>
