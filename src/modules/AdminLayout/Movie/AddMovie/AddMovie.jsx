@@ -85,7 +85,7 @@ export default function AddMovie() {
       "Mô tả phim để khán giả có thể dễ dàng nắm bắt được nội dung"
     ),
     trailer: string().required("Vui lòng cung cấp trailer của phim"),
-    ngayKhoiChieu: string().required("Vui lòng chọn ngày"),
+    ngayKhoiChieu: string().required("Vui lòng chọn ngày "),
   });
 
   const {
@@ -298,12 +298,13 @@ export default function AddMovie() {
               src="/img/animation_lnfs5c14_small.gif"
               alt="confirm"
             />
-            <Typography variant="h5" fontWeight={"bold"}>
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", marginBottom: "40px" }}
+            >
               Thêm phim thành công
             </Typography>
-            <Typography sx={{ fontSize: "17px", margin: "15px" }}>
-              Kiểm tra trong lịch sử đặt vé
-            </Typography>
+
             <ButtonMain
               variant="contained"
               color="primary"
