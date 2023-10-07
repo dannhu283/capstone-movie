@@ -17,6 +17,7 @@ import {
 import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../Components/ButtonMain";
 import { object, string } from "yup";
+import { ModalSuccess, ModalContent } from "./index";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
@@ -75,6 +76,7 @@ export default function AddMovie() {
   const [isNowShowing, setIsNowShowing] = useState(false);
   const [isComingSoon, setIsComingSoon] = useState(false);
   const [rating, setRating] = useState(2);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const addmovieShema = object({
     tenPhim: string().required("Tên phim không được để trống"),
@@ -141,6 +143,7 @@ export default function AddMovie() {
     onSuccess: () => {
       // Đóng modal hoặc chuyển trang
       // Sử dụng queryClient.invalidateQueries để gọi lại API get danh sách phim
+      setShowSuccessModal(true);
     },
   });
 
@@ -287,6 +290,30 @@ export default function AddMovie() {
           </Grid>
         </Grid>
       </form>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnfs5c14_small.gif"
+              alt="confirm"
+            />
+            <Typography variant="h5" fontWeight={"bold"}>
+              Thêm phim thành công
+            </Typography>
+            <Typography sx={{ fontSize: "17px", margin: "15px" }}>
+              Kiểm tra trong lịch sử đặt vé
+            </Typography>
+            <ButtonMain
+              variant="contained"
+              color="primary"
+              onClick={() => setShowSuccessModal(false)}
+            >
+              Đồng ý
+            </ButtonMain>
+          </ModalContent>
+        </ModalSuccess>
+      )}
     </Container>
   );
 }

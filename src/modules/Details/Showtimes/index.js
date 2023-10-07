@@ -8,7 +8,7 @@ export const ShowTime = styled.div`
   background-color: white;
   min-height: 30vh;
   width: 80%;
-  margin: 5%;
+  margin: 5% 0 0 5%;
 `;
 
 export const DivNote = styled.div`
