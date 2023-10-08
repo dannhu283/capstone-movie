@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { getMovies } from "../../../../APIs/movieAPI";
+import { deleteMovie, getMovies } from "../../../../APIs/movieAPI";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -24,6 +24,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Loading from "../../../../Components/Loading";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import { Tooltip } from "@mui/joy";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -115,6 +117,7 @@ const rows = [
 ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
 export default function UserManagement() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const [page, setPage] = useState(0);
@@ -124,7 +127,6 @@ export default function UserManagement() {
     queryKey: ["movie"],
     queryFn: getMovies,
   });
-  console.log(movies);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -137,6 +139,11 @@ export default function UserManagement() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleDeleteMovie = async (movieId) => {
+    await deleteMovie(movieId);
+    queryClient.invalidateQueries("movie");
   };
 
   if (isLoading) {
@@ -190,21 +197,37 @@ export default function UserManagement() {
                 <StyledTableCell>{movie.moTa}</StyledTableCell>
                 <StyledTableCell>
                   <Box sx={{ display: "flex" }}>
-                    <IconButton aria-label="update" size="large">
-                      <EditIcon fontSize="inherit" color="primary" />
-                    </IconButton>
-                    <IconButton aria-label="delete" size="large">
-                      <DeleteIcon fontSize="inherit" color="error" />
-                    </IconButton>
-                    <IconButton
-                      aria-label="setup"
-                      size="large"
-                      onClick={() =>
-                        navigate(`/admin/showtime/${movie.maPhim}`)
-                      }
-                    >
-                      <CalendarMonthIcon fontSize="inherit" color="success" />
-                    </IconButton>
+                    <Tooltip title="Cập nhật" placement="top-start">
+                      <IconButton
+                        aria-label="update"
+                        size="large"
+                        onClick={() =>
+                          navigate(`/admin/editmovie/${movie.maPhim}`)
+                        }
+                      >
+                        <EditIcon fontSize="inherit" color="primary" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Xoá" placement="top-start">
+                      <IconButton
+                        aria-label="delete"
+                        size="large"
+                        onClick={() => handleDeleteMovie(movie.maPhim)}
+                      >
+                        <DeleteIcon fontSize="inherit" color="error" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Thêm Lịch" placement="top-start">
+                      <IconButton
+                        aria-label="setup"
+                        size="large"
+                        onClick={() =>
+                          navigate(`/admin/showtime/${movie.maPhim}`)
+                        }
+                      >
+                        <CalendarMonthIcon fontSize="inherit" color="success" />
+                      </IconButton>
+                    </Tooltip>
                   </Box>
                 </StyledTableCell>
               </StyledTableRow>
