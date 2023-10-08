@@ -45,3 +45,16 @@ export async function addMovie(movie) {
     throw error.response.data?.content;
   }
 }
+
+export async function deleteMovie(movieId) {
+  try {
+    const response = await fetcher.delete("/QuanLyPhim/XoaPhim", {
+      params: {
+        MaPhim: movieId,
+      },
+    });
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
