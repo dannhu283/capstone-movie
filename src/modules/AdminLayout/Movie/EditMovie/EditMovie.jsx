@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import dayjs from "dayjs";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { addMovie } from "../../../../APIs/movieAPI";
+import { updateMovie, getMovieDetails } from "../../../../APIs/movieAPI";
 import {
   Box,
   Container,
@@ -17,6 +17,8 @@ import {
 import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../Components/ButtonMain";
 import { object, string } from "yup";
+import Loading from "../../../../Components/Loading";
+import { useParams } from "react-router-dom";
 import { ModalSuccess, ModalContent } from "./index";
 
 //MUI switch
@@ -71,14 +73,22 @@ const IOSSwitch = styled((props) => (
   },
 }));
 
-export default function AddMovie() {
-  const [isHot, setIsHot] = useState(false);
-  const [isNowShowing, setIsNowShowing] = useState(false);
-  const [isComingSoon, setIsComingSoon] = useState(false);
-  const [rating, setRating] = useState(2);
+export default function EditMovie() {
+  const { movieId } = useParams();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const addmovieShema = object({
+  const { data: inforMovie = [], isLoading } = useQuery({
+    queryKey: ["inforMovie", movieId],
+    queryFn: () => getMovieDetails(movieId),
+    enabled: !!movieId,
+  });
+
+  const [isHot, setIsHot] = useState(inforMovie.hot);
+  const [isNowShowing, setIsNowShowing] = useState(inforMovie.dangChieu);
+  const [isComingSoon, setIsComingSoon] = useState(inforMovie.sapChieu);
+  const [rating, setRating] = useState(inforMovie.danhGia);
+
+  const updatemovieShema = object({
     tenPhim: string().required("Tên phim không được để trống"),
     biDanh: string().required("Bí danh không được để trống"),
     moTa: string().required(
@@ -95,19 +105,18 @@ export default function AddMovie() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      tenPhim: "",
-      biDanh: "",
-      moTa: "",
-      hinhAnh: "",
-      trailer: "",
-      ngayKhoiChieu: "",
+      tenPhim: inforMovie?.tenPhim || "",
+      biDanh: inforMovie?.biDanh || "",
+      moTa: inforMovie?.moTa || "",
+      hinhAnh: inforMovie?.hinhAnh || "",
+      trailer: inforMovie?.trailer || "",
+      ngayKhoiChieu: inforMovie?.ngayKhoiChieu || "",
     },
-    resolver: yupResolver(addmovieShema),
+    resolver: yupResolver(updatemovieShema),
     mode: "onTouched",
   });
 
   const hinhAnh = watch("hinhAnh");
-
   const [imgPreview, setImgPreview] = useState("");
   useEffect(() => {
     // Chạy vào useEffect callback khi giá trị của hinhAnh bị thay đổi
@@ -138,20 +147,20 @@ export default function AddMovie() {
       formData.append("sapChieu", isComingSoon);
       formData.append("danhGia", rating);
 
-      return addMovie(formData);
+      return updateMovie(formData);
     },
-    onSuccess: () => {
-      // Đóng modal hoặc chuyển trang
-      // Sử dụng queryClient.invalidateQueries để gọi lại API get danh sách phim
-      setShowSuccessModal(true);
-    },
+    onSuccess: () => {},
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
       <Box mt={7}>
         <Typography variant="h4" gutterBottom>
-          🎬🎬Thêm Phim
+          📒📒 Cập Nhật Phim
         </Typography>
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -285,7 +294,7 @@ export default function AddMovie() {
           </Grid>
           <Grid item xs={12}>
             <ButtonMain variant="contained" color="primary" type="submit">
-              Thêm Phim
+              Cập Nhật
             </ButtonMain>
           </Grid>
         </Grid>

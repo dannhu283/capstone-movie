@@ -25,6 +25,7 @@ import Loading from "../../../../Components/Loading";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { Tooltip } from "@mui/joy";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -196,25 +197,37 @@ export default function UserManagement() {
                 <StyledTableCell>{movie.moTa}</StyledTableCell>
                 <StyledTableCell>
                   <Box sx={{ display: "flex" }}>
-                    <IconButton aria-label="update" size="large">
-                      <EditIcon fontSize="inherit" color="primary" />
-                    </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      size="large"
-                      onClick={() => handleDeleteMovie(movie.maPhim)}
-                    >
-                      <DeleteIcon fontSize="inherit" color="error" />
-                    </IconButton>
-                    <IconButton
-                      aria-label="setup"
-                      size="large"
-                      onClick={() =>
-                        navigate(`/admin/showtime/${movie.maPhim}`)
-                      }
-                    >
-                      <CalendarMonthIcon fontSize="inherit" color="success" />
-                    </IconButton>
+                    <Tooltip title="Cập nhật" placement="top-start">
+                      <IconButton
+                        aria-label="update"
+                        size="large"
+                        onClick={() =>
+                          navigate(`/admin/editmovie/${movie.maPhim}`)
+                        }
+                      >
+                        <EditIcon fontSize="inherit" color="primary" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Xoá" placement="top-start">
+                      <IconButton
+                        aria-label="delete"
+                        size="large"
+                        onClick={() => handleDeleteMovie(movie.maPhim)}
+                      >
+                        <DeleteIcon fontSize="inherit" color="error" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Thêm Lịch" placement="top-start">
+                      <IconButton
+                        aria-label="setup"
+                        size="large"
+                        onClick={() =>
+                          navigate(`/admin/showtime/${movie.maPhim}`)
+                        }
+                      >
+                        <CalendarMonthIcon fontSize="inherit" color="success" />
+                      </IconButton>
+                    </Tooltip>
                   </Box>
                 </StyledTableCell>
               </StyledTableRow>

@@ -58,3 +58,16 @@ export async function deleteMovie(movieId) {
     throw error.response.data.content;
   }
 }
+
+export async function updateMovie(movieId) {
+  try {
+    const response = await fetcher.post("/QuanLyPhim/CapNhatPhimUpLoad", {
+      params: {
+        MaPhim: movieId,
+      },
+    });
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
