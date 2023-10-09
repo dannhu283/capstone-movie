@@ -16,7 +16,7 @@ import {
   ListItem,
   Box,
   Divider,
-  ListSubheader,
+  Button,
   ListItemButton,
 } from "@mui/material";
 
@@ -63,7 +63,7 @@ export default function Footer() {
         <Divider sx={{ my: 2 }} />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>Giới Thiệu</ListSubheader>
+            <Typography sx={{ color: "#ff9f1a" }}>Giới Thiệu</Typography>
             <List>
               <ListItem>
                 <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
@@ -84,9 +84,7 @@ export default function Footer() {
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>
-              Góc Điện Ảnh
-            </ListSubheader>
+            <Typography sx={{ color: "#ff9f1a" }}>Góc Điện Ảnh</Typography>
             <List>
               <ListItem>
                 <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
@@ -107,7 +105,7 @@ export default function Footer() {
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>Hỗ Trợ</ListSubheader>
+            <Typography sx={{ color: "#ff9f1a" }}>Hỗ Trợ</Typography>
             <List>
               <ListItem>
                 <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
@@ -128,9 +126,9 @@ export default function Footer() {
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>
+            <Typography sx={{ color: "#ff9f1a" }}>
               Liên hệ với chúng tôi
-            </ListSubheader>
+            </Typography>
             <List
               size="sm"
               orientation="horizontal"
@@ -139,24 +137,24 @@ export default function Footer() {
             >
               <ListItem>
                 <List sx={{ "--ListItemDecorator-size": "32px" }}>
-                  <ListItem>
+                  <Button sx={{ color: "white" }}>
                     <ListItemButton>
                       <FacebookIcon sx={{ m: "10px", fontSize: "25px" }} />
                       FaceBook
                     </ListItemButton>
-                  </ListItem>
-                  <ListItem>
+                  </Button>
+                  <Button sx={{ color: "white" }}>
                     <ListItemButton>
                       <GitHubIcon sx={{ m: "10px", fontSize: "25px" }} />
                       Github
                     </ListItemButton>
-                  </ListItem>
-                  <ListItem>
+                  </Button>
+                  <Button sx={{ color: "white" }}>
                     <ListItemButton>
                       <YouTubeIcon sx={{ m: "10px", fontSize: "25px" }} />
                       Youtube
                     </ListItemButton>
-                  </ListItem>
+                  </Button>
                 </List>
               </ListItem>
             </List>

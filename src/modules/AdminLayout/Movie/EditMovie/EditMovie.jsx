@@ -117,11 +117,12 @@ export default function EditMovie() {
   });
 
   const hinhAnh = watch("hinhAnh");
+
   const [imgPreview, setImgPreview] = useState("");
   useEffect(() => {
     // Chạy vào useEffect callback khi giá trị của hinhAnh bị thay đổi
     const file = hinhAnh?.[0];
-    if (!file) {
+    if (!file || !(file instanceof Blob || file instanceof File)) {
       return;
     }
 
