@@ -76,17 +76,16 @@ const IOSSwitch = styled((props) => (
 export default function EditMovie() {
   const { movieId } = useParams();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isHot, setIsHot] = useState(false);
+  const [isNowShowing, setIsNowShowing] = useState(false);
+  const [isComingSoon, setIsComingSoon] = useState(false);
+  const [rating, setRating] = useState(0);
 
   const { data: inforMovie = [], isLoading } = useQuery({
     queryKey: ["inforMovie", movieId],
     queryFn: () => getMovieDetails(movieId),
     enabled: !!movieId,
   });
-
-  const [isHot, setIsHot] = useState(inforMovie.hot);
-  const [isNowShowing, setIsNowShowing] = useState(inforMovie.dangChieu);
-  const [isComingSoon, setIsComingSoon] = useState(inforMovie.sapChieu);
-  const [rating, setRating] = useState(inforMovie.danhGia);
 
   const updatemovieShema = object({
     tenPhim: string().required("Tên phim không được để trống"),
@@ -103,18 +102,36 @@ export default function EditMovie() {
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
-      tenPhim: inforMovie?.tenPhim || "",
-      biDanh: inforMovie?.biDanh || "",
-      moTa: inforMovie?.moTa || "",
-      hinhAnh: inforMovie?.hinhAnh || "",
-      trailer: inforMovie?.trailer || "",
-      ngayKhoiChieu: inforMovie?.ngayKhoiChieu || "",
+      tenPhim: "",
+      biDanh: "",
+      moTa: "",
+      hinhAnh: "",
+      trailer: "",
+      ngayKhoiChieu: "",
+      hot: false,
+      dangChieu: false,
+      sapChieu: false,
+      danhGia: 2,
     },
     resolver: yupResolver(updatemovieShema),
     mode: "onTouched",
   });
+
+  useEffect(() => {
+    setValue("tenPhim", inforMovie?.tenPhim || "");
+    setValue("biDanh", inforMovie?.biDanh || "");
+    setValue("moTa", inforMovie?.moTa || "");
+    setValue("hinhAnh", inforMovie?.hinhAnh || "");
+    setValue("trailer", inforMovie?.trailer || "");
+    setValue("ngayKhoiChieu", inforMovie?.ngayKhoiChieu || "");
+    setIsHot(inforMovie.hot || false);
+    setIsNowShowing(inforMovie.dangChieu || false);
+    setIsComingSoon(inforMovie.sapChieu || false);
+    setRating(inforMovie.danhGia || 2);
+  }, [inforMovie, setValue]);
 
   const hinhAnh = watch("hinhAnh");
 
@@ -285,7 +302,6 @@ export default function EditMovie() {
             <Typography component="legend">Đánh Giá</Typography>
             <Rating
               name="customized-10"
-              defaultValue={2}
               value={rating}
               max={10}
               onChange={(evt, value) => {
