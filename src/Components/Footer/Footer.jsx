@@ -1,22 +1,28 @@
 import * as React from "react";
-import Box from "@mui/joy/Box";
-import IconButton from "@mui/joy/IconButton";
+
 import GitHubIcon from "@mui/icons-material/GitHub";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-import Divider from "@mui/joy/Divider";
-import ListSubheader from "@mui/joy/ListSubheader";
-import ListItemButton from "@mui/joy/ListItemButton";
-import Sheet from "@mui/joy/Sheet";
+import IconButton from "@mui/material/IconButton";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { LiFooter } from "./index";
 import data from "../data.json";
 
-import { Container, Grid, Typography, List, ListItem } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Typography,
+  List,
+  ListItem,
+  Box,
+  Divider,
+  ListSubheader,
+  ListItemButton,
+} from "@mui/material";
 
 export default function Footer() {
   return (
-    <Sheet
+    <Box
       variant="solid"
       invertedColors
       sx={{
@@ -157,6 +163,6 @@ export default function Footer() {
           </Grid>
         </Grid>
       </Container>
-    </Sheet>
+    </Box>
   );
 }

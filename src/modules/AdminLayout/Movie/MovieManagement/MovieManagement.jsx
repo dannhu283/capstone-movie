@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { deleteMovie, getMovies } from "../../../../APIs/movieAPI";
 import PropTypes from "prop-types";
@@ -25,7 +25,6 @@ import Loading from "../../../../Components/Loading";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { Tooltip } from "@mui/joy";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
