@@ -76,10 +76,11 @@ const IOSSwitch = styled((props) => (
 export default function EditMovie() {
   const { movieId } = useParams();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [imgPreview, setImgPreview] = useState("");
   const [isHot, setIsHot] = useState(false);
   const [isNowShowing, setIsNowShowing] = useState(false);
   const [isComingSoon, setIsComingSoon] = useState(false);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(2);
 
   const { data: inforMovie = [], isLoading } = useQuery({
     queryKey: ["inforMovie", movieId],
@@ -121,28 +122,29 @@ export default function EditMovie() {
   });
 
   useEffect(() => {
-    setValue("tenPhim", inforMovie?.tenPhim || "");
-    setValue("biDanh", inforMovie?.biDanh || "");
-    setValue("moTa", inforMovie?.moTa || "");
-    setValue("hinhAnh", inforMovie?.hinhAnh || "");
-    setValue("trailer", inforMovie?.trailer || "");
-    setValue("ngayKhoiChieu", inforMovie?.ngayKhoiChieu || "");
-    setIsHot(inforMovie.hot || false);
-    setIsNowShowing(inforMovie.dangChieu || false);
-    setIsComingSoon(inforMovie.sapChieu || false);
-    setRating(inforMovie.danhGia || 2);
+    if (inforMovie) {
+      setValue("tenPhim", inforMovie.tenPhim);
+      setValue("biDanh", inforMovie.biDanh);
+      setValue("moTa", inforMovie.moTa);
+      setValue("hinhAnh", inforMovie.hinhAnh);
+      setValue("trailer", inforMovie.trailer);
+      setValue("ngayKhoiChieu", inforMovie.ngayKhoiChieu);
+      setIsHot(inforMovie.hot);
+      setIsNowShowing(inforMovie.dangChieu);
+      setIsComingSoon(inforMovie.sapChieu);
+      if (inforMovie.danhGia !== undefined) {
+        setRating(inforMovie.danhGia);
+      }
+    }
   }, [inforMovie, setValue]);
 
   const hinhAnh = watch("hinhAnh");
 
-  const [imgPreview, setImgPreview] = useState("");
   useEffect(() => {
-    // Chạy vào useEffect callback khi giá trị của hinhAnh bị thay đổi
     const file = hinhAnh?.[0];
-    if (!file || !(file instanceof Blob || file instanceof File)) {
+    if (!file) {
       return;
     }
-
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onload = (event) => {
