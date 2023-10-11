@@ -139,12 +139,14 @@ export default function EditMovie() {
   }, [inforMovie, setValue]);
 
   const hinhAnh = watch("hinhAnh");
+  console.log("hinhAnh:", hinhAnh);
 
   useEffect(() => {
     const file = hinhAnh?.[0];
     if (!file) {
       return;
     }
+
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onload = (event) => {

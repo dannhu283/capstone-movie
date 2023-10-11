@@ -58,3 +58,12 @@ export async function getTheaterShowtimes(theaterId) {
     throw error.response.data.content;
   }
 }
+
+export async function getTheaterSystem() {
+  try {
+    const response = await fetcher.get("QuanLyRap/LayThongTinHeThongRap");
+    return response.data.content;
+  } catch (error) {
+    throw error.response.data.content;
+  }
+}
