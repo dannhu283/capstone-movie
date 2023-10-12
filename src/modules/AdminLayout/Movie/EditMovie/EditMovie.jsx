@@ -142,6 +142,7 @@ export default function EditMovie() {
       setImgPreview("hinhAnh", inforMovie.hinhAnh);
       setValue("trailer", inforMovie.trailer);
       setValue("ngayKhoiChieu", inforMovie.ngayKhoiChieu);
+      setValue("maNhom", inforMovie.maNhom);
       setIsHot(inforMovie.hot);
       setIsNowShowing(inforMovie.dangChieu);
       setIsComingSoon(inforMovie.sapChieu);
