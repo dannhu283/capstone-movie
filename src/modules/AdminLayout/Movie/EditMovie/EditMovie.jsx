@@ -121,6 +121,23 @@ export default function EditMovie() {
     mode: "onTouched",
   });
 
+  useEffect(() => {
+    if (inforMovie) {
+      setValue("tenPhim", inforMovie.tenPhim);
+      setValue("biDanh", inforMovie.biDanh);
+      setValue("moTa", inforMovie.moTa);
+      setImgPreview(inforMovie.hinhAnh);
+      setValue("trailer", inforMovie.trailer);
+      setValue("ngayKhoiChieu", inforMovie.ngayKhoiChieu);
+      setIsHot(inforMovie.hot);
+      setIsNowShowing(inforMovie.dangChieu);
+      setIsComingSoon(inforMovie.sapChieu);
+      if (inforMovie.danhGia !== undefined) {
+        setRating(inforMovie.danhGia);
+      }
+    }
+  }, [inforMovie, setValue]);
+
   const hinhAnh = watch("hinhAnh");
 
   useEffect(() => {
@@ -134,27 +151,10 @@ export default function EditMovie() {
     };
   }, [hinhAnh]);
 
-  useEffect(() => {
-    if (inforMovie) {
-      setValue("tenPhim", inforMovie.tenPhim);
-      setValue("biDanh", inforMovie.biDanh);
-      setValue("moTa", inforMovie.moTa);
-      setImgPreview("hinhAnh", inforMovie.hinhAnh);
-      setValue("trailer", inforMovie.trailer);
-      setValue("ngayKhoiChieu", inforMovie.ngayKhoiChieu);
-      setValue("maNhom", inforMovie.maNhom);
-      setIsHot(inforMovie.hot);
-      setIsNowShowing(inforMovie.dangChieu);
-      setIsComingSoon(inforMovie.sapChieu);
-      if (inforMovie.danhGia !== undefined) {
-        setRating(inforMovie.danhGia);
-      }
-    }
-  }, [inforMovie, setValue]);
-
   const { mutate: onSubmit } = useMutation({
     mutationFn: (values) => {
       const formData = new FormData();
+      formData.append("maPhim", movieId);
       formData.append("tenPhim", values.tenPhim);
       formData.append("biDanh", values.biDanh);
       formData.append("moTa", values.moTa);
@@ -166,10 +166,11 @@ export default function EditMovie() {
       formData.append("dangChieu", isNowShowing);
       formData.append("sapChieu", isComingSoon);
       formData.append("danhGia", rating);
-
       return updateMovie(formData);
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      setShowSuccessModal(true);
+    },
   });
 
   if (isLoading) {
@@ -330,7 +331,7 @@ export default function EditMovie() {
               variant="h5"
               sx={{ fontWeight: "bold", marginBottom: "40px" }}
             >
-              Thêm phim thành công
+              Cập nhật phim thành công
             </Typography>
 
             <ButtonMain

@@ -13,13 +13,9 @@ export async function getTicketMovie(showtimeId) {
   }
 }
 
-export async function addShowtimes(movieId, showtime) {
+export async function addShowtimes(showtime) {
   try {
-    const response = await fetcher.post("/QuanLyDatVe/TaoLichChieu", showtime, {
-      params: {
-        maPhim: movieId,
-      },
-    });
+    const response = await fetcher.post("/QuanLyDatVe/TaoLichChieu", showtime);
     return response.data.content;
   } catch (error) {
     throw error.response.data.content;

@@ -141,8 +141,6 @@ export default function AddMovie() {
       return addMovie(formData);
     },
     onSuccess: () => {
-      // Đóng modal hoặc chuyển trang
-      // Sử dụng queryClient.invalidateQueries để gọi lại API get danh sách phim
       setShowSuccessModal(true);
     },
   });

@@ -8,7 +8,6 @@ import {
   InputLabel,
   Grid,
   TextField,
-  FormHelperText,
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getTheaterSystem, getInforTheater } from "../../../../APIs/cinemaAPI";
@@ -20,19 +19,30 @@ import { ButtonMain } from "../../../../Components/ButtonMain";
 import { useParams } from "react-router-dom";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Title } from "./index";
+import { Title, ModalSuccess, ModalContent } from "./index";
 
 export default function CreateShowtimes() {
   const { movieId } = useParams();
   const [selectedSystem, setSelectedSystem] = useState("");
   const [selectedCumRap, setSelectedCumRap] = useState("");
   const [theaterInformation, setTheaterInformation] = useState([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const addCalendarShema = object({
     maHeThongRap: string().required("Vui lòng chọn hệ thống rạp"),
     cumRap: string().required("Vui lòng chọn cụm rạp"),
     ngayChieuGioChieu: string().required("Vui lòng chọn ngày"),
     giaVe: string().required("Vui lòng nhập giá vé"),
+  });
+
+  const { data: movieDetails = [], isLoading: isDetailLoading } = useQuery({
+    queryKey: ["movieDetails", movieId],
+    queryFn: () => getMovieDetails(movieId),
+  });
+
+  const { data: theaterSystem = [], isLoading } = useQuery({
+    queryKey: ["systemTheater"],
+    queryFn: getTheaterSystem,
   });
 
   const {
@@ -50,26 +60,7 @@ export default function CreateShowtimes() {
     mode: "all",
   });
 
-  const { mutate: onSubmit } = useMutation({
-    mutationFn: (values) => {
-      const formData = new FormData();
-      formData.append("maPhim", movieId);
-      formData.append("ngayChieuGioChieu", values.ngayChieuGioChieu);
-
-      return addShowtimes(formData);
-    },
-    onSuccess: () => {},
-  });
-
-  const { data: movieDetails = [], isLoading: isDetailLoading } = useQuery({
-    queryKey: ["movieDetails", movieId],
-    queryFn: () => getMovieDetails(movieId),
-  });
-
-  const { data: theaterSystem = [], isLoading } = useQuery({
-    queryKey: ["systemTheater"],
-    queryFn: getTheaterSystem,
-  });
+  console.log(errors);
 
   useEffect(() => {
     if (selectedSystem) {
@@ -90,6 +81,22 @@ export default function CreateShowtimes() {
   const handleChangeCumRap = (evt) => {
     setSelectedCumRap(evt.target.value);
   };
+
+  const { mutate: onSubmit } = useMutation({
+    mutationFn: (values) => {
+      console.log(values);
+      const formData = new FormData();
+      formData.append("maPhim", movieId);
+      formData.append("maHeThongRap", values.maHeThongRap);
+      formData.append("ngayChieuGioChieu", values.ngayChieuGioChieu);
+      formData.append("maRap", values.maCumRap);
+      formData.append("giaVe", values.giaVe);
+      return addShowtimes(formData);
+    },
+    onSuccess: () => {
+      setShowSuccessModal(true);
+    },
+  });
 
   if (isLoading && isDetailLoading) {
     return <Loading />;
@@ -119,8 +126,10 @@ export default function CreateShowtimes() {
                     onChange={handleChangeSystem}
                     autoWidth
                     label="Chọn Hệ Thống Rạp"
-                    // {...register("maHeThongRap")}
                   >
+                    <MenuItem value=" ">
+                      <em>------</em>
+                    </MenuItem>
                     {theaterSystem.map((system) => (
                       <MenuItem
                         key={system.maHeThongRap}
@@ -130,9 +139,6 @@ export default function CreateShowtimes() {
                       </MenuItem>
                     ))}
                   </Select>
-                  <FormHelperText error={!!errors.maHeThongRap}>
-                    {errors.maHeThongRap?.message}
-                  </FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -148,6 +154,8 @@ export default function CreateShowtimes() {
                     onChange={handleChangeCumRap}
                     autoWidth
                     label="Chọn Cụm Rạp"
+                    error={!!errors.cumRap}
+                    {...register("cumRap")}
                   >
                     <MenuItem value=" ">
                       <em>------</em>
@@ -158,9 +166,6 @@ export default function CreateShowtimes() {
                       </MenuItem>
                     ))}
                   </Select>
-                  <FormHelperText error={!!errors.cumRap}>
-                    {errors.cumRap?.message}
-                  </FormHelperText>
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
@@ -219,6 +224,31 @@ export default function CreateShowtimes() {
           </Box>
         </Grid>
       </Grid>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnfs5c14_small.gif"
+              alt="confirm"
+            />
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", marginBottom: "40px" }}
+            >
+              Thêm lịch chiếu thành công
+            </Typography>
+
+            <ButtonMain
+              variant="contained"
+              color="primary"
+              onClick={() => setShowSuccessModal(false)}
+            >
+              Đồng ý
+            </ButtonMain>
+          </ModalContent>
+        </ModalSuccess>
+      )}
     </>
   );
 }
