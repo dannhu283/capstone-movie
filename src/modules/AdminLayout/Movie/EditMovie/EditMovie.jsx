@@ -121,14 +121,28 @@ export default function EditMovie() {
     mode: "onTouched",
   });
 
+  const hinhAnh = watch("hinhAnh");
+
+  useEffect(() => {
+    const file = hinhAnh?.[0];
+    if (!file) return;
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = (event) => {
+      setImgPreview(event.target.result);
+    };
+  }, [hinhAnh]);
+
   useEffect(() => {
     if (inforMovie) {
       setValue("tenPhim", inforMovie.tenPhim);
       setValue("biDanh", inforMovie.biDanh);
       setValue("moTa", inforMovie.moTa);
-      setValue("hinhAnh", inforMovie.hinhAnh);
+      setImgPreview("hinhAnh", inforMovie.hinhAnh);
       setValue("trailer", inforMovie.trailer);
       setValue("ngayKhoiChieu", inforMovie.ngayKhoiChieu);
+      setValue("maNhom", inforMovie.maNhom);
       setIsHot(inforMovie.hot);
       setIsNowShowing(inforMovie.dangChieu);
       setIsComingSoon(inforMovie.sapChieu);
@@ -137,22 +151,6 @@ export default function EditMovie() {
       }
     }
   }, [inforMovie, setValue]);
-
-  const hinhAnh = watch("hinhAnh");
-  console.log("hinhAnh:", hinhAnh);
-
-  useEffect(() => {
-    const file = hinhAnh?.[0];
-    if (!file) {
-      return;
-    }
-
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = (event) => {
-      setImgPreview(event.target.result);
-    };
-  }, [hinhAnh]);
 
   const { mutate: onSubmit } = useMutation({
     mutationFn: (values) => {
