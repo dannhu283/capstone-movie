@@ -119,7 +119,7 @@ export default function CreateShowtimes() {
                     onChange={handleChangeSystem}
                     autoWidth
                     label="Chọn Hệ Thống Rạp"
-                    {...register("maHeThongRap")}
+                    // {...register("maHeThongRap")}
                   >
                     {theaterSystem.map((system) => (
                       <MenuItem
