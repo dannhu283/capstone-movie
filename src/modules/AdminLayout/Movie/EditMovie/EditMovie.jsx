@@ -18,7 +18,7 @@ import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../Components/ButtonMain";
 import { object, string } from "yup";
 import Loading from "../../../../Components/Loading";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ModalSuccess, ModalContent } from "./index";
 
 //MUI switch
@@ -74,6 +74,7 @@ const IOSSwitch = styled((props) => (
 }));
 
 export default function EditMovie() {
+  const navigate = useNavigate();
   const { movieId } = useParams();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [imgPreview, setImgPreview] = useState("");
@@ -337,7 +338,7 @@ export default function EditMovie() {
             <ButtonMain
               variant="contained"
               color="primary"
-              onClick={() => setShowSuccessModal(false)}
+              onClick={() => navigate("/admin/moviemanagement")}
             >
               Đồng ý
             </ButtonMain>
