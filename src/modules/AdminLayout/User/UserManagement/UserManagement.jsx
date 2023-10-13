@@ -1,6 +1,13 @@
 import React from "react";
-import { Box } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Modal,
+  Typography,
+} from "@mui/material";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCustomer } from "../../../../APIs/customerAPI";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
@@ -21,6 +28,11 @@ import { StyledTableCell, StyledTableRow } from "./styledTable";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../../../../Components/Loading";
+import UserModal from "./UpdateUser";
+import { getInfoUser, removeUser } from "../../../../APIs/userAPI";
+import ErrorIcon from "@mui/icons-material/Error";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import AddUser from "./AddUser/AddUser";
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -90,39 +102,39 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
-const rows = [
-  createData("Cupcake", 305, 3.7),
-  createData("Donut", 452, 25.0),
-  createData("Eclair", 262, 16.0),
-  createData("Frozen yoghurt", 159, 6.0),
-  createData("Gingerbread", 356, 16.0),
-  createData("Honeycomb", 408, 3.2),
-  createData("Ice cream sandwich", 237, 9.0),
-  createData("Jelly Bean", 375, 0.0),
-  createData("KitKat", 518, 26.0),
-  createData("Lollipop", 392, 0.2),
-  createData("Marshmallow", 318, 0),
-  createData("Nougat", 360, 19.0),
-  createData("Oreo", 437, 18.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
 export default function UserManagement() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [open, setOpen] = React.useState(false);
+  const [openAddUser, setOpenAddUser] = React.useState(false);
+  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [userName, setUserName] = React.useState("");
+  const [infoUser, setInfoUser] = React.useState({});
+  const [isLoadingInfoUser, setIsLoadingInfoUser] = React.useState(false);
+  const [selectedUser, setSelectedUser] = React.useState(null);
+  const [openError, setOpenError] = React.useState(true);
+  const [openSuccess, setOpenSuccess] = React.useState(false);
+
+  const queryClient = useQueryClient();
 
   const { data: customers = [], isLoading } = useQuery({
     queryKey: ["customer"],
     queryFn: getCustomer,
   });
-  console.log(customers);
+
+  const { mutate: handleDeleteUser, error } = useMutation({
+    mutationFn: (username) => removeUser(username),
+    onSuccess: () => {
+      setOpenSuccess(false);
+      setOpenError(false);
+      queryClient.invalidateQueries({ queryKey: ["customer"] });
+    },
+  });
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - customers.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -133,6 +145,51 @@ export default function UserManagement() {
     setPage(0);
   };
 
+  const handleOpen = (username) => {
+    setUserName(username);
+    setIsLoadingInfoUser(true); // Bắt đầu tải dữ liệu
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setUserName("");
+    setOpen(false);
+    setOpenBackdrop(false);
+  };
+
+  const handleOpenAddUser = () => {
+    setOpenAddUser(true);
+  };
+
+  const handleCloseAddUser = () => {
+    setOpenAddUser(false);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
+
+  const handleCloseError = () => {
+    setOpenError(false);
+    setOpenDelete(false);
+  };
+
+  const handleCloseSuccess = () => {
+    setOpenSuccess(false);
+  };
+
+  React.useEffect(() => {
+    if (userName) {
+      setIsLoadingInfoUser(true);
+      setOpenBackdrop(true);
+      // Gọi API để lấy infoUser khi userName đã có giá trị
+      getInfoUser(userName).then((data) => {
+        setInfoUser(data);
+        setIsLoadingInfoUser(false); // Dừng trạng thái tải
+      });
+    }
+  }, [userName]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -140,6 +197,15 @@ export default function UserManagement() {
   return (
     <>
       <Box height={100} />
+      <Box display={"flex"} justifyContent={"right"} mb={2}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleOpenAddUser}
+        >
+          Thêm người dùng
+        </Button>
+      </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead>
@@ -149,6 +215,9 @@ export default function UserManagement() {
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 Mật khẩu
+              </StyledTableCell>
+              <StyledTableCell component="th" scope="row">
+                Email
               </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 Họ tên
@@ -175,15 +244,29 @@ export default function UserManagement() {
               <StyledTableRow key={customer.taiKhoan}>
                 <StyledTableCell>{customer.taiKhoan}</StyledTableCell>
                 <StyledTableCell>{customer.matKhau}</StyledTableCell>
+                <StyledTableCell>{customer.email}</StyledTableCell>
                 <StyledTableCell>{customer.hoTen}</StyledTableCell>
                 <StyledTableCell>{customer.soDT}</StyledTableCell>
                 <StyledTableCell>{customer.maLoaiNguoiDung}</StyledTableCell>
                 <StyledTableCell>
                   <Box>
-                    <IconButton aria-label="update" size="large">
+                    <IconButton
+                      aria-label="update"
+                      size="large"
+                      onClick={() => {
+                        handleOpen(customer.taiKhoan);
+                      }}
+                    >
                       <EditIcon fontSize="inherit" color="primary" />
                     </IconButton>
-                    <IconButton aria-label="delete" size="large">
+                    <IconButton
+                      aria-label="delete"
+                      size="large"
+                      onClick={() => {
+                        setOpenDelete(true);
+                        setSelectedUser(customer.taiKhoan);
+                      }}
+                    >
                       <DeleteIcon fontSize="inherit" color="error" />
                     </IconButton>
                   </Box>
@@ -218,6 +301,177 @@ export default function UserManagement() {
           </TableFooter>
         </Table>
       </TableContainer>
+
+      {/* Modal update user */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        {isLoadingInfoUser ? (
+          <Backdrop
+            sx={{
+              color: "#fff",
+              zIndex: (theme) => theme.zIndex.drawer + 1,
+            }}
+            open={openBackdrop}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop> // Hiển thị trạng thái tải
+        ) : (
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 1000,
+              height: 400,
+              bgcolor: "background.paper",
+              border: "1px solid #fff",
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            {/* Hiển thị form hoặc nội dung modal */}
+            <UserModal infoUser={infoUser} onClose={handleClose} />
+          </Box>
+        )}
+      </Modal>
+
+      {/* Modal add user */}
+      <Modal
+        open={openAddUser}
+        onClose={handleCloseAddUser}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 1000,
+            height: 400,
+            bgcolor: "background.paper",
+            border: "1px solid #fff",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          {/* Hiển thị form hoặc nội dung modal */}
+          <AddUser />
+        </Box>
+      </Modal>
+
+      {/* Modal hiển thị thông báo xác nhận xóa */}
+      <Modal
+        open={openDelete}
+        onClose={handleCloseDelete}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 500,
+            bgcolor: "background.paper",
+            border: "1px solid #fff",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Bạn có muốn xóa tài khoản {selectedUser} ?
+          </Typography>
+          <Box display={"flex"} justifyContent={"right"} m={2}>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ marginRight: "10px" }}
+              onClick={() => {
+                if (!error) {
+                  handleDeleteUser(selectedUser);
+                } else {
+                  setOpenError(true);
+                }
+              }}
+            >
+              Xác nhận
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => {
+                setOpenDelete(false);
+              }}
+            >
+              Hủy
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      {/* Hiện thông báo lỗi */}
+      {!!error && (
+        <Modal
+          open={openError}
+          onClose={handleCloseError}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "#fff",
+              border: "1px solid #fff",
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <ErrorIcon color="error" />
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              {error}
+            </Typography>
+          </Box>
+        </Modal>
+      )}
+
+      {/* Hiện thông báo xóa user thành công */}
+      <Modal
+        open={openSuccess}
+        onClose={handleCloseSuccess}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "#fff",
+            border: "1px solid #fff",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <CheckBoxIcon color="success" />
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Xóa người dùng thành công
+          </Typography>
+        </Box>
+      </Modal>
     </>
   );
 }

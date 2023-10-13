@@ -13,7 +13,6 @@ import "./indexx.css";
 import TicketMovie from "./modules/TicketMovie/TicketMovie";
 import AddMovie from "./modules/AdminLayout/Movie/AddMovie";
 import MovieManagement from "./modules/AdminLayout/Movie/MovieManagement";
-import AddUser from "./modules/AdminLayout/User/AddUser";
 import UserManagement from "./modules/AdminLayout/User/UserManagement";
 import CreateShowtimes from "./modules/AdminLayout/Movie/CreateShowtimes";
 import EditMovie from "./modules/AdminLayout/Movie/EditMovie";
@@ -46,8 +45,6 @@ function App() {
             <Route path="editmovie/:movieId" element={<EditMovie />} />
 
             <Route path="showtime/:movieId" element={<CreateShowtimes />} />
-
-            <Route path="adduser" element={<AddUser />} />
 
             <Route path="usermanagement" element={<UserManagement />} />
           </Route>
