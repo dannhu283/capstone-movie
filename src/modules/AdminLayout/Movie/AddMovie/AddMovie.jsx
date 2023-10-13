@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../Components/ButtonMain";
+import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import { ModalSuccess, ModalContent } from "./index";
 
@@ -72,6 +73,7 @@ const IOSSwitch = styled((props) => (
 }));
 
 export default function AddMovie() {
+  const navigate = useNavigate();
   const [isHot, setIsHot] = useState(false);
   const [isNowShowing, setIsNowShowing] = useState(false);
   const [isComingSoon, setIsComingSoon] = useState(false);
@@ -306,7 +308,7 @@ export default function AddMovie() {
             <ButtonMain
               variant="contained"
               color="primary"
-              onClick={() => setShowSuccessModal(false)}
+              onClick={() => navigate("/admin/moviemanagement")}
             >
               Đồng ý
             </ButtonMain>
