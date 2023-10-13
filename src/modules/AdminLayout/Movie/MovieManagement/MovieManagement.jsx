@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Tooltip } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { deleteMovie, getMovies } from "../../../../APIs/movieAPI";
 import PropTypes from "prop-types";
@@ -25,6 +25,8 @@ import Loading from "../../../../Components/Loading";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
+import { ButtonCustom, ButtonMain } from "../../../../Components/ButtonMain";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -101,6 +103,9 @@ export default function UserManagement() {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [movieToDelete, setMovieToDelete] = useState(null);
 
   const { data: movies = [], isLoading } = useQuery({
     queryKey: ["movie"],
@@ -120,9 +125,23 @@ export default function UserManagement() {
     setPage(0);
   };
 
-  const handleDeleteMovie = async (movieId) => {
-    await deleteMovie(movieId);
-    queryClient.invalidateQueries("movie");
+  const handleDeleteConfirmed = async () => {
+    if (movieToDelete) {
+      await deleteMovie(movieToDelete);
+      queryClient.invalidateQueries("movie");
+      setShowSuccessModal(true);
+    }
+    setShowConfirmModal(false);
+  };
+
+  const handleConfirmDelete = (movieId) => {
+    setMovieToDelete(movieId);
+    setShowConfirmModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowConfirmModal(false);
+    setShowSuccessModal(false);
   };
 
   if (isLoading) {
@@ -191,7 +210,7 @@ export default function UserManagement() {
                       <IconButton
                         aria-label="delete"
                         size="large"
-                        onClick={() => handleDeleteMovie(movie.maPhim)}
+                        onClick={() => handleConfirmDelete(movie.maPhim)}
                       >
                         <DeleteIcon fontSize="inherit" color="error" />
                       </IconButton>
@@ -239,6 +258,55 @@ export default function UserManagement() {
           </TableFooter>
         </Table>
       </TableContainer>
+
+      {showConfirmModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnov06bj_small.gif"
+              alt="confirm"
+            />
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", marginBottom: "40px" }}
+            >
+              Bạn có muốn xóa phim
+            </Typography>
+
+            <ButtonMain variant="contained" onClick={handleCloseModal}>
+              Hủy
+            </ButtonMain>
+            <ButtonCustom onClick={handleDeleteConfirmed}>Đồng ý</ButtonCustom>
+          </ModalContent>
+        </ModalSuccess>
+      )}
+
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnfs5c14_small.gif"
+              alt="confirm"
+            />
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", marginBottom: "40px" }}
+            >
+              Xóa phim thành công
+            </Typography>
+
+            <ButtonMain
+              variant="contained"
+              color="primary"
+              onClick={handleCloseModal}
+            >
+              Đồng ý
+            </ButtonMain>
+          </ModalContent>
+        </ModalSuccess>
+      )}
     </>
   );
 }
