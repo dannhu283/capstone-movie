@@ -83,9 +83,7 @@ export default function AddMovie() {
   const addmovieShema = object({
     tenPhim: string().required("Tên phim không được để trống"),
     biDanh: string().required("Bí danh không được để trống"),
-    moTa: string().required(
-      "Mô tả phim để khán giả có thể dễ dàng nắm bắt được nội dung"
-    ),
+    moTa: string().required("Vui lòng nhập mô tả"),
     trailer: string().required("Vui lòng cung cấp trailer của phim"),
     ngayKhoiChieu: string().required("Vui lòng chọn ngày "),
   });
