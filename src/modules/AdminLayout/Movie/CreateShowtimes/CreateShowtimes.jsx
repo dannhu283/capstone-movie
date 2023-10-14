@@ -14,12 +14,13 @@ import { getTheaterSystem, getInforTheater } from "../../../../APIs/cinemaAPI";
 import { getMovieDetails } from "../../../../APIs/movieAPI";
 import { addShowtimes } from "../../../../APIs/bookTicketAPI";
 import Loading from "../../../../Components/Loading";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { ButtonMain } from "../../../../Components/ButtonMain";
 import { useParams } from "react-router-dom";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Title, ModalSuccess, ModalContent } from "./index";
+import { Title } from "./index";
+import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 
 export default function CreateShowtimes() {
   const { movieId } = useParams();
@@ -30,9 +31,25 @@ export default function CreateShowtimes() {
 
   const addCalendarShema = object({
     maHeThongRap: string().required("Vui lòng chọn hệ thống rạp"),
-    cumRap: string().required("Vui lòng chọn cụm rạp"),
+    maRap: string().required("Vui lòng chọn cụm rạp"),
     ngayChieuGioChieu: string().required("Vui lòng chọn ngày"),
     giaVe: string().required("Vui lòng nhập giá vé"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      maHeThongRap: "",
+      maRap: "",
+      ngayChieuGioChieu: "",
+      giaVe: "",
+    },
+    resolver: yupResolver(addCalendarShema),
+    mode: "onTouched",
   });
 
   const { data: movieDetails = [], isLoading: isDetailLoading } = useQuery({
@@ -44,23 +61,6 @@ export default function CreateShowtimes() {
     queryKey: ["systemTheater"],
     queryFn: getTheaterSystem,
   });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      maHeThongRap: "",
-      cumRap: "",
-      ngayChieuGioChieu: "",
-      giaVe: "",
-    },
-    resolver: yupResolver(addCalendarShema),
-    mode: "all",
-  });
-
-  console.log(errors);
 
   useEffect(() => {
     if (selectedSystem) {
@@ -84,13 +84,13 @@ export default function CreateShowtimes() {
 
   const { mutate: onSubmit } = useMutation({
     mutationFn: (values) => {
-      console.log(values);
       const formData = new FormData();
       formData.append("maPhim", movieId);
-      formData.append("maHeThongRap", values.maHeThongRap);
+      formData.append("maHeThongRap", selectedSystem);
       formData.append("ngayChieuGioChieu", values.ngayChieuGioChieu);
-      formData.append("maRap", values.maCumRap);
+      formData.append("maRap", values.maRap);
       formData.append("giaVe", values.giaVe);
+
       return addShowtimes(formData);
     },
     onSuccess: () => {
@@ -116,58 +116,71 @@ export default function CreateShowtimes() {
               <Grid item xs={12}>
                 <Title>Hệ Thống Rạp:</Title>
                 <FormControl sx={{ m: 1, minWidth: "80%" }} color="success">
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Chọn Hệ Thống Rạp
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-autowidth-label"
-                    id="demo-simple-select-autowidth"
-                    value={selectedSystem}
-                    onChange={handleChangeSystem}
-                    autoWidth
-                    label="Chọn Hệ Thống Rạp"
-                  >
-                    <MenuItem value=" ">
-                      <em>------</em>
-                    </MenuItem>
-                    {theaterSystem.map((system) => (
-                      <MenuItem
-                        key={system.maHeThongRap}
-                        value={system.maHeThongRap}
+                  <InputLabel>Chọn Hệ Thống Rạp</InputLabel>
+                  <Controller
+                    control={control}
+                    defaultValue=""
+                    name="maHeThongRap"
+                    render={({ field }) => (
+                      <Select
+                        autoWidth
+                        value={field.value}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          handleChangeSystem(e);
+                        }}
+                        label="Chọn Hệ Thống Rạp"
                       >
-                        {system.maHeThongRap}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                        <MenuItem value=" ">
+                          <em>------</em>
+                        </MenuItem>
+                        {theaterSystem.map((system) => (
+                          <MenuItem
+                            key={system.maHeThongRap}
+                            value={system.maHeThongRap}
+                          >
+                            {system.maHeThongRap}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
                 </FormControl>
               </Grid>
+              {/* Cụm rạp */}
               <Grid item xs={12}>
                 <Title>Cụm Rạp :</Title>
                 <FormControl sx={{ m: 1, minWidth: "80%" }} color="success">
-                  <InputLabel id="demo-simple-select-autowidth-label">
-                    Chọn Cụm Rạp
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-autowidth-label"
-                    id="demo-simple-select-autowidth"
-                    value={selectedCumRap}
-                    onChange={handleChangeCumRap}
-                    autoWidth
-                    label="Chọn Cụm Rạp"
-                    error={!!errors.cumRap}
-                    {...register("cumRap")}
-                  >
-                    <MenuItem value=" ">
-                      <em>------</em>
-                    </MenuItem>
-                    {theaterInformation.map((info) => (
-                      <MenuItem key={info.maCumRap} value={info.maCumRap}>
-                        {info.maCumRap}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                  <InputLabel>Chọn Cụm Rạp</InputLabel>
+                  <Controller
+                    control={control}
+                    defaultValue=""
+                    name="maRap"
+                    render={({ field }) => (
+                      <Select
+                        value={selectedCumRap}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          handleChangeCumRap(e);
+                        }}
+                        autoWidth
+                        label="Chọn Cụm Rạp"
+                        {...field}
+                      >
+                        <MenuItem value=" ">
+                          <em>------</em>
+                        </MenuItem>
+                        {theaterInformation.map((info) => (
+                          <MenuItem key={info.maCumRap} value={info.maCumRap}>
+                            {info.maCumRap}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
                 </FormControl>
               </Grid>
+              {/* Ngày giờ chiếu */}
               <Grid item xs={12}>
                 <Title>Ngày Giờ Chiếu</Title>
                 <FormControl sx={{ m: 1, minWidth: "80%" }} color="success">
@@ -186,6 +199,7 @@ export default function CreateShowtimes() {
                   />
                 </FormControl>
               </Grid>
+              {/* Giá vé */}
               <Grid item xs={12}>
                 <Title>Giá vé</Title>
                 <FormControl sx={{ m: 1, minWidth: "80%" }} color="success">

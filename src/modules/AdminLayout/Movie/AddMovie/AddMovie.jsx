@@ -18,7 +18,7 @@ import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../Components/ButtonMain";
 import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
-import { ModalSuccess, ModalContent } from "./index";
+import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 
 //MUI switch
 const IOSSwitch = styled((props) => (

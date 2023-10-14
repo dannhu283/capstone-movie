@@ -19,7 +19,7 @@ import { ButtonMain } from "../../../../Components/ButtonMain";
 import { object, string } from "yup";
 import Loading from "../../../../Components/Loading";
 import { useParams, useNavigate } from "react-router-dom";
-import { ModalSuccess, ModalContent } from "./index";
+import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
