@@ -21,8 +21,11 @@ import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Title } from "./index";
 import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateShowtimes() {
+  const navigate = useNavigate();
   const { movieId } = useParams();
   const [selectedSystem, setSelectedSystem] = useState("");
   const [selectedCumRap, setSelectedCumRap] = useState("");
@@ -84,14 +87,7 @@ export default function CreateShowtimes() {
 
   const { mutate: onSubmit } = useMutation({
     mutationFn: (values) => {
-      const formData = new FormData();
-      formData.append("maPhim", movieId);
-      formData.append("maHeThongRap", selectedSystem);
-      formData.append("ngayChieuGioChieu", values.ngayChieuGioChieu);
-      formData.append("maRap", values.maRap);
-      formData.append("giaVe", values.giaVe);
-
-      return addShowtimes(formData);
+      return addShowtimes({ ...values, maPhim: movieId });
     },
     onSuccess: () => {
       setShowSuccessModal(true);
@@ -190,7 +186,11 @@ export default function CreateShowtimes() {
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    {...register("ngayChieuGioChieu")}
+                    {...register("ngayChieuGioChieu", {
+                      setValueAs: (values) => {
+                        return dayjs(values).format("DD/MM/YYYY hh:mm:ss");
+                      },
+                    })}
                     error={!!errors.ngayChieuGioChieu}
                     helperText={
                       errors.ngayChieuGioChieu &&
@@ -213,7 +213,12 @@ export default function CreateShowtimes() {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <ButtonMain type="submit">Thêm Lịch Chiếu</ButtonMain>
+                <ButtonMain
+                  type="submit"
+                  onClick={() => navigate("/admin/moviemanagement")}
+                >
+                  Thêm Lịch Chiếu
+                </ButtonMain>
               </Grid>
             </Grid>
           </form>
