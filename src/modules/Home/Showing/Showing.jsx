@@ -65,6 +65,7 @@ export default function Showing() {
     slidesToScroll: 4,
     initialSlide: 0,
     rows: 2,
+
     nextArrow: (
       <ChevronRightIcon
         sx={{

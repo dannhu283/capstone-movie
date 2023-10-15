@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { ButtonMain } from "../../Components/ButtonMain";
@@ -33,7 +26,7 @@ export default function Profile() {
   });
   console.log(profile);
 
-  const { mutate: handleEditProfile, error } = useMutation({
+  const { mutate: handleEditProfile } = useMutation({
     mutationFn: (username) => editUser(username),
     onSuccess: () => {
       queryClient.invalidateQueries("profile");
