@@ -171,13 +171,6 @@ export default function Footer() {
                   Youtube
                 </ListItemButton>
               </ListItem>
-              {/* <ListItem>
-                <List sx={{ "--ListItemDecorator-size": "32px", padding: "0" }}>
-
-                  
-                  
-                </List>
-              </ListItem> */}
             </List>
           </Grid>
         </Grid>
