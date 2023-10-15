@@ -75,6 +75,8 @@ export default function Header(props) {
     setAnchorElUser(null);
     if (setting === "Logout") {
       handleSignout();
+    } else if (setting === "Profile") {
+      navigate(`/profile/${currentUser.taiKhoan}`);
     }
   };
 

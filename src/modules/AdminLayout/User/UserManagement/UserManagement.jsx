@@ -362,7 +362,7 @@ export default function UserManagement() {
           }}
         >
           {/* Hiển thị form hoặc nội dung modal */}
-          <AddUser />
+          <AddUser onClose={handleCloseAddUser} />
         </Box>
       </Modal>
 

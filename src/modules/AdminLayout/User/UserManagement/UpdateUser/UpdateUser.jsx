@@ -14,19 +14,21 @@ import { ButtonMain } from "../../../../../Components/ButtonMain";
 import { useForm } from "react-hook-form";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editUser } from "../../../../../APIs/userAPI";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { Controller } from "react-hook-form";
 
 export default function UpdateUser({ infoUser, onClose }) {
-  const [codeUser, setCodeUser] = useState(infoUser.maLoaiNguoiDung || "");
+  // const [codeUser, setCodeUser] = useState(infoUser.maLoaiNguoiDung || "");
   const [dataLoaded, setDataLoaded] = useState(false);
   const [openError, setOpenError] = React.useState(true);
   const [openSuccess, setOpenSuccess] = React.useState(false);
+
+  const queryClient = useQueryClient();
 
   const editUserSchema = object({
     taiKhoan: string().required("Tài khoản không được để trống"),
@@ -51,7 +53,9 @@ export default function UpdateUser({ infoUser, onClose }) {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
     setValue,
+    watch,
   } = useForm({
     defaultValues: infoUser,
     resolver: yupResolver(editUserSchema),
@@ -62,14 +66,17 @@ export default function UpdateUser({ infoUser, onClose }) {
     mutationFn: (payload) => editUser(payload),
     onSuccess: () => {
       //   navigate("/signin");
+      queryClient.invalidateQueries("customer");
       setOpenSuccess(true);
     },
   });
 
-  const navigate = useNavigate();
-
   const onSubmit = (values) => {
     console.log(values);
+    // Giá trị đã chọn từ Select
+    console.log(values.maLoaiNguoiDung);
+    // Cập nhật giá trị trong infoUser
+    infoUser.maLoaiNguoiDung = values.maLoaiNguoiDung;
     // Gọi API đăng ký
     if (error) {
       setOpenError(true);
@@ -77,9 +84,9 @@ export default function UpdateUser({ infoUser, onClose }) {
     handleChangeUser(values);
   };
 
-  const handleChange = (event) => {
-    setCodeUser(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setCodeUser(event.target.value);
+  // };
 
   const handleCloseError = () => {
     onClose();
@@ -90,6 +97,9 @@ export default function UpdateUser({ infoUser, onClose }) {
     setOpenSuccess(false);
     onClose();
   };
+
+  const maLoaiNguoiDung = watch("maLoaiNguoiDung");
+
   // Sử dụng useEffect để đặt giá trị trường nhập khi infoUser thay đổi
   useEffect(() => {
     // Kiểm tra nếu dữ liệu đã tải xong
@@ -177,21 +187,23 @@ export default function UpdateUser({ infoUser, onClose }) {
           <Grid item xs={6}>
             <FormControl fullWidth error={!!errors.maLoaiNguoiDung}>
               <InputLabel id="maLoaiNguoiDung">Loại người dùng</InputLabel>
-              <Select
-                labelId="maLoaiNguoiDung"
-                id="maLoaiNguoiDung"
-                value={codeUser}
-                label="Loại người dùng"
-                onChange={handleChange}
+              <Controller
+                name="maLoaiNguoiDung"
+                control={control}
                 defaultValue={infoUser.maLoaiNguoiDung}
-                // error={!!errors.maLoaiNguoiDung}
-                // helperText={errors.maLoaiNguoiDung?.message}
-                // {...register("maLoaiNguoiDung")}
-              >
-                <MenuItem value={""}>Chọn loại người dùng</MenuItem>
-                <MenuItem value={"KhachHang"}>Khách hàng</MenuItem>
-                <MenuItem value={"QuanTri"}>Quản trị viên</MenuItem>
-              </Select>
+                render={({ field }) => (
+                  <Select
+                    labelId="maLoaiNguoiDung"
+                    id="maLoaiNguoiDung"
+                    label="Loại người dùng"
+                    {...field}
+                  >
+                    <MenuItem value={""}>Chọn loại người dùng</MenuItem>
+                    <MenuItem value={"KhachHang"}>Khách hàng</MenuItem>
+                    <MenuItem value={"QuanTri"}>Quản trị viên</MenuItem>
+                  </Select>
+                )}
+              />
             </FormControl>
           </Grid>
         </Grid>
