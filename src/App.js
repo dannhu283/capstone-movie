@@ -16,6 +16,7 @@ import MovieManagement from "./modules/AdminLayout/Movie/MovieManagement";
 import UserManagement from "./modules/AdminLayout/User/UserManagement";
 import CreateShowtimes from "./modules/AdminLayout/Movie/CreateShowtimes";
 import EditMovie from "./modules/AdminLayout/Movie/EditMovie";
+import Profile from "./modules/Profile";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="movies/:movieId" element={<Details />} />
 
             <Route element={<ProtectedRoute />}>
+              <Route path="profile/:username" element={<Profile />} />
               <Route path="tickets/:showtimeId" element={<TicketMovie />} />
             </Route>
 

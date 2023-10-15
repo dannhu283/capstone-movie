@@ -10,21 +10,21 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import { useState } from "react";
 import { ButtonMain } from "../../../../../Components/ButtonMain";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addUser } from "../../../../../APIs/userAPI";
 
-export default function AddUser() {
-  const [codeUser, setCodeUser] = useState("");
-  // const [dataLoaded, setDataLoaded] = useState(false);
-  const [openError, setOpenError] = React.useState(true);
-  const [openSuccess, setOpenSuccess] = React.useState(false);
+export default function AddUser({ onClose }) {
+  const [openError, setOpenError] = useState(true);
+  const [openSuccess, setOpenSuccess] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const addUserSchema = object({
     taiKhoan: string().required("Tài khoản không được để trống"),
@@ -46,6 +46,10 @@ export default function AddUser() {
 
   const { mutate: handleAddUser, error } = useMutation({
     mutationFn: (payload) => addUser(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries("customer");
+      setOpenSuccess(true);
+    },
   });
 
   const {
@@ -53,7 +57,7 @@ export default function AddUser() {
     handleSubmit,
     formState: { errors },
     reset,
-    setValue,
+    control,
   } = useForm({
     defaultValues: {
       taiKhoan: "",
@@ -72,11 +76,20 @@ export default function AddUser() {
     console.log(values);
     // Gọi API đăng ký
     handleAddUser(values);
+    reset({
+      taiKhoan: "",
+      matKhau: "",
+      email: "",
+      soDt: "",
+      maNhom: "GP09",
+      maLoaiNguoiDung: "",
+      hoTen: "",
+    });
   };
 
-  const handleChange = (event) => {
-    setValue("maLoaiNguoiDung", event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setValue("maLoaiNguoiDung", event.target.value);
+  // };
 
   const handleCloseError = () => {
     setOpenError(false);
@@ -84,6 +97,7 @@ export default function AddUser() {
 
   const handleCloseSuccess = () => {
     setOpenSuccess(false);
+    onClose();
   };
 
   return (
@@ -134,9 +148,9 @@ export default function AddUser() {
               label="Số điện thoại"
               variant="outlined"
               fullWidth
-              error={!!errors.soDT}
-              helperText={errors.soDT?.message}
-              {...register("soDT")}
+              error={!!errors.soDt}
+              helperText={errors.soDt?.message}
+              {...register("soDt")}
             />
           </Grid>
           <Grid item xs={6}>
@@ -152,21 +166,23 @@ export default function AddUser() {
           <Grid item xs={6}>
             <FormControl fullWidth error={!!errors.maLoaiNguoiDung}>
               <InputLabel id="maLoaiNguoiDung">Loại người dùng</InputLabel>
-              <Select
-                labelId="maLoaiNguoiDung"
-                id="maLoaiNguoiDung"
-                // value={codeUser}
-                label="Loại người dùng"
-                onChange={handleChange}
-                // defaultValue={infoUser.maLoaiNguoiDung}
-                // error={!!errors.maLoaiNguoiDung}
-                // helperText={errors.maLoaiNguoiDung?.message}
-                {...register("maLoaiNguoiDung")}
-              >
-                <MenuItem value={""}>Chọn loại người dùng</MenuItem>
-                <MenuItem value={"KhachHang"}>Khách hàng</MenuItem>
-                <MenuItem value={"QuanTri"}>Quản trị viên</MenuItem>
-              </Select>
+              <Controller
+                name="maLoaiNguoiDung"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Select
+                    labelId="maLoaiNguoiDung"
+                    id="maLoaiNguoiDung"
+                    label="Loại người dùng"
+                    {...field}
+                  >
+                    <MenuItem value={""}>Chọn loại người dùng</MenuItem>
+                    <MenuItem value={"KhachHang"}>Khách hàng</MenuItem>
+                    <MenuItem value={"QuanTri"}>Quản trị viên</MenuItem>
+                  </Select>
+                )}
+              />
             </FormControl>
           </Grid>
         </Grid>
@@ -177,7 +193,7 @@ export default function AddUser() {
         </Box>
 
         {/* Hiện thông báo lỗi */}
-        {/* {!!error && (
+        {!!error && (
           <Modal
             open={openError}
             onClose={handleCloseError}
@@ -203,7 +219,7 @@ export default function AddUser() {
               </Typography>
             </Box>
           </Modal>
-        )} */}
+        )}
 
         {/* Thông báo khi chỉnh sửa thành công */}
         <Modal

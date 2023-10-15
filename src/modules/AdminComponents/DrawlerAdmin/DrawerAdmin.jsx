@@ -188,7 +188,7 @@ export default function DrawerAdmin() {
           </ListItem>
           <Collapse in={menuData.userMenuOpen}>
             <List>
-              <ListItemButton sx={{ minHeight: 60 }}>
+              {/* <ListItemButton sx={{ minHeight: 60 }}>
                 {open && <ChevronRightIcon />}
                 <Link to="/admin/adduser" className={AdminStyle.link}>
                   {open ? (
@@ -197,7 +197,7 @@ export default function DrawerAdmin() {
                     <AddIcon fontSize="large" />
                   )}
                 </Link>
-              </ListItemButton>
+              </ListItemButton> */}
               <ListItemButton sx={{ minHeight: 60 }}>
                 {open && <ChevronRightIcon />}
                 <Link to="/admin/usermanagement" className={AdminStyle.link}>

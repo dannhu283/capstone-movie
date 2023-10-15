@@ -16,7 +16,6 @@ import {
   ListItem,
   Box,
   Divider,
-  ListSubheader,
   ListItemButton,
 } from "@mui/material";
 
@@ -24,7 +23,6 @@ export default function Footer() {
   return (
     <Box
       variant="solid"
-      invertedColors
       sx={{
         flexGrow: 1,
         p: 2,
@@ -47,12 +45,12 @@ export default function Footer() {
             Đối Tác Của Chúng Tôi
           </Typography>
           <Grid container spacing={2}>
-            {data.map((item) => (
-              <Grid item xs={6} sm={4} md={3} lg={2} key={item.biDanh}>
+            {data.map((cinema) => (
+              <Grid item xs={6} sm={4} md={3} lg={2} key={cinema.biDanh}>
                 <IconButton variant="plain">
                   <div>
-                    <a href={item.link} target="_blank" rel="noreferrer">
-                      <img src={item.logo} alt="" width={40} />
+                    <a href={cinema.link} target="_blank" rel="noreferrer">
+                      <img src={cinema.logo} alt="..." width={40} />
                     </a>
                   </div>
                 </IconButton>
@@ -63,7 +61,9 @@ export default function Footer() {
         <Divider sx={{ my: 2 }} />
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>Giới Thiệu</ListSubheader>
+            <Typography sx={{ color: "#ff9f1a" }} p={"0 16px"}>
+              Giới Thiệu
+            </Typography>
             <List>
               <ListItem>
                 <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
@@ -84,9 +84,9 @@ export default function Footer() {
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>
+            <Typography sx={{ color: "#ff9f1a" }} p={"0 16px"}>
               Góc Điện Ảnh
-            </ListSubheader>
+            </Typography>
             <List>
               <ListItem>
                 <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
@@ -107,7 +107,9 @@ export default function Footer() {
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>Hỗ Trợ</ListSubheader>
+            <Typography sx={{ color: "#ff9f1a" }} p={"0 16px"}>
+              Hỗ Trợ
+            </Typography>
             <List>
               <ListItem>
                 <KeyboardDoubleArrowRightIcon sx={{ color: "#ff9f1a" }} />
@@ -128,37 +130,54 @@ export default function Footer() {
             </List>
           </Grid>
           <Grid item xs={12} sm={6} md={3} lg={3}>
-            <ListSubheader sx={{ color: "#ff9f1a" }}>
+            <Typography sx={{ color: "#ff9f1a" }} p={"0 16px"}>
               Liên hệ với chúng tôi
-            </ListSubheader>
+            </Typography>
             <List
               size="sm"
               orientation="horizontal"
-              wrap
-              sx={{ flexGrow: 0, "--ListItem-radius": "8px" }}
+              // sx={{ flexGrow: 0, "--ListItem-radius": "8px" }}
             >
               <ListItem>
-                <List sx={{ "--ListItemDecorator-size": "32px" }}>
-                  <ListItem>
-                    <ListItemButton>
-                      <FacebookIcon sx={{ m: "10px", fontSize: "25px" }} />
-                      FaceBook
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemButton>
-                      <GitHubIcon sx={{ m: "10px", fontSize: "25px" }} />
-                      Github
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem>
-                    <ListItemButton>
-                      <YouTubeIcon sx={{ m: "10px", fontSize: "25px" }} />
-                      Youtube
-                    </ListItemButton>
-                  </ListItem>
-                </List>
+                <ListItemButton
+                  sx={{
+                    transition: "all .5s",
+                    "&:hover": { color: "#ff9f1a" },
+                  }}
+                >
+                  <FacebookIcon sx={{ fontSize: "25px", marginRight: "8px" }} />
+                  FaceBook
+                </ListItemButton>
               </ListItem>
+              <ListItem>
+                <ListItemButton
+                  sx={{
+                    transition: "all .5s",
+                    "&:hover": { color: "#ff9f1a" },
+                  }}
+                >
+                  <GitHubIcon sx={{ fontSize: "25px", marginRight: "8px" }} />
+                  Github
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton
+                  sx={{
+                    transition: "all .5s",
+                    "&:hover": { color: "#ff9f1a" },
+                  }}
+                >
+                  <YouTubeIcon sx={{ fontSize: "25px", marginRight: "8px" }} />
+                  Youtube
+                </ListItemButton>
+              </ListItem>
+              {/* <ListItem>
+                <List sx={{ "--ListItemDecorator-size": "32px", padding: "0" }}>
+
+                  
+                  
+                </List>
+              </ListItem> */}
             </List>
           </Grid>
         </Grid>
