@@ -16,8 +16,9 @@ import {
 } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../Components/ButtonMain";
+import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
-import { ModalSuccess, ModalContent } from "./index";
+import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
@@ -72,6 +73,7 @@ const IOSSwitch = styled((props) => (
 }));
 
 export default function AddMovie() {
+  const navigate = useNavigate();
   const [isHot, setIsHot] = useState(false);
   const [isNowShowing, setIsNowShowing] = useState(false);
   const [isComingSoon, setIsComingSoon] = useState(false);
@@ -81,9 +83,7 @@ export default function AddMovie() {
   const addmovieShema = object({
     tenPhim: string().required("Tên phim không được để trống"),
     biDanh: string().required("Bí danh không được để trống"),
-    moTa: string().required(
-      "Mô tả phim để khán giả có thể dễ dàng nắm bắt được nội dung"
-    ),
+    moTa: string().required("Vui lòng nhập mô tả"),
     trailer: string().required("Vui lòng cung cấp trailer của phim"),
     ngayKhoiChieu: string().required("Vui lòng chọn ngày "),
   });
@@ -141,8 +141,6 @@ export default function AddMovie() {
       return addMovie(formData);
     },
     onSuccess: () => {
-      // Đóng modal hoặc chuyển trang
-      // Sử dụng queryClient.invalidateQueries để gọi lại API get danh sách phim
       setShowSuccessModal(true);
     },
   });
@@ -308,7 +306,7 @@ export default function AddMovie() {
             <ButtonMain
               variant="contained"
               color="primary"
-              onClick={() => setShowSuccessModal(false)}
+              onClick={() => navigate("/admin/moviemanagement")}
             >
               Đồng ý
             </ButtonMain>

@@ -18,8 +18,8 @@ import Switch from "@mui/material/Switch";
 import { ButtonMain } from "../../../../Components/ButtonMain";
 import { object, string } from "yup";
 import Loading from "../../../../Components/Loading";
-import { useParams } from "react-router-dom";
-import { ModalSuccess, ModalContent } from "./index";
+import { useParams, useNavigate } from "react-router-dom";
+import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 
 //MUI switch
 const IOSSwitch = styled((props) => (
@@ -74,19 +74,20 @@ const IOSSwitch = styled((props) => (
 }));
 
 export default function EditMovie() {
+  const navigate = useNavigate();
   const { movieId } = useParams();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [imgPreview, setImgPreview] = useState("");
+  const [isHot, setIsHot] = useState(false);
+  const [isNowShowing, setIsNowShowing] = useState(false);
+  const [isComingSoon, setIsComingSoon] = useState(false);
+  const [rating, setRating] = useState(2);
 
   const { data: inforMovie = [], isLoading } = useQuery({
     queryKey: ["inforMovie", movieId],
     queryFn: () => getMovieDetails(movieId),
     enabled: !!movieId,
   });
-
-  const [isHot, setIsHot] = useState(inforMovie.hot);
-  const [isNowShowing, setIsNowShowing] = useState(inforMovie.dangChieu);
-  const [isComingSoon, setIsComingSoon] = useState(inforMovie.sapChieu);
-  const [rating, setRating] = useState(inforMovie.danhGia);
 
   const updatemovieShema = object({
     tenPhim: string().required("Tên phim không được để trống"),
@@ -103,27 +104,46 @@ export default function EditMovie() {
     handleSubmit,
     watch,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
-      tenPhim: inforMovie?.tenPhim || "",
-      biDanh: inforMovie?.biDanh || "",
-      moTa: inforMovie?.moTa || "",
-      hinhAnh: inforMovie?.hinhAnh || "",
-      trailer: inforMovie?.trailer || "",
-      ngayKhoiChieu: inforMovie?.ngayKhoiChieu || "",
+      tenPhim: "",
+      biDanh: "",
+      moTa: "",
+      hinhAnh: "",
+      trailer: "",
+      ngayKhoiChieu: "",
+      hot: false,
+      dangChieu: false,
+      sapChieu: false,
+      danhGia: 2,
     },
     resolver: yupResolver(updatemovieShema),
     mode: "onTouched",
   });
 
-  const hinhAnh = watch("hinhAnh");
-  const [imgPreview, setImgPreview] = useState("");
   useEffect(() => {
-    // Chạy vào useEffect callback khi giá trị của hinhAnh bị thay đổi
-    const file = hinhAnh?.[0];
-    if (!file) {
-      return;
+    if (inforMovie) {
+      setValue("tenPhim", inforMovie.tenPhim);
+      setValue("biDanh", inforMovie.biDanh);
+      setValue("moTa", inforMovie.moTa);
+      setImgPreview(inforMovie.hinhAnh);
+      setValue("trailer", inforMovie.trailer);
+      setValue("ngayKhoiChieu", inforMovie.ngayKhoiChieu);
+      setIsHot(inforMovie.hot);
+      setIsNowShowing(inforMovie.dangChieu);
+      setIsComingSoon(inforMovie.sapChieu);
+      if (inforMovie.danhGia !== undefined) {
+        setRating(inforMovie.danhGia);
+      }
     }
+  }, [inforMovie, setValue]);
+
+  const hinhAnh = watch("hinhAnh");
+
+  useEffect(() => {
+    const file = hinhAnh?.[0];
+    if (!file) return;
 
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -135,6 +155,7 @@ export default function EditMovie() {
   const { mutate: onSubmit } = useMutation({
     mutationFn: (values) => {
       const formData = new FormData();
+      formData.append("maPhim", movieId);
       formData.append("tenPhim", values.tenPhim);
       formData.append("biDanh", values.biDanh);
       formData.append("moTa", values.moTa);
@@ -146,10 +167,11 @@ export default function EditMovie() {
       formData.append("dangChieu", isNowShowing);
       formData.append("sapChieu", isComingSoon);
       formData.append("danhGia", rating);
-
       return updateMovie(formData);
     },
-    onSuccess: () => {},
+    onSuccess: () => {
+      setShowSuccessModal(true);
+    },
   });
 
   if (isLoading) {
@@ -284,7 +306,6 @@ export default function EditMovie() {
             <Typography component="legend">Đánh Giá</Typography>
             <Rating
               name="customized-10"
-              defaultValue={2}
               value={rating}
               max={10}
               onChange={(evt, value) => {
@@ -311,13 +332,13 @@ export default function EditMovie() {
               variant="h5"
               sx={{ fontWeight: "bold", marginBottom: "40px" }}
             >
-              Thêm phim thành công
+              Cập nhật phim thành công
             </Typography>
 
             <ButtonMain
               variant="contained"
               color="primary"
-              onClick={() => setShowSuccessModal(false)}
+              onClick={() => navigate("/admin/moviemanagement")}
             >
               Đồng ý
             </ButtonMain>
