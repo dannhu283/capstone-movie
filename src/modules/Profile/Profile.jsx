@@ -6,6 +6,8 @@ import Account from "./Account";
 import HistoryTicket from "./HistoryTicket/HistoryTicket";
 import { useQuery } from "@tanstack/react-query";
 import { getInfoUser } from "../../APIs/userAPI";
+import Loading from "../../Components/Loading/Loading";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -52,6 +54,10 @@ export default function Profile() {
   const handleChangeTabBar = (event, newValue) => {
     setTabBar(newValue);
   };
+
+  if (isLoading) {
+    <Loading />;
+  }
 
   return (
     <Box

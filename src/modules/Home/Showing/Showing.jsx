@@ -21,6 +21,41 @@ import ShowingCss from "./ShowingCss.module.css";
 import SearchFilm from "../SearchFilm/SearchFilm";
 import { ButtonMain } from "../../../Components/ButtonMain";
 import { CustomDot } from "./index";
+// import { constants } from "http2";
+
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <ChevronRightIcon
+      className={className}
+      style={{
+        ...style,
+        display: "block",
+        color: "#3d3d3d",
+        fontSize: "80px",
+        right: "-55px",
+      }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <ChevronLeftIcon
+      className={className}
+      style={{
+        ...style,
+        display: "block",
+        color: "#3d3d3d",
+        fontSize: "80px",
+        left: "-55px",
+      }}
+      onClick={onClick}
+    />
+  );
+}
 
 export default function Showing() {
   // const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,7 +89,7 @@ export default function Showing() {
     setIsButtonVisible(false);
   };
 
-  var settings = {
+  const settings = {
     dots: true,
     customPaging: function () {
       return <CustomDot></CustomDot>;
@@ -65,31 +100,9 @@ export default function Showing() {
     slidesToScroll: 4,
     initialSlide: 0,
     rows: 2,
-
-    nextArrow: (
-      <ChevronRightIcon
-        sx={{
-          color: "#3d3d3d",
-          fontSize: "80px",
-          right: "-8%",
-          "&:hover": {
-            color: "#3ae374",
-          },
-        }}
-      />
-    ),
-    prevArrow: (
-      <ChevronLeftIcon
-        sx={{
-          color: "#3d3d3d",
-          fontSize: "80px",
-          left: "-8%",
-          "&:hover": {
-            color: "#3ae374",
-          },
-        }}
-      />
-    ),
+    accessibility: false,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
     responsive: [
       {
         breakpoint: 1024,
@@ -97,7 +110,7 @@ export default function Showing() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -107,6 +120,9 @@ export default function Showing() {
           slidesToScroll: 1,
           initialSlide: 2,
           rows: 6,
+          nextArrow: <></>,
+          prevArrow: <></>,
+          dots: false,
         },
       },
       {
@@ -133,7 +149,7 @@ export default function Showing() {
       <SearchFilm movies={data} />
       <Slider {...settings}>
         {data.map((movie) => (
-          <Grid className={ShowingCss.item}>
+          <Grid className={ShowingCss.item} key={movie.maPhim}>
             <Grid
               item
               sx={{ margin: "10px" }}

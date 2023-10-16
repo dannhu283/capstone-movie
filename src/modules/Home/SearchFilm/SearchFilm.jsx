@@ -30,9 +30,12 @@ export default function SearchFilm({ movies }) {
   const navigate = useNavigate();
 
   const handleChangeMovie = (event) => {
+    setCinema("");
+    setDate("");
     setMovie(event.target.value);
   };
   const handleChangeCinema = (event) => {
+    setDate("");
     setCinema(event.target.value);
     setDateCinemas(event.target.value.cumRapChieu);
   };
@@ -117,29 +120,26 @@ export default function SearchFilm({ movies }) {
             label="Ngày giờ chiếu"
           >
             <MenuItem value="">
-              <em>Ngày Giờ Chiêú</em>
+              <em>Ngày Giờ Chiếu</em>
             </MenuItem>
 
             {dateCinemas.map((dateCinema) => {
-              return (
-                <MenuItem key={dateCinema.maCumRap} value={dateCinema.maCumRap}>
-                  {dateCinema.lichChieuPhim.map((showtime) => {
-                    const time = dayjs(showtime.ngayChieuGioChieu).format(
-                      "DD-MM-YYYY ~ HH:mm"
-                    );
-                    return (
-                      <em
-                        key={showtime.maLichChieu}
-                        onClick={() => {
-                          setCodeTimeCinema(showtime.maLichChieu);
-                        }}
-                      >
-                        {time}
-                      </em>
-                    );
-                  })}
-                </MenuItem>
-              );
+              return dateCinema.lichChieuPhim.map((showtime) => {
+                const time = dayjs(showtime.ngayChieuGioChieu).format(
+                  "DD-MM-YYYY ~ HH:mm"
+                );
+                return (
+                  <MenuItem
+                    key={showtime.maLichChieu}
+                    value={showtime.maLichChieu}
+                    onClick={() => {
+                      setCodeTimeCinema(showtime.maLichChieu);
+                    }}
+                  >
+                    {time}
+                  </MenuItem>
+                );
+              });
             })}
           </Select>
         </FormControl>
@@ -153,7 +153,7 @@ export default function SearchFilm({ movies }) {
             }
           }}
         >
-          mua vé ngay
+          Mua vé ngay
         </ButtonMain>
       </Box>
     </Paper>

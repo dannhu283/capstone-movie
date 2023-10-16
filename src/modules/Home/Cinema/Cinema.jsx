@@ -106,7 +106,7 @@ export default function Cinema({ theaterId }) {
                           : "transparent",
                     }}
                   >
-                    <img src={item.logo} alt="logo" style={{ width: "80%" }} />
+                    <img src={item.logo} alt="logo" style={{ width: "60%" }} />
                   </Paper>
                   <Divider />
                 </Grid>
@@ -164,13 +164,9 @@ export default function Cinema({ theaterId }) {
                         sx={{
                           borderBottom: "1px dashed #cd84f1",
                         }}
+                        key={phim.maPhim}
                       >
-                        <Grid
-                          item
-                          xs={4}
-                          key={phim.maPhim}
-                          sx={{ padding: "15px" }}
-                        >
+                        <Grid item xs={4} sx={{ padding: "15px" }}>
                           <img
                             src={phim.hinhAnh}
                             alt="hinhAnh"
@@ -179,14 +175,16 @@ export default function Cinema({ theaterId }) {
                         </Grid>
                         <Grid item xs={8}>
                           <Box sx={{ marginLeft: "10px" }}>
-                            <Typography
-                              sx={{
-                                color: "#3ae374",
-                                fontSize: "25px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {phim.tenPhim}
+                            <Box display={"flex"} alignItems={"center"}>
+                              <Typography
+                                sx={{
+                                  color: "#3ae374",
+                                  fontSize: "25px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {phim.tenPhim}
+                              </Typography>
                               {phim.hot && (
                                 <Chip
                                   label="HOT"
@@ -196,8 +194,7 @@ export default function Cinema({ theaterId }) {
                                   sx={{ fontWeight: "bold", ml: 2 }}
                                 />
                               )}
-                            </Typography>
-
+                            </Box>
                             {phim.lstLichChieuTheoPhim.map((lichChieu) => (
                               <ButtonCustom
                                 onClick={() =>
