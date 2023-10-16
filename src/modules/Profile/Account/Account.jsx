@@ -67,7 +67,6 @@ export default function Account({ username }) {
 
   return (
     <>
-      {" "}
       <Box display={"flex"} alignItems={"center"} flexDirection={"column"}>
         <Box
           width={"80px"}
