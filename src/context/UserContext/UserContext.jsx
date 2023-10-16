@@ -18,8 +18,20 @@ const UserProvider = ({ children }) => {
     localStorage.removeItem("currentUser");
   };
 
+  const handleChangeCurrentUser = (user) => {
+    setCurrentUser(user);
+    localStorage.setItem("currentUser", JSON.stringify(user));
+  };
+
   return (
-    <UserContext.Provider value={{ currentUser, handleSignin, handleSignout }}>
+    <UserContext.Provider
+      value={{
+        currentUser,
+        handleSignin,
+        handleSignout,
+        handleChangeCurrentUser,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
