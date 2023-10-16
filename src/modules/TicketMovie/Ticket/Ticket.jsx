@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Divider, Paper, Snackbar, Alert, Typography } from "@mui/material";
+import { Divider, Paper, Typography } from "@mui/material";
 import { ButtonMain } from "../../../Components/ButtonMain";
 import { Text, TextColor, Row, TextSeat } from "./index";
 import { useTicketContext } from "../../../context/TicketContext/TicketContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { bookTicket } from "../../../APIs/bookTicketAPI";
+import { ModalSuccess, ModalContent } from "../../../Components/Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function Ticket({ ticketInfo }) {
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const { selectedSeats, totalPrice } = useTicketContext();
 
   const queryClient = useQueryClient();
@@ -29,15 +32,14 @@ export default function Ticket({ ticketInfo }) {
   });
 
   const handlepay = () => {
+    if (selectedSeats.length === 0) return alert("Vui lòng chọn ghế");
     handleBookTickets();
-    setOpen(true);
+    setShowSuccessModal(true);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
+  const handleClose = () => {
+    setShowSuccessModal(false);
+    navigate("/");
   };
 
   return (
@@ -107,11 +109,27 @@ export default function Ticket({ ticketInfo }) {
       >
         Đặt vé
       </ButtonMain>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Đặt vé thành công
-        </Alert>
-      </Snackbar>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnfs5c14_small.gif"
+              alt="confirm"
+            />
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              Đặt vé thành công
+            </Typography>
+            <Typography
+              sx={{ fontSize: "20px", marginY: "10px", opacity: "0.5" }}
+            >
+              Vui lòng xem lịch sử đặt vé ở profile
+            </Typography>
+
+            <ButtonMain onClick={handleClose}>Đồng ý</ButtonMain>
+          </ModalContent>
+        </ModalSuccess>
+      )}
     </>
   );
 }
