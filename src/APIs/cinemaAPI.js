@@ -26,7 +26,7 @@ export async function getLogo(theaterId) {
   }
 }
 
-export async function getInfoTheater(theaterId) {
+export async function getInforTheater(theaterId) {
   try {
     const response = await fetcher.get(
       "QuanLyRap/LayThongTinCumRapTheoHeThong",
