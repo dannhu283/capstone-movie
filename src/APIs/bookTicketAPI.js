@@ -21,3 +21,12 @@ export async function addShowtimes(showtime) {
     throw error.response.data.content;
   }
 }
+
+export async function bookTicket(ticket) {
+  try {
+    const response = await fetcher.post("/QuanLyDatVe/DatVe", ticket);
+    return response.data?.content;
+  } catch (error) {
+    throw error.response.data?.content;
+  }
+}
