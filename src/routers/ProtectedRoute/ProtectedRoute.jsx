@@ -13,10 +13,9 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to={url} replace />;
   }
 
-  //trang admin
-  //   if(currentUser.maLoaiNguoiDung!==="QuanTri"){
-  //     return<Navigate to="/404" />
-  //   }
+  if (currentUser?.maLoaiNguoiDung !== "QuanTri") {
+    return <Navigate to="/404" replace />;
+  }
 
   return children || <Outlet />;
 }
