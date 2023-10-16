@@ -15,8 +15,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import { useState } from "react";
 import { ButtonMain } from "../../../../../Components/ButtonMain";
-import ErrorIcon from "@mui/icons-material/Error";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addUser } from "../../../../../APIs/userAPI";
 
@@ -213,7 +211,13 @@ export default function AddUser({ onClose }) {
                 p: 4,
               }}
             >
-              <ErrorIcon color="error" />
+              <Box display={"flex"} justifyContent={"center"}>
+                <img
+                  style={{ width: "80px", marginTop: "10px" }}
+                  src="/img/animation_error_small.gif"
+                  alt="confirm"
+                />
+              </Box>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 {error}
               </Typography>
@@ -241,7 +245,13 @@ export default function AddUser({ onClose }) {
               p: 4,
             }}
           >
-            <CheckBoxIcon color="success" />
+            <Box display={"flex"} justifyContent={"center"}>
+              <img
+                style={{ width: "80px", marginTop: "10px" }}
+                src="/img/animation_lnfs5c14_small.gif"
+                alt="confirm"
+              />
+            </Box>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Chỉnh sửa thông tin người dùng thành công
             </Typography>

@@ -18,8 +18,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { editUser } from "../../../../../APIs/userAPI";
 import { useEffect } from "react";
 import { useState } from "react";
-import ErrorIcon from "@mui/icons-material/Error";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Controller } from "react-hook-form";
 
 export default function UpdateUser({ infoUser, onClose }) {
@@ -55,7 +53,6 @@ export default function UpdateUser({ infoUser, onClose }) {
     reset,
     control,
     setValue,
-    watch,
   } = useForm({
     defaultValues: infoUser,
     resolver: yupResolver(editUserSchema),
@@ -98,8 +95,6 @@ export default function UpdateUser({ infoUser, onClose }) {
     onClose();
   };
 
-  const maLoaiNguoiDung = watch("maLoaiNguoiDung");
-
   // Sử dụng useEffect để đặt giá trị trường nhập khi infoUser thay đổi
   useEffect(() => {
     // Kiểm tra nếu dữ liệu đã tải xong
@@ -140,7 +135,6 @@ export default function UpdateUser({ infoUser, onClose }) {
               fullWidth
               error={!!errors.taiKhoan}
               helperText={errors.taiKhoan?.message}
-              disabled
               {...register("taiKhoan")}
             />
           </Grid>
@@ -234,7 +228,13 @@ export default function UpdateUser({ infoUser, onClose }) {
                 p: 4,
               }}
             >
-              <ErrorIcon color="error" />
+              <Box display={"flex"} justifyContent={"center"}>
+                <img
+                  style={{ width: "80px", marginTop: "10px" }}
+                  src="/img/animation_error_small.gif"
+                  alt="confirm"
+                />
+              </Box>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 {error}
               </Typography>
@@ -262,7 +262,13 @@ export default function UpdateUser({ infoUser, onClose }) {
               p: 4,
             }}
           >
-            <CheckBoxIcon color="success" />
+            <Box display={"flex"} justifyContent={"center"}>
+              <img
+                style={{ width: "80px", marginTop: "10px" }}
+                src="/img/animation_lnfs5c14_small.gif"
+                alt="confirm"
+              />
+            </Box>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               Chỉnh sửa thông tin người dùng thành công
             </Typography>

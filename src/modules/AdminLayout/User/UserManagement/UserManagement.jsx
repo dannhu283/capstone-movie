@@ -30,8 +30,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import Loading from "../../../../Components/Loading";
 import UserModal from "./UpdateUser";
 import { getInfoUser, removeUser } from "../../../../APIs/userAPI";
-import ErrorIcon from "@mui/icons-material/Error";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AddUser from "./AddUser/AddUser";
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -113,7 +111,7 @@ export default function UserManagement() {
   const [infoUser, setInfoUser] = React.useState({});
   const [isLoadingInfoUser, setIsLoadingInfoUser] = React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState(null);
-  const [openError, setOpenError] = React.useState(true);
+  const [openError, setOpenError] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
 
   const queryClient = useQueryClient();
@@ -126,7 +124,7 @@ export default function UserManagement() {
   const { mutate: handleDeleteUser, error } = useMutation({
     mutationFn: (username) => removeUser(username),
     onSuccess: () => {
-      setOpenSuccess(false);
+      setOpenSuccess(true);
       setOpenError(false);
       queryClient.invalidateQueries({ queryKey: ["customer"] });
     },
@@ -169,9 +167,19 @@ export default function UserManagement() {
     setOpenDelete(false);
   };
 
+  const handleDeleteAndReload = () => {
+    if (!error) {
+      handleDeleteUser(selectedUser);
+    } else {
+      setOpenError(true);
+      setOpenDelete(false);
+    }
+  };
+
   const handleCloseError = () => {
     setOpenError(false);
     setOpenDelete(false);
+    window.location.reload(); // Reload the page if there's an error
   };
 
   const handleCloseSuccess = () => {
@@ -394,13 +402,7 @@ export default function UserManagement() {
               variant="contained"
               color="success"
               sx={{ marginRight: "10px" }}
-              onClick={() => {
-                if (!error) {
-                  handleDeleteUser(selectedUser);
-                } else {
-                  setOpenError(true);
-                }
-              }}
+              onClick={handleDeleteAndReload}
             >
               Xác nhận
             </Button>
@@ -418,33 +420,36 @@ export default function UserManagement() {
       </Modal>
 
       {/* Hiện thông báo lỗi */}
-      {!!error && (
-        <Modal
-          open={openError}
-          onClose={handleCloseError}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
+
+      <Modal
+        open={openError}
+        onClose={handleCloseError}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "#fff",
+            border: "1px solid #fff",
+            boxShadow: 24,
+            p: 4,
+          }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              bgcolor: "#fff",
-              border: "1px solid #fff",
-              boxShadow: 24,
-              p: 4,
-            }}
-          >
-            <ErrorIcon color="error" />
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              {error}
-            </Typography>
-          </Box>
-        </Modal>
-      )}
+          <img
+            style={{ width: "80px", marginTop: "10px" }}
+            src="/img/animation_error_small.gif"
+            alt="confirm"
+          />
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            {error}
+          </Typography>
+        </Box>
+      </Modal>
 
       {/* Hiện thông báo xóa user thành công  */}
       <Modal
@@ -466,7 +471,13 @@ export default function UserManagement() {
             p: 4,
           }}
         >
-          <CheckBoxIcon color="success" />
+          <Box display={"flex"} justifyContent={"center"}>
+            <img
+              style={{ width: "80px", marginTop: "10px" }}
+              src="/img/animation_lnfs5c14_small.gif"
+              alt="confirm"
+            />
+          </Box>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Xóa người dùng thành công
           </Typography>
