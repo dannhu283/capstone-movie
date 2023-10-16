@@ -144,6 +144,7 @@ export default function Footer() {
                   sx={{
                     transition: "all .5s",
                     "&:hover": { color: "#ff9f1a" },
+                    color: "white",
                   }}
                 >
                   <FacebookIcon sx={{ fontSize: "25px", marginRight: "8px" }} />
@@ -154,6 +155,7 @@ export default function Footer() {
                 <ListItemButton
                   sx={{
                     transition: "all .5s",
+                    color: "white",
                     "&:hover": { color: "#ff9f1a" },
                   }}
                 >
@@ -165,6 +167,7 @@ export default function Footer() {
                 <ListItemButton
                   sx={{
                     transition: "all .5s",
+                    color: "white",
                     "&:hover": { color: "#ff9f1a" },
                   }}
                 >

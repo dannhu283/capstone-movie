@@ -86,6 +86,7 @@ export default function AddMovie() {
     moTa: string().required("Vui lòng nhập mô tả"),
     trailer: string().required("Vui lòng cung cấp trailer của phim"),
     ngayKhoiChieu: string().required("Vui lòng chọn ngày "),
+    hinhAnh: string().required("Vui lòng chọn hình ảnh"),
   });
 
   const {
@@ -261,11 +262,17 @@ export default function AddMovie() {
           </Grid>
           {/* hinhanh */}
           <Grid item xs={12}>
-            <input type="file" {...register("hinhAnh")} />
+            <TextField
+              type="file"
+              color="success"
+              {...register("hinhAnh")}
+              error={!!errors.hinhAnh}
+              helperText={errors.hinhAnh && errors.hinhAnh.message}
+            />
             {imgPreview && (
-              <div>
+              <Box>
                 <img src={imgPreview} alt="preview" width={200} height={200} />
-              </div>
+              </Box>
             )}
           </Grid>
           {/* rating */}

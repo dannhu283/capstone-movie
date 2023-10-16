@@ -21,12 +21,15 @@ import { StyledTableCell, StyledTableRow } from "./index";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import TextField from "@mui/material/TextField";
 import Loading from "../../../../Components/Loading";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 import { ButtonCustom, ButtonMain } from "../../../../Components/ButtonMain";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -106,11 +109,16 @@ export default function UserManagement() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { data: movies = [], isLoading } = useQuery({
     queryKey: ["movie"],
     queryFn: getMovies,
   });
+
+  const filteredMovies = movies.filter((movie) =>
+    movie.tenPhim.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -144,6 +152,11 @@ export default function UserManagement() {
     setShowSuccessModal(false);
   };
 
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+    setPage(0);
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -151,6 +164,20 @@ export default function UserManagement() {
   return (
     <>
       <Box height={100} />
+      <TextField
+        sx={{ marginBottom: "20px", width: "100%" }}
+        color="success"
+        label="Tìm kiếm phim"
+        value={searchQuery}
+        onChange={handleSearchInputChange}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
           <TableHead>
@@ -177,11 +204,11 @@ export default function UserManagement() {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? movies.slice(
+              ? filteredMovies.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : movies
+              : filteredMovies
             ).map((movie) => (
               <StyledTableRow key={movie.bidanh}>
                 <StyledTableCell>{movie.maPhim}</StyledTableCell>
@@ -236,6 +263,7 @@ export default function UserManagement() {
               </TableRow>
             )}
           </TableBody>
+
           <TableFooter>
             <TableRow>
               <TablePagination

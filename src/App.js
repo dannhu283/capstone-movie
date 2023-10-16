@@ -17,44 +17,47 @@ import UserManagement from "./modules/AdminLayout/User/UserManagement";
 import CreateShowtimes from "./modules/AdminLayout/Movie/CreateShowtimes";
 import EditMovie from "./modules/AdminLayout/Movie/EditMovie";
 import Profile from "./modules/Profile";
+import TicketProvider from "./context/TicketContext/TicketContext";
 
 function App() {
   return (
     <UserProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* user */}
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="movies/:movieId" element={<Details />} />
+      <TicketProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* user */}
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Home />} />
+              <Route path="movies/:movieId" element={<Details />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="profile/:username" element={<Profile />} />
-              <Route path="tickets/:showtimeId" element={<TicketMovie />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="profile/:username" element={<Profile />} />
+                <Route path="tickets/:showtimeId" element={<TicketMovie />} />
+              </Route>
+
+              <Route path="/sign-in" element={<Signin />} />
+              <Route path="/sign-up" element={<Signup />} />
             </Route>
 
-            <Route path="/sign-in" element={<Signin />} />
-            <Route path="/sign-up" element={<Signup />} />
-          </Route>
+            {/* admin */}
+            {/* <Route element={<AdminProtectedRoute />} > */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route path="addmovie" element={<AddMovie />} />
 
-          {/* admin */}
-          {/* <Route element={<AdminProtectedRoute />} > */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route path="addmovie" element={<AddMovie />} />
+              <Route path="moviemanagement" element={<MovieManagement />} />
 
-            <Route path="moviemanagement" element={<MovieManagement />} />
+              <Route path="editmovie/:movieId" element={<EditMovie />} />
 
-            <Route path="editmovie/:movieId" element={<EditMovie />} />
+              <Route path="showtime/:movieId" element={<CreateShowtimes />} />
 
-            <Route path="showtime/:movieId" element={<CreateShowtimes />} />
+              <Route path="usermanagement" element={<UserManagement />} />
+            </Route>
+            {/* </Route> */}
 
-            <Route path="usermanagement" element={<UserManagement />} />
-          </Route>
-          {/* </Route> */}
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TicketProvider>
     </UserProvider>
   );
 }
