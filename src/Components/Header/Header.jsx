@@ -19,6 +19,9 @@ import { useNavigate } from "react-router-dom";
 import { SigninAndSignup } from "./index";
 import { useUserContext } from "../../context/UserContext/UserContext";
 import PropTypes from "prop-types";
+import { ModalSuccess, ModalContent } from "../Modal";
+import { ButtonMain, ButtonCustom } from "../ButtonMain";
+
 function ElevationScroll(props) {
   const { children, window } = props;
 
@@ -49,6 +52,7 @@ export default function Header(props) {
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const navigate = useNavigate();
   const { currentUser, handleSignout } = useUserContext();
@@ -74,10 +78,14 @@ export default function Header(props) {
   const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
     if (setting === "Logout") {
-      handleSignout();
+      handleLogout();
     } else if (setting === "Profile") {
       navigate(`/profile/${currentUser.taiKhoan}`);
     }
+  };
+
+  const handleLogout = () => {
+    setShowSuccessModal(true);
   };
 
   return (
@@ -219,7 +227,7 @@ export default function Header(props) {
                         color: "#ff9f1a",
                       },
                     }}
-                    onClick={handleSignout}
+                    onClick={handleLogout}
                   >
                     <ExitToApp />
                     <Typography>Đăng xuất</Typography>
@@ -255,6 +263,28 @@ export default function Header(props) {
           </Container>
         </AppBar>
       </ElevationScroll>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnov06bj_small.gif"
+              alt="confirm"
+            />
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", marginBottom: "40px" }}
+            >
+              Bạn có chắc chắn đăng xuất?
+            </Typography>
+
+            <ButtonMain onClick={handleSignout}>Đồng ý</ButtonMain>
+            <ButtonCustom onClick={() => setShowSuccessModal(false)}>
+              Hủy Bỏ
+            </ButtonCustom>
+          </ModalContent>
+        </ModalSuccess>
+      )}
     </>
   );
 }
