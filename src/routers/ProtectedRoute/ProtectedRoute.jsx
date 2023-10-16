@@ -5,7 +5,6 @@ import { useUserContext } from "../../context/UserContext/UserContext";
 export default function ProtectedRoute({ children }) {
   const { currentUser } = useUserContext();
   const location = useLocation();
-  console.log(location);
 
   if (!currentUser) {
     //user chưa đăng nhập=> redirect về login
@@ -13,10 +12,9 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to={url} replace />;
   }
 
-  //trang admin
-  //   if(currentUser.maLoaiNguoiDung!==="QuanTri"){
-  //     return<Navigate to="/404" />
-  //   }
+  if (currentUser?.maLoaiNguoiDung !== "QuanTri") {
+    return <Navigate to="/404" replace />;
+  }
 
   return children || <Outlet />;
 }

@@ -19,6 +19,9 @@ import { useNavigate } from "react-router-dom";
 import { SigninAndSignup } from "./index";
 import { useUserContext } from "../../context/UserContext/UserContext";
 import PropTypes from "prop-types";
+import { ModalSuccess, ModalContent } from "../Modal";
+import { ButtonMain, ButtonCustom } from "../ButtonMain";
+
 function ElevationScroll(props) {
   const { children, window } = props;
 
@@ -40,18 +43,27 @@ ElevationScroll.propTypes = {
 };
 
 export default function Header(props) {
+  const { currentUser, handleSignout } = useUserContext();
+
   const pages = [
     { id: "showing", label: "Lịch chiếu" },
     { id: "cinema", label: "Cụm rạp" },
     { id: "tintuc", label: "Tin tức" },
     { id: "ungdung", label: "Ứng dụng" },
   ];
+
+  const isAdmin = currentUser?.maLoaiNguoiDung === "QuanTri";
+
   const settings = ["Profile", "Account", "Dashboard", "Logout"];
+  if (isAdmin) {
+    settings.push("Admin");
+  }
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const navigate = useNavigate();
-  const { currentUser, handleSignout } = useUserContext();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -74,10 +86,21 @@ export default function Header(props) {
   const handleCloseUserMenu = (setting) => {
     setAnchorElUser(null);
     if (setting === "Logout") {
-      handleSignout();
+      handleConfirmLogout();
     } else if (setting === "Profile") {
       navigate(`/profile/${currentUser.taiKhoan}`);
+    } else if (setting === "Admin") {
+      navigate(`/admin`);
     }
+  };
+
+  const handleConfirmLogout = () => {
+    setShowSuccessModal(true);
+  };
+
+  const handleLogout = () => {
+    handleSignout();
+    setShowSuccessModal(false);
   };
 
   return (
@@ -218,8 +241,11 @@ export default function Header(props) {
                       "&:hover": {
                         color: "#ff9f1a",
                       },
+                      "@media (max-width: 400px)": {
+                        display: "none",
+                      },
                     }}
-                    onClick={handleSignout}
+                    onClick={handleConfirmLogout}
                   >
                     <ExitToApp />
                     <Typography>Đăng xuất</Typography>
@@ -255,6 +281,28 @@ export default function Header(props) {
           </Container>
         </AppBar>
       </ElevationScroll>
+      {showSuccessModal && (
+        <ModalSuccess>
+          <ModalContent>
+            <img
+              style={{ width: "120px", marginTop: "10px" }}
+              src="/img/animation_lnov06bj_small.gif"
+              alt="confirm"
+            />
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: "bold", marginBottom: "40px" }}
+            >
+              Bạn có chắc chắn đăng xuất?
+            </Typography>
+
+            <ButtonMain onClick={handleLogout}>Đồng ý</ButtonMain>
+            <ButtonCustom onClick={() => setShowSuccessModal(false)}>
+              Hủy Bỏ
+            </ButtonCustom>
+          </ModalContent>
+        </ModalSuccess>
+      )}
     </>
   );
 }

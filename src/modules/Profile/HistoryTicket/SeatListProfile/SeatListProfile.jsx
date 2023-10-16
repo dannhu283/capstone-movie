@@ -1,5 +1,5 @@
 import WeekendIcon from "@mui/icons-material/Weekend";
-import { Box, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import React from "react";
 
 export default function SeatListProfile({ seatList }) {

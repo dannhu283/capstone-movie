@@ -6,8 +6,7 @@ import Account from "./Account";
 import HistoryTicket from "./HistoryTicket/HistoryTicket";
 import { useQuery } from "@tanstack/react-query";
 import { getInfoUser } from "../../APIs/userAPI";
-import Loading from "../../Components/Loading/Loading";
-
+import Loading from "../../Components/Loading";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -47,8 +46,6 @@ export default function Profile() {
     queryFn: () => getInfoUser(username),
     enabled: !!username,
   });
-
-  console.log(profile);
 
   const infoTicket = profile?.thongTinDatVe || undefined;
   const handleChangeTabBar = (event, newValue) => {
