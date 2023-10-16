@@ -30,29 +30,25 @@ function App() {
               <Route index element={<Home />} />
               <Route path="movies/:movieId" element={<Details />} />
 
-              <Route element={<ProtectedRoute />}>
-                <Route path="profile/:username" element={<Profile />} />
-                <Route path="tickets/:showtimeId" element={<TicketMovie />} />
-
-                {/* admin */}
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route path="addmovie" element={<AddMovie />} />
-
-                  <Route path="moviemanagement" element={<MovieManagement />} />
-
-                  <Route path="editmovie/:movieId" element={<EditMovie />} />
-
-                  <Route
-                    path="showtime/:movieId"
-                    element={<CreateShowtimes />}
-                  />
-
-                  <Route path="usermanagement" element={<UserManagement />} />
-                </Route>
-              </Route>
-
               <Route path="/sign-in" element={<Signin />} />
               <Route path="/sign-up" element={<Signup />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="profile/:username" element={<Profile />} />
+              <Route path="tickets/:showtimeId" element={<TicketMovie />} />
+
+              {/* admin */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="addmovie" element={<AddMovie />} />
+
+                <Route path="moviemanagement" element={<MovieManagement />} />
+
+                <Route path="editmovie/:movieId" element={<EditMovie />} />
+
+                <Route path="showtime/:movieId" element={<CreateShowtimes />} />
+
+                <Route path="usermanagement" element={<UserManagement />} />
+              </Route>
             </Route>
 
             <Route path="*" element={<NotFound />} />

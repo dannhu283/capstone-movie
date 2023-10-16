@@ -85,10 +85,10 @@ export default function Account({ username }) {
         <ButtonMain
           m="20px 0 0 0"
           onClick={() => {
-            navigate("/admin");
+            navigate("/");
           }}
         >
-          Đi tới trang admin
+          Quay về trang chủ
         </ButtonMain>
       </Box>
       <Box

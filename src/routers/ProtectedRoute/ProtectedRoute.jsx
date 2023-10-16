@@ -5,7 +5,6 @@ import { useUserContext } from "../../context/UserContext/UserContext";
 export default function ProtectedRoute({ children }) {
   const { currentUser } = useUserContext();
   const location = useLocation();
-  console.log(location);
 
   if (!currentUser) {
     //user chưa đăng nhập=> redirect về login
