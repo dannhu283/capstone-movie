@@ -3,10 +3,8 @@ import { Divider, Paper, Snackbar, Alert, Typography } from "@mui/material";
 import { ButtonMain } from "../../../Components/ButtonMain";
 import { Text, TextColor, Row, TextSeat } from "./index";
 import { useTicketContext } from "../../../context/TicketContext/TicketContext";
-import { useQueryClient } from "react-query";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { bookTicket } from "../../../APIs/bookTicketAPI";
-import Loading from "../../../Components/Loading";
 
 export default function Ticket({ ticketInfo }) {
   const [open, setOpen] = useState(false);
@@ -19,7 +17,7 @@ export default function Ticket({ ticketInfo }) {
     giaVe: item.giaVe,
   }));
 
-  const { mutate: handleBookTickets, isLoading } = useMutation({
+  const { mutate: handleBookTickets } = useMutation({
     mutationFn: () =>
       bookTicket({
         maLichChieu: ticketInfo.maLichChieu,
@@ -30,14 +28,17 @@ export default function Ticket({ ticketInfo }) {
     },
   });
 
+  const handlepay = () => {
+    handleBookTickets();
+    setOpen(true);
+  };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
-
-  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -101,7 +102,7 @@ export default function Ticket({ ticketInfo }) {
         </Row>
       </Paper>
       <ButtonMain
-        onClick={handleBookTickets}
+        onClick={handlepay}
         style={{ width: "100%", fontSize: "16px" }}
       >
         Đặt vé
