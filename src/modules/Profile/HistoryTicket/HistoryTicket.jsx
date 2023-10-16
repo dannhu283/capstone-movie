@@ -23,6 +23,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import SeatListProfile from "./SeatListProfile";
+import dayjs from "dayjs";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -168,7 +169,9 @@ export default function HistoryTicket({ infoTicket }) {
                     height={"80px"}
                   />
                 </StyledTableCell>
-                <StyledTableCell>{index.ngayDat}</StyledTableCell>
+                <StyledTableCell>
+                  {dayjs(index.ngayDat).format("DD-MM-YYYY  HH:mm")}
+                </StyledTableCell>
                 <StyledTableCell>{`${index.thoiLuongPhim} phút`}</StyledTableCell>
                 <StyledTableCell>{index.giaVe}</StyledTableCell>
                 <StyledTableCell>

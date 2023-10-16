@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   getLogo,
-  getInforTheater,
+  getInfoTheater,
   getTheaterShowtimes,
 } from "../../../APIs/cinemaAPI";
 import Loading from "../../../Components/Loading";
@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
 export default function Cinema({ theaterId }) {
-  const [inforTheaters, setInforTheater] = useState([]);
+  const [infoTheaters, setInfoTheater] = useState([]);
 
   const [listMovies, setListMovies] = useState([]);
 
@@ -30,7 +30,7 @@ export default function Cinema({ theaterId }) {
 
   const navigate = useNavigate();
 
-  const { data = {}, isLoading } = useQuery({
+  const { data = [], isLoading } = useQuery({
     queryKey: ["logo", theaterId],
     queryFn: () => getLogo(theaterId),
   });
@@ -39,17 +39,17 @@ export default function Cinema({ theaterId }) {
 
   const handleChangeTab = async (theaterSystemsId) => {
     try {
-      const inforTheaters = await getInforTheater(theaterSystemsId);
-      setInforTheater(inforTheaters);
+      const infoTheaters = await getInfoTheater(theaterSystemsId);
+      setInfoTheater(infoTheaters);
       setSelectedTab(theaterSystemsId);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleGetListMovie = async (inforTheaterId, tenCumRap) => {
+  const handleGetListMovie = async (infoTheaterId, tenCumRap) => {
     try {
-      const listMovies = await getTheaterShowtimes(inforTheaterId);
+      const listMovies = await getTheaterShowtimes(infoTheaterId);
       setListMovies(listMovies);
       setSelectedTenCumRap(tenCumRap);
     } catch (error) {
@@ -65,13 +65,13 @@ export default function Cinema({ theaterId }) {
   }, [theaterSystems]);
 
   useEffect(() => {
-    if (inforTheaters.length > 0) {
+    if (infoTheaters.length > 0) {
       handleGetListMovie(
-        inforTheaters[0].maHeThongRap,
-        inforTheaters[0].tenCumRap
+        infoTheaters[0].maHeThongRap,
+        infoTheaters[0].tenCumRap
       );
     }
-  }, [inforTheaters]);
+  }, [infoTheaters]);
 
   if (isLoading) {
     return <Loading />;
@@ -106,7 +106,7 @@ export default function Cinema({ theaterId }) {
                           : "transparent",
                     }}
                   >
-                    <img src={item.logo} alt="logo" style={{ width: "80%" }} />
+                    <img src={item.logo} alt="logo" style={{ width: "60%" }} />
                   </Paper>
                   <Divider />
                 </Grid>
@@ -117,13 +117,13 @@ export default function Cinema({ theaterId }) {
         <Grid item xs={4} style={{ height: "80vh", overflowY: "scroll" }}>
           <Box>
             <Grid container>
-              {inforTheaters.map((inforTheater) => (
-                <Grid item key={inforTheater.maCumRap} xs={12}>
+              {infoTheaters.map((infoTheater) => (
+                <Grid item key={infoTheater.maCumRap} xs={12}>
                   <Paper
                     onClick={() =>
                       handleGetListMovie(
-                        inforTheater.maHeThongRap,
-                        inforTheater.tenCumRap
+                        infoTheater.maHeThongRap,
+                        infoTheater.tenCumRap
                       )
                     }
                     style={{
@@ -132,16 +132,16 @@ export default function Cinema({ theaterId }) {
                       padding: "16px",
                       margin: "10px  10px 0",
                       background:
-                        selectedTenCumRap === inforTheater.tenCumRap
+                        selectedTenCumRap === infoTheater.tenCumRap
                           ? "#dfe4ea"
                           : "transparent",
                     }}
                   >
                     <Typography sx={{ color: "#3ae374", fontWeight: "bold" }}>
-                      {inforTheater.tenCumRap}
+                      {infoTheater.tenCumRap}
                     </Typography>
                     <Typography variant="body2">
-                      {inforTheater.diaChi}
+                      {infoTheater.diaChi}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -164,13 +164,9 @@ export default function Cinema({ theaterId }) {
                         sx={{
                           borderBottom: "1px dashed #cd84f1",
                         }}
+                        key={phim.maPhim}
                       >
-                        <Grid
-                          item
-                          xs={4}
-                          key={phim.maPhim}
-                          sx={{ padding: "15px" }}
-                        >
+                        <Grid item xs={4} sx={{ padding: "15px" }}>
                           <img
                             src={phim.hinhAnh}
                             alt="hinhAnh"
@@ -179,14 +175,16 @@ export default function Cinema({ theaterId }) {
                         </Grid>
                         <Grid item xs={8}>
                           <Box sx={{ marginLeft: "10px" }}>
-                            <Typography
-                              sx={{
-                                color: "#3ae374",
-                                fontSize: "25px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {phim.tenPhim}
+                            <Box display={"flex"} alignItems={"center"}>
+                              <Typography
+                                sx={{
+                                  color: "#3ae374",
+                                  fontSize: "25px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {phim.tenPhim}
+                              </Typography>
                               {phim.hot && (
                                 <Chip
                                   label="HOT"
@@ -196,8 +194,7 @@ export default function Cinema({ theaterId }) {
                                   sx={{ fontWeight: "bold", ml: 2 }}
                                 />
                               )}
-                            </Typography>
-
+                            </Box>
                             {phim.lstLichChieuTheoPhim.map((lichChieu) => (
                               <ButtonCustom
                                 onClick={() =>

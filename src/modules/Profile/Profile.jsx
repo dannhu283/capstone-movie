@@ -52,7 +52,9 @@ export default function Profile() {
     setTabBar(newValue);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) {
+    <Loading />;
+  }
 
   return (
     <Box
