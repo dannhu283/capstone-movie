@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  getLogo,
-  getInfoTheater,
-  getTheaterShowtimes,
-} from "../../../APIs/cinemaAPI";
+
 import Loading from "../../../Components/Loading";
 import {
   Container,
@@ -18,6 +14,11 @@ import {
 import { ButtonCustom } from "../../../Components/ButtonMain";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import {
+  getInforTheater,
+  getLogo,
+  getTheaterShowtimes,
+} from "../../../APIs/cinemaAPI";
 
 export default function Cinema({ theaterId }) {
   const [infoTheaters, setInfoTheater] = useState([]);
@@ -39,7 +40,7 @@ export default function Cinema({ theaterId }) {
 
   const handleChangeTab = async (theaterSystemsId) => {
     try {
-      const infoTheaters = await getInfoTheater(theaterSystemsId);
+      const infoTheaters = await getInforTheater(theaterSystemsId);
       setInfoTheater(infoTheaters);
       setSelectedTab(theaterSystemsId);
     } catch (error) {
