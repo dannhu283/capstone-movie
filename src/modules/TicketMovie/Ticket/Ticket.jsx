@@ -3,23 +3,42 @@ import { Divider, Paper, Snackbar, Alert, Typography } from "@mui/material";
 import { ButtonMain } from "../../../Components/ButtonMain";
 import { Text, TextColor, Row, TextSeat } from "./index";
 import { useTicketContext } from "../../../context/TicketContext/TicketContext";
+import { useQueryClient } from "react-query";
+import { useMutation } from "@tanstack/react-query";
+import { bookTicket } from "../../../APIs/bookTicketAPI";
+import Loading from "../../../Components/Loading";
 
 export default function Ticket({ ticketInfo }) {
   const [open, setOpen] = useState(false);
-
   const { selectedSeats, totalPrice } = useTicketContext();
 
-  const handlePay = () => {
-    setOpen(true);
-  };
+  const queryClient = useQueryClient();
+
+  const listTicket = selectedSeats.map((item) => ({
+    maGhe: item.maGhe,
+    giaVe: item.giaVe,
+  }));
+
+  const { mutate: handleBookTickets, isLoading } = useMutation({
+    mutationFn: () =>
+      bookTicket({
+        maLichChieu: ticketInfo.maLichChieu,
+        danhSachVe: listTicket,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ticketShowtimes"] });
+    },
+  });
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
+
+  if (isLoading) return <Loading />;
+
   return (
     <>
       <Paper
@@ -82,7 +101,7 @@ export default function Ticket({ ticketInfo }) {
         </Row>
       </Paper>
       <ButtonMain
-        onClick={handlePay}
+        onClick={handleBookTickets}
         style={{ width: "100%", fontSize: "16px" }}
       >
         Đặt vé
