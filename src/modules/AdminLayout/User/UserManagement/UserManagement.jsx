@@ -5,6 +5,7 @@ import {
   Button,
   CircularProgress,
   Modal,
+  TextField,
   Typography,
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -31,6 +32,7 @@ import Loading from "../../../../Components/Loading";
 import UserModal from "./UpdateUser";
 import { getInfoUser, removeUser } from "../../../../APIs/userAPI";
 import AddUser from "./AddUser/AddUser";
+import SearchIcon from "@mui/icons-material/Search";
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -113,6 +115,8 @@ export default function UserManagement() {
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [openError, setOpenError] = React.useState(false);
   const [openSuccess, setOpenSuccess] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [filteredUsers, setFilteredUsers] = React.useState([]);
 
   const queryClient = useQueryClient();
 
@@ -186,6 +190,30 @@ export default function UserManagement() {
     setOpenSuccess(false);
   };
 
+  // Function to filter users based on search query
+  const filterUsers = () => {
+    const filteredData = customers.filter((customer) =>
+      customer.taiKhoan.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredUsers(filteredData);
+  };
+
+  const handleSearch = () => {
+    filterUsers();
+  };
+
+  // Attach an event handler to update searchQuery when the input value changes
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  // Sự kiện xử lý khi nhấn phím "Enter" trong trường đầu vào tìm kiếm
+  const handleEnterKeyDown = (event) => {
+    if (event.key === "Enter") {
+      filterUsers();
+    }
+  };
+
   React.useEffect(() => {
     if (userName) {
       setIsLoadingInfoUser(true);
@@ -198,6 +226,13 @@ export default function UserManagement() {
     }
   }, [userName]);
 
+  React.useEffect(() => {
+    if (customers) {
+      //  setInitialData(customers);
+      setFilteredUsers(customers); // Ban đầu, filteredUsers bằng danh sách customers
+    }
+  }, [customers]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -206,6 +241,27 @@ export default function UserManagement() {
     <>
       <Box height={100} />
       <Box display={"flex"} justifyContent={"right"} mb={2}>
+        <Box
+          sx={{
+            width: 500,
+            maxWidth: "100%",
+            marginRight: "16px",
+            display: "flex",
+          }}
+        >
+          <TextField
+            fullWidth
+            label="Tìm kiếm tài khoản"
+            id="fullWidth"
+            color="secondary"
+            value={searchQuery}
+            onChange={handleSearchInputChange} // Handle input change
+            onKeyDown={handleEnterKeyDown}
+          />
+          <Button variant="contained" color="info" onClick={handleSearch}>
+            <SearchIcon />
+          </Button>
+        </Box>
         <Button
           variant="contained"
           color="secondary"
@@ -243,11 +299,11 @@ export default function UserManagement() {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? customers.slice(
+              ? filteredUsers.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : customers
+              : filteredUsers
             ).map((customer) => (
               <StyledTableRow key={customer.taiKhoan}>
                 <StyledTableCell>{customer.taiKhoan}</StyledTableCell>
