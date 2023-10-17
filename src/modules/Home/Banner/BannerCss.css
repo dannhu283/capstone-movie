@@ -1,0 +1,15 @@
+.swiper-button-prev {
+    transition: all .5s;
+}
+
+.swiper-button-next {
+    transition: all .5s;
+}
+
+.swiper-button-prev:hover {
+    color: #0051ff;
+}
+
+.swiper-button-next:hover {
+    color: #0051ff;
+}

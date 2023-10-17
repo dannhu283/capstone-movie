@@ -54,9 +54,9 @@ export default function Header(props) {
 
   const isAdmin = currentUser?.maLoaiNguoiDung === "QuanTri";
 
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
+  const settings = ["Profile", "Logout"];
   if (isAdmin) {
-    settings.push("Admin");
+    settings.splice(1, 0, "Admin");
   }
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -109,7 +109,10 @@ export default function Header(props) {
       <ElevationScroll {...props}>
         <AppBar sx={{ backgroundColor: "#2f2e2c" }}>
           <Container maxWidth="xl">
-            <Toolbar disableGutters>
+            <Toolbar
+              disableGutters
+              sx={{ "@media (max-width:480px)": { width: "90%" } }}
+            >
               <img
                 style={{ cursor: "pointer" }}
                 onClick={() => navigate("/")}
@@ -190,7 +193,14 @@ export default function Header(props) {
               {currentUser ? (
                 <>
                   <Box
-                    sx={{ flexGrow: 0, borderRight: 1, pr: 2 }}
+                    sx={{
+                      flexGrow: 0,
+                      borderRight: 1,
+                      pr: 2,
+                      "@media (max-width:600px)": {
+                        borderRight: 0,
+                      },
+                    }}
                     display={"inline-block"}
                   >
                     <Tooltip title="User">
@@ -241,7 +251,7 @@ export default function Header(props) {
                       "&:hover": {
                         color: "#ff9f1a",
                       },
-                      "@media (max-width: 400px)": {
+                      "@media (max-width: 600px)": {
                         display: "none",
                       },
                     }}
@@ -260,7 +270,12 @@ export default function Header(props) {
                       borderRight="1px solid #9e9e9e"
                     >
                       <Tooltip title="Đăng nhập">
-                        <AccountCircle fontSize="large" />
+                        <AccountCircle
+                          fontSize="large"
+                          sx={{
+                            "@media (max-width:480px)": { display: "none" },
+                          }}
+                        />
                       </Tooltip>
                       <Typography>Đăng nhập</Typography>
                     </SigninAndSignup>
@@ -270,7 +285,12 @@ export default function Header(props) {
                   <Box sx={{ flexGrow: 0 }}>
                     <SigninAndSignup onClick={() => navigate(`/sign-up`)}>
                       <Tooltip title="Đăng kí">
-                        <AccountCircle fontSize="large" />
+                        <AccountCircle
+                          fontSize="large"
+                          sx={{
+                            "@media (max-width:480px)": { display: "none" },
+                          }}
+                        />
                       </Tooltip>
                       <Typography>Đăng kí</Typography>
                     </SigninAndSignup>

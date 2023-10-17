@@ -5,15 +5,19 @@ import Loading from "../../../Components/Loading";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import { Navigation, Autoplay } from "swiper/modules";
-import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Modal } from "@mui/material";
+import "./BannerCss.css";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import ReactPlayer from "react-player";
 
 export default function Banner() {
-  const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const { data: banners = [], isLoading } = useQuery({
     queryKey: ["banners"],
@@ -22,6 +26,7 @@ export default function Banner() {
   if (isLoading) {
     return <Loading />;
   }
+  console.log(banners);
   return (
     <Swiper
       autoplay={{
@@ -45,12 +50,12 @@ export default function Banner() {
             <img
               width="100%"
               src={banner.hinhAnh}
-              alt=""
+              alt={banner.maPhim}
               style={{ height: "800px" }}
             />
             <Box
               onClick={() => {
-                navigate(`/`);
+                handleOpen();
               }}
               sx={{
                 backgroundColor: "#000000a7",
@@ -64,7 +69,7 @@ export default function Banner() {
                 opacity: 0,
                 borderRadius: "10px",
                 cursor: "pointer",
-                transition: "all 0.5s",
+                transition: "all 1s",
 
                 "&:hover": {
                   opacity: 1,
@@ -88,6 +93,32 @@ export default function Banner() {
           </SwiperSlide>
         );
       })}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 500,
+            height: 400,
+            backgroundColor: "transparent",
+            border: "1px solid transparent",
+          }}
+        >
+          <ReactPlayer
+            url="https://www.youtube.com/watch?v=PvKiWRTSAzg"
+            controls={true}
+            width={"100%"}
+            height={"100%"}
+          />
+        </Box>
+      </Modal>
     </Swiper>
   );
 }
