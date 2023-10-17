@@ -20,11 +20,7 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -59,7 +55,7 @@ export default function New() {
   };
 
   return (
-    <Container>
+    <Container id="tintuc">
       <Box sx={{ width: "100%" }}>
         <Box
           sx={{
@@ -117,7 +113,7 @@ export default function New() {
               ))}
               {/* row2 */}
               {news[0].dienAnh?.slice(2, 4).map((item) => (
-                <Grid item md={4} key={item.id}>
+                <Grid item md={4} xs={6} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -143,7 +139,7 @@ export default function New() {
                 sx={{ display: "flex", flexDirection: "column" }}
               >
                 {news[0].dienAnh?.slice(4).map((item) => (
-                  <Grid item xs={12} key={item.id}>
+                  <Grid item md={12} key={item.id} marginBottom={1}>
                     <CardActionArea sx={{ display: "flex" }}>
                       <Box sx={{ display: "flex" }}>
                         <CardMedia
@@ -189,7 +185,7 @@ export default function New() {
               ))}
               {/* row2 */}
               {news[0].review?.slice(2, 4).map((item) => (
-                <Grid item md={4} key={item.id}>
+                <Grid item md={4} xs={6} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -215,7 +211,7 @@ export default function New() {
                 sx={{ display: "flex", flexDirection: "column" }}
               >
                 {news[0].review?.slice(4).map((item) => (
-                  <Grid item xs={12} key={item.id}>
+                  <Grid item xs={12} key={item.id} marginBottom={1}>
                     <CardActionArea sx={{ display: "flex" }}>
                       <Box sx={{ display: "flex" }}>
                         <CardMedia
@@ -261,7 +257,7 @@ export default function New() {
               ))}
               {/* row2 */}
               {news[0].khuyenMai?.slice(2, 4).map((item) => (
-                <Grid item md={4} key={item.id}>
+                <Grid item md={4} xs={6} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -287,7 +283,7 @@ export default function New() {
                 sx={{ display: "flex", flexDirection: "column" }}
               >
                 {news[0].khuyenMai?.slice(4).map((item) => (
-                  <Grid item xs={12} key={item.id}>
+                  <Grid item md={12} key={item.id} marginBottom={1}>
                     <CardActionArea sx={{ display: "flex" }}>
                       <Box sx={{ display: "flex" }}>
                         <CardMedia

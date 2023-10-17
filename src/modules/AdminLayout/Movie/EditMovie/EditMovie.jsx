@@ -296,9 +296,9 @@ export default function EditMovie() {
           <Grid item xs={12}>
             <input type="file" {...register("hinhAnh")} />
             {imgPreview && (
-              <div>
+              <Box>
                 <img src={imgPreview} alt="preview" width={200} height={200} />
-              </div>
+              </Box>
             )}
           </Grid>
           {/* rating */}
