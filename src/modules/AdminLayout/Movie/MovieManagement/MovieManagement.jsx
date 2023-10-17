@@ -164,6 +164,9 @@ export default function UserManagement() {
   return (
     <>
       <Box height={100} />
+      <Typography sx={{ marginBottom: "30px", fontSize: "30px" }}>
+        📒📒 Danh Sách Phim
+      </Typography>
       <TextField
         sx={{ marginBottom: "20px", width: "100%" }}
         color="success"
@@ -210,7 +213,7 @@ export default function UserManagement() {
                 )
               : filteredMovies
             ).map((movie) => (
-              <StyledTableRow key={movie.bidanh}>
+              <StyledTableRow key={movie.maPhim}>
                 <StyledTableCell>{movie.maPhim}</StyledTableCell>
                 <StyledTableCell>
                   <img src={movie.hinhAnh} alt={movie.tenPhim} width={200} />

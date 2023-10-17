@@ -124,7 +124,7 @@ export default function AddMovie() {
     };
   }, [hinhAnh]);
 
-  const { mutate: onSubmit } = useMutation({
+  const { mutate: onSubmit, error } = useMutation({
     mutationFn: (values) => {
       const formData = new FormData();
       formData.append("tenPhim", values.tenPhim);
@@ -262,18 +262,13 @@ export default function AddMovie() {
           </Grid>
           {/* hinhanh */}
           <Grid item xs={12}>
-            <TextField
-              type="file"
-              color="success"
-              {...register("hinhAnh")}
-              error={!!errors.hinhAnh}
-              helperText={errors.hinhAnh && errors.hinhAnh.message}
-            />
+            <input type="file" {...register("hinhAnh")} />
             {imgPreview && (
               <Box>
                 <img src={imgPreview} alt="preview" width={200} height={200} />
               </Box>
             )}
+            <Typography sx={{ color: "red" }}>{error}</Typography>
           </Grid>
           {/* rating */}
           <Grid item xs={12}>

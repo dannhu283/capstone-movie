@@ -26,7 +26,7 @@ export default function Banner() {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(banners);
+
   return (
     <Swiper
       autoplay={{
