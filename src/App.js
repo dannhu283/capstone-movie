@@ -18,6 +18,7 @@ import CreateShowtimes from "./modules/AdminLayout/Movie/CreateShowtimes";
 import EditMovie from "./modules/AdminLayout/Movie/EditMovie";
 import Profile from "./modules/Profile";
 import TicketProvider from "./context/TicketContext/TicketContext";
+import ProtectedRouteAdmin from "./routers/ProtectedRouteAdmin/ProtectedRouteAdmin";
 
 function App() {
   return (
@@ -32,12 +33,14 @@ function App() {
 
               <Route path="/sign-in" element={<Signin />} />
               <Route path="/sign-up" element={<Signup />} />
+              <Route element={<ProtectedRoute />}>
+                <Route path="profile/:username" element={<Profile />} />
+                <Route path="tickets/:showtimeId" element={<TicketMovie />} />
+              </Route>
             </Route>
-            <Route element={<ProtectedRoute />}>
-              <Route path="profile/:username" element={<Profile />} />
-              <Route path="tickets/:showtimeId" element={<TicketMovie />} />
 
-              {/* admin */}
+            {/* admin */}
+            <Route element={<ProtectedRouteAdmin />}>
               <Route path="/admin" element={<AdminLayout />}>
                 <Route path="addmovie" element={<AddMovie />} />
 
@@ -50,7 +53,6 @@ function App() {
                 <Route path="usermanagement" element={<UserManagement />} />
               </Route>
             </Route>
-
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -23,6 +23,52 @@ import { ButtonMain } from "../../../Components/ButtonMain";
 import { CustomDot } from "./index";
 // import { constants } from "http2";
 
+// function SampleNextArrow(props) {
+//   const { style, className, onClick } = props;
+//   return (
+//     <ChevronRightIcon
+//       className={className}
+//       sx={{
+//         ...style,
+//         display: "block",
+//         color: "#3ae374",
+//         fontSize: "80px",
+//         right: "-55px",
+//         transition: "all 0.5s",
+
+//         "&:hover": {
+//           color: "#ff9f1a",
+//         },
+//       }}
+//       onClick={onClick}
+//       color="success"
+//     />
+//   );
+// }
+
+// function SamplePrevArrow(props) {
+//   const { style, className, onClick } = props;
+
+//   return (
+//     <ChevronLeftIcon
+//       className={className}
+//       sx={{
+//         ...style,
+//         display: "block",
+//         color: "#3ae374",
+//         fontSize: "80px",
+//         left: "-55px",
+//         transition: "all 0.5s",
+
+//         "&:hover": {
+//           color: "#ff9f1a",
+//         },
+//       }}
+//       onClick={onClick}
+//     />
+//   );
+// }
+
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -100,7 +146,7 @@ export default function Showing() {
     slidesToScroll: 4,
     initialSlide: 0,
     rows: 2,
-    accessibility: false,
+
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
@@ -111,6 +157,8 @@ export default function Showing() {
           slidesToScroll: 3,
           infinite: true,
           dots: false,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />,
         },
       },
       {
@@ -131,6 +179,9 @@ export default function Showing() {
           slidesToShow: 1,
           slidesToScroll: 1,
           rows: 6,
+          nextArrow: <></>,
+          prevArrow: <></>,
+          dots: false,
         },
       },
     ],
@@ -210,7 +261,7 @@ export default function Showing() {
                   onClick={() => handleCloseModal(movie.maPhim)}
                 />
                 <div className={ShowingCss.videoContainer}>
-                  <ReactPlayer url={movie.trailer} controls={true} video />
+                  <ReactPlayer url={movie.trailer} controls={true} />
                 </div>
               </div>
             </Modal>
