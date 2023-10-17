@@ -2,41 +2,49 @@
     {
         "dienAnh":[
             {
+                "id":"1",
                 "title":"TENET công bố ngày khởi chiếu chính thức tại Việt Nam",
                 "img":"https://s3img.vcdn.vn/123phim/2020/07/tenet-cong-bo-ngay-khoi-chieu-chinh-thuc-tai-viet-nam-15959320391357.png",
                 "desc":"Đêm qua theo giờ Việt Nam, hãng phim Warner Bros. đưa ra thông báo chính thức về ngày khởi chiếu cho bom tấn TENET tại các thị trường bên ngoài Bắc Mỹ, trong đó có Việt Nam..."
             },
             {
+                "id":"2",
                 "title":"Khi phụ nữ không còn ở thế trốn chạy của nạn nhân",
                 "img":"https://s3img.vcdn.vn/123phim/2020/07/khi-phu-nu-khong-con-o-the-tron-chay-cua-nan-nhan-15943683481617.jpg",
                 "desc":"Là bộ phim tâm lý li kỳ với chủ đề tội phạm, Bằng Chứng Vô Hình mang đến một góc nhìn mới về hình ảnh những người phụ nữ thời hiện đại. Điều đó được thể hiện qua câu chuyện về hai người phụ nữ cùng hợp sức để.."
             },
             {
+                "id":"3",
                 "title":"Gerard Butler cùng bồ cũ Deadpool tham gia Greenland",
                 "img":"https://s3img.vcdn.vn/123phim/2020/07/gerard-butler-cung-bo-cu-deadpool-tham-gia-greenland-15937528932506.png",
                 "desc":"Bộ phim hành động mang đề tài tận thế Greenland: Thảm Họa Thiên Thạch đến từ nhà sản xuất của loạt phim John Wick đã tung.."
             },
             {
+                "id":"4",
                 "title":"Diễn viên đặc biệt của Bằng Chứng Vô Hình",
                 "img":"https://s3img.vcdn.vn/123phim/2020/07/dien-vien-dac-biet-cua-bang-chung-vo-hinh-15937518743844.png",
                 "desc":"Bằng Chứng Vô Hình tiết lộ thêm với khán giả một diễn viên vô cùng đặc biệt, đi diễn như đi chơi và không hề nghe theo sự chỉ đạo của.. "
             },
             {
+                "id":"5",
                 "title":"Pee nak 2-Vạn kiếp thiên thu,đi tu không hết nghiệp",
                 "img":"https://s3img.vcdn.vn/123phim/2020/07/pee-nak-2-van-kiep-thien-thu-di-tu-khong-het-nghiep-15937498464029.png",
                 "desc":""
             },
             {
+                "id":"6",
                 "title":"Loạt phim kinh dị không thể bỏ lỡ trong tháng 7",
                 "img":"https://s3img.vcdn.vn/123phim/2020/07/loat-phim-kinh-di-khong-the-bo-lo-trong-thang-7-15937470779379.png",
                 "desc":""
             },
             {
+                "id":"7",
                 "title":"RÒM tung trailer hé lộ cuộc sống của dân chơi số đề",
                 "img":"https://s3img.vcdn.vn/123phim/2020/06/rom-tung-trailer-he-lo-cuoc-song-cua-dan-choi-so-de-15929959532579.jpg",
                 "desc":""
             },
             {
+                "id":"8",
                 "title":" Antebellum - Trailer cuối cùng không hé lộ bất cứ thông tin gì",
                 "img":"https://s3img.vcdn.vn/123phim/2020/06/antebellum-trailer-cuoi-cung-khong-he-lo-bat-cu-thong-tin-gi-them-15929866818923.jpg",
                 "desc":""
@@ -44,36 +52,43 @@
         ],
         "review":[
             {
+                "id":"9",
                 "title":"[Review] Nắng 3: Lời Hứa Của Cha - Câu chuyện tình thân cảm động của Khả Như và Kiều Minh Tuấn",
                 "img":"https://s3img.vcdn.vn/123phim/2020/03/review-nang-3-loi-hua-cua-cha-cau-chuyen-tinh-than-cam-dong-cua-kha-nhu-va-kieu-minh-tuan-15834049872311.jpg",
                 "desc":"Như hai phần phim trước, Nắng 3 tiếp tục mang đến câu chuyện tình cha, mẹ - con đầy nước mắt của bộ ba nhân vật chính..."
             },
             {
+                "id":"10",
                 "title":"[Review] Onward - Khi phép thuật mạnh mẽ nhất chính là tình thân",
                 "img":"https://s3img.vcdn.vn/123phim/2020/03/review-onward-khi-phep-thuat-manh-me-nhat-chinh-la-tinh-than-15832047938817.jpg",
                 "desc":"Tác phẩm mới nhất của Pixar tiếp tục là câu chuyện hài hước và cảm xúc về tình cảm gia đình..."
             },
             {
+                "id":"11",
                 "title":"[Review] Kẻ Vô Hình - Còn gì đáng sợ hơn kẻ giết người bệnh hoạn vô hình?",
                 "img":"https://s3img.vcdn.vn/123phim/2020/02/review-ke-vo-hinh-con-gi-dang-so-hon-ke-giet-nguoi-benh-hoan-vo-hinh-15828835353362.jpg",
                 "desc":"Phiên bản hiện đại của The Invisible Man là một trong những phim kinh dị xuất sắc nhất năm nay."
             },
             {
+                "id":"12",
                 "title":"[Review] Cậu Bé Ma 2 - Bạn trai của 'bé Beo' là đây chứ đâu xa",
                 "img":"https://s3img.vcdn.vn/123phim/2020/02/review-cau-be-ma-2-ban-trai-cua-be-beo-la-day-chu-dau-xa-15823608583110.jpg",
                 "desc":"Brahms: The Boy II có những màn hù dọa ấn tượng nhưng cái kết lại không tương xứng với phần mở đầu hứa hẹn."
             },
             {
+                "id":"13",
                 "title":"[Review] Nhím Sonic - Cười thả ga cùng chàng nhím siêu thanh",
                 "img":"https://s3img.vcdn.vn/123phim/2020/02/review-nhim-sonic-cuoi-tha-ga-cung-chang-nhim-sieu-thanh-lay-loi-15821907793369.jpg",
                 "desc":""
             },
             {
+                "id":"14",
                 "title":"[Review] Tháng Năm Hạnh Phúc Ta Từng Có - Buông bỏ chưa",
                 "img":"https://s3img.vcdn.vn/123phim/2020/02/review-thang-nam-hanh-phuc-ta-tung-co-buong-bo-chua-bao-gio-la-viec-de-dang-15817967038683.jpg",
                 "desc":""
             },
             {
+                "id":"15",
                 "title":"[Review] Sắc Đẹp Dối Trá - Hương Giang kể chuyện đời",
                 "img":"https://s3img.vcdn.vn/123phim/2020/02/review-sac-dep-doi-tra-huong-giang-ke-chuyen-doi-minh-qua-phim-anh-15817958389162.jpg",
                 "desc":""
@@ -81,20 +96,50 @@
         ],
         "khuyenMai":[
             {
+                "id":"16",
                 "title":"[123Phim] NHẬP MÃ 'BKT' - Giảm ngay 20k khi đặt vé Bắc Kim Thang",
                 "img":"https://s3img.vcdn.vn/123phim/2019/10/123phim-nhap-ma-bkt-giam-ngay-20k-khi-dat-ve-bac-kim-thang-15712976725554.jpg",
                 "desc":"123Phim đồng hành cùng phim Việt - Giảm ngay 20k mỗi giao dịch khi đặt vé Bắc Kim Thang trên ứng dụng 123Phim..."
             },
             {
+                "id":"17",
                 "title":"Sinh Nhật Mega GS",
                 "img":"https://s3img.vcdn.vn/123phim/2019/08/sinh-nhat-mega-gs-15663933683466.jpg",
                 "desc":"Đến hẹn lại lên, vậy là một năm nữa đã trôi qua và chúng ta lại đến tháng 8, tháng sinh nhật của Mega GS Cinemas."
             },
             {
+                "id":"18",
                 "title":"[123Phim] TixShop trở lại, quà ‘xịn’ hơn xưa",
                 "img":"https://s3img.vcdn.vn/123phim/2019/05/123phim-tixshop-tro-lai-qua-xin-hon-xua-15583511037699.jpg",
                 "desc":"Nhiều Tix làm gì, để tiêu vào TixShop chứ còn chờ chi."
+            },
+            {
+                "id":"19",
+                "title":"[Galaxy Tràng Thi] Xem Phim Hay, Say Quà Tặng",
+                "img":"https://s3img.vcdn.vn/123phim/2019/05/galaxy-trang-thi-xem-phim-hay-say-qua-tang-15572160162243.jpg",
+                "desc":""
+            },
+            {
+                "id":"20",
+                "title":"Mua 2 Vé Cinestar Qua ZaloPay Chỉ 1.000đ/vé",
+                "img":"https://s3img.vcdn.vn/123phim/2019/04/mua-2-ve-cinestar-qua-zalopay-chi-1-000d-ve-15563607309238.jpg",
+                "desc":""
+            },
+            {
+                "id":"21",
+                "title":"Mua Vé BHD Star Trên 123Phim Bằng ZaloPay: 1.000đ/vé",
+                "img":"https://s3img.vcdn.vn/123phim/2019/04/mua-ve-bhd-star-tren-123phim-bang-zalopay-1-000d-ve-15547979641987.jpg",
+                "desc":""
+            }, {
+                "id":"22",
+                "title":"[Galaxy Tràng Thi] Trải Nghiệm Bom Tấn Càng Đông Càng Vui",
+                "img":"https://s3img.vcdn.vn/123phim/2019/04/galaxy-trang-thi-trai-nghiem-bom-tan-cang-dong-cang-vui-15561704693167.jpg",
+                "desc":""
             }
+            
         ]
     }
 ]
+   
+
+
