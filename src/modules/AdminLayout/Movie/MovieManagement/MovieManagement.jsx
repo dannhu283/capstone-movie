@@ -164,9 +164,17 @@ export default function UserManagement() {
   return (
     <>
       <Box height={100} />
-      <Typography sx={{ marginBottom: "30px", fontSize: "30px" }}>
-        📒📒 Danh Sách Phim
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "20px",
+        }}
+      >
+        <Typography variant="h4">📒📒 Danh Sách Phim</Typography>
+        <ButtonMain onClick={() => navigate("/")}>Trang Chủ</ButtonMain>
+      </Box>
+
       <TextField
         sx={{ marginBottom: "20px", width: "100%" }}
         color="success"
