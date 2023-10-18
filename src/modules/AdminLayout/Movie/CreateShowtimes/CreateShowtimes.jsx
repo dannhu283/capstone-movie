@@ -16,7 +16,7 @@ import { addShowtimes } from "../../../../APIs/bookTicketAPI";
 import Loading from "../../../../Components/Loading";
 import { Controller, useForm } from "react-hook-form";
 import { ButtonMain } from "../../../../Components/ButtonMain";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Title } from "./index";
@@ -24,6 +24,7 @@ import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 import dayjs from "dayjs";
 
 export default function CreateShowtimes() {
+  const navigate = useNavigate();
   const { movieId } = useParams();
   const [selectedSystem, setSelectedSystem] = useState("");
   const [selectedCumRap, setSelectedCumRap] = useState("");
@@ -254,7 +255,7 @@ export default function CreateShowtimes() {
             <ButtonMain
               variant="contained"
               color="primary"
-              onClick={() => setShowSuccessModal(false)}
+              onClick={() => navigate("/admin/moviemanagement")}
             >
               Đồng ý
             </ButtonMain>

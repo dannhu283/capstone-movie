@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
 import dayjs from "dayjs";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updateMovie, getMovieDetails } from "../../../../APIs/movieAPI";
@@ -21,66 +20,12 @@ import Loading from "../../../../Components/Loading";
 import { useParams, useNavigate } from "react-router-dom";
 import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 
-//MUI switch
-const IOSSwitch = styled((props) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
-  width: 42,
-  height: 26,
-  padding: 0,
-  "& .MuiSwitch-switchBase": {
-    padding: 0,
-    margin: 2,
-    transitionDuration: "300ms",
-    "&.Mui-checked": {
-      transform: "translateX(16px)",
-      color: "#fff",
-      "& + .MuiSwitch-track": {
-        backgroundColor: theme.palette.mode === "dark" ? "#2ECA45" : "#65C466",
-        opacity: 1,
-        border: 0,
-      },
-      "&.Mui-disabled + .MuiSwitch-track": {
-        opacity: 0.5,
-      },
-    },
-    "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#33cf4d",
-      border: "6px solid #fff",
-    },
-    "&.Mui-disabled .MuiSwitch-thumb": {
-      color:
-        theme.palette.mode === "light"
-          ? theme.palette.grey[100]
-          : theme.palette.grey[600],
-    },
-    "&.Mui-disabled + .MuiSwitch-track": {
-      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
-    },
-  },
-  "& .MuiSwitch-thumb": {
-    boxSizing: "border-box",
-    width: 22,
-    height: 22,
-  },
-  "& .MuiSwitch-track": {
-    borderRadius: 26 / 2,
-    backgroundColor: theme.palette.mode === "light" ? "#E9E9EA" : "#39393D",
-    opacity: 1,
-    transition: theme.transitions.create(["background-color"], {
-      duration: 500,
-    }),
-  },
-}));
-
 export default function EditMovie() {
   const navigate = useNavigate();
   const { movieId } = useParams();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [imgPreview, setImgPreview] = useState("");
-  const [isHot, setIsHot] = useState(false);
-  const [isNowShowing, setIsNowShowing] = useState(false);
-  const [isComingSoon, setIsComingSoon] = useState(false);
+
   const [rating, setRating] = useState(2);
 
   const { data: inforMovie = [], isLoading } = useQuery({
@@ -105,6 +50,7 @@ export default function EditMovie() {
     watch,
     formState: { errors },
     setValue,
+    control,
   } = useForm({
     defaultValues: {
       tenPhim: "",
@@ -130,9 +76,9 @@ export default function EditMovie() {
       setImgPreview(inforMovie.hinhAnh);
       setValue("trailer", inforMovie.trailer);
       setValue("ngayKhoiChieu", inforMovie.ngayKhoiChieu);
-      setIsHot(inforMovie.hot);
-      setIsNowShowing(inforMovie.dangChieu);
-      setIsComingSoon(inforMovie.sapChieu);
+      setValue("hot", inforMovie.hot);
+      setValue("dangChieu", inforMovie.dangChieu);
+      setValue("sapChieu", inforMovie.sapChieu);
       if (inforMovie.danhGia !== undefined) {
         setRating(inforMovie.danhGia);
       }
@@ -163,9 +109,9 @@ export default function EditMovie() {
       formData.append("trailer", values.trailer);
       formData.append("ngayKhoiChieu", values.ngayKhoiChieu);
       formData.append("maNhom", "GP09");
-      formData.append("hot", isHot);
-      formData.append("dangChieu", isNowShowing);
-      formData.append("sapChieu", isComingSoon);
+      formData.append("hot", values.hot);
+      formData.append("dangChieu", values.dangChieu);
+      formData.append("sapChieu", values.sapChieu);
       formData.append("danhGia", rating);
       return updateMovie(formData);
     },
@@ -255,41 +201,47 @@ export default function EditMovie() {
           </Grid>
           {/* hot */}
           <Grid item xs={4}>
-            <FormControlLabel
-              control={
-                <IOSSwitch
-                  sx={{ m: 1 }}
-                  onChange={() => setIsHot(!isHot)}
-                  checked={isHot}
-                />
-              }
-              label="Hot"
+            <Controller
+              name="hot"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <FormControlLabel
+                    control={<Switch {...field} checked={field.value} />}
+                    label="Hot"
+                  />
+                );
+              }}
             />
           </Grid>
           {/* đang chiếu */}
           <Grid item xs={4}>
-            <FormControlLabel
-              control={
-                <IOSSwitch
-                  sx={{ m: 1 }}
-                  onChange={() => setIsNowShowing(!isNowShowing)}
-                  checked={isNowShowing}
-                />
-              }
-              label="Đang chiếu"
+            <Controller
+              name="dangChieu"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <FormControlLabel
+                    control={<Switch {...field} checked={field.value} />}
+                    label="Đang chiếu"
+                  />
+                );
+              }}
             />
           </Grid>
           {/* Sắp chiếu */}
           <Grid item xs={4}>
-            <FormControlLabel
-              control={
-                <IOSSwitch
-                  sx={{ m: 1 }}
-                  onChange={() => setIsComingSoon(!isComingSoon)}
-                  checked={isComingSoon}
-                />
-              }
-              label="Sắp chiếu"
+            <Controller
+              name="sapChieu"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <FormControlLabel
+                    control={<Switch {...field} checked={field.value} />}
+                    label="Sắp chiếu"
+                  />
+                );
+              }}
             />
           </Grid>
           {/* hinhanh */}
