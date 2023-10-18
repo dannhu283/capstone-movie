@@ -152,7 +152,7 @@ export default function HistoryTicket({ infoTicket }) {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? infoTicket.slice(
+              ? infoTicket?.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
