@@ -195,6 +195,7 @@ export default function AddMovie() {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              type="date"
               label="Ngày khởi chiếu"
               color="success"
               variant="outlined"
