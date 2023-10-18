@@ -22,10 +22,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Title } from "./index";
 import { ModalSuccess, ModalContent } from "../../../../Components/Modal";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 
 export default function CreateShowtimes() {
-  const navigate = useNavigate();
   const { movieId } = useParams();
   const [selectedSystem, setSelectedSystem] = useState("");
   const [selectedCumRap, setSelectedCumRap] = useState("");
@@ -213,12 +211,7 @@ export default function CreateShowtimes() {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <ButtonMain
-                  type="submit"
-                  onClick={() => navigate("/admin/moviemanagement")}
-                >
-                  Thêm Lịch Chiếu
-                </ButtonMain>
+                <ButtonMain type="submit">Thêm Lịch Chiếu</ButtonMain>
               </Grid>
             </Grid>
           </form>
