@@ -79,6 +79,7 @@ export default function AddMovie() {
   const [isComingSoon, setIsComingSoon] = useState(false);
   const [rating, setRating] = useState(2);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  // const [formatValue, setFormatValue] = useState("");
 
   const addmovieShema = object({
     tenPhim: string().required("Tên phim không được để trống"),
@@ -86,7 +87,6 @@ export default function AddMovie() {
     moTa: string().required("Vui lòng nhập mô tả"),
     trailer: string().required("Vui lòng cung cấp trailer của phim"),
     ngayKhoiChieu: string().required("Vui lòng chọn ngày "),
-    hinhAnh: string().required("Vui lòng chọn hình ảnh"),
   });
 
   const {
@@ -126,13 +126,17 @@ export default function AddMovie() {
 
   const { mutate: onSubmit, error } = useMutation({
     mutationFn: (values) => {
+      console.log(values);
       const formData = new FormData();
       formData.append("tenPhim", values.tenPhim);
       formData.append("biDanh", values.biDanh);
       formData.append("moTa", values.moTa);
       formData.append("hinhAnh", values.hinhAnh[0]);
       formData.append("trailer", values.trailer);
-      formData.append("ngayKhoiChieu", values.ngayKhoiChieu);
+      formData.append(
+        "ngayKhoiChieu",
+        dayjs(values.ngayKhoiChieu).format("DD/MM/YYYY")
+      );
       formData.append("maNhom", "GP09");
       formData.append("hot", isHot);
       formData.append("dangChieu", isNowShowing);
@@ -200,11 +204,7 @@ export default function AddMovie() {
               color="success"
               variant="outlined"
               InputLabelProps={{ shrink: true }}
-              {...register("ngayKhoiChieu", {
-                setValueAs: (values) => {
-                  return dayjs(values).format("DD/MM/YYYY");
-                },
-              })}
+              {...register("ngayKhoiChieu")}
               error={!!errors.ngayKhoiChieu}
               helperText={errors.ngayKhoiChieu && errors.ngayKhoiChieu.message}
             />
@@ -265,9 +265,9 @@ export default function AddMovie() {
           <Grid item xs={12}>
             <input type="file" {...register("hinhAnh")} />
             {imgPreview && (
-              <Box>
+              <div>
                 <img src={imgPreview} alt="preview" width={200} height={200} />
-              </Box>
+              </div>
             )}
             <Typography sx={{ color: "red" }}>{error}</Typography>
           </Grid>
