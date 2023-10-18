@@ -20,83 +20,48 @@ import Typography from "@mui/material/Typography";
 import ShowingCss from "./ShowingCss.module.css";
 import SearchFilm from "../SearchFilm/SearchFilm";
 import { ButtonMain } from "../../../Components/ButtonMain";
-import { CustomDot } from "./index";
+import { CarouselContainer } from "./styledShowing";
 // import { constants } from "http2";
 
-// function SampleNextArrow(props) {
-//   const { style, className, onClick } = props;
-//   return (
-//     <ChevronRightIcon
-//       className={className}
-//       sx={{
-//         ...style,
-//         display: "block",
-//         color: "#3ae374",
-//         fontSize: "80px",
-//         right: "-55px",
-//         transition: "all 0.5s",
-
-//         "&:hover": {
-//           color: "#ff9f1a",
-//         },
-//       }}
-//       onClick={onClick}
-//       color="success"
-//     />
-//   );
-// }
-
-// function SamplePrevArrow(props) {
-//   const { style, className, onClick } = props;
-
-//   return (
-//     <ChevronLeftIcon
-//       className={className}
-//       sx={{
-//         ...style,
-//         display: "block",
-//         color: "#3ae374",
-//         fontSize: "80px",
-//         left: "-55px",
-//         transition: "all 0.5s",
-
-//         "&:hover": {
-//           color: "#ff9f1a",
-//         },
-//       }}
-//       onClick={onClick}
-//     />
-//   );
-// }
-
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { style, className, onClick } = props;
   return (
     <ChevronRightIcon
       className={className}
-      style={{
+      sx={{
         ...style,
-        display: "block",
-        color: "#3d3d3d",
+        color: "#3ae374",
         fontSize: "80px",
         right: "-55px",
+        transition: "all 0.5s",
+
+        "&:hover": {
+          color: "#ff9f1a",
+        },
       }}
       onClick={onClick}
+      color="success"
     />
   );
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { style, className, onClick } = props;
+
   return (
     <ChevronLeftIcon
       className={className}
-      style={{
+      sx={{
         ...style,
-        display: "block",
-        color: "#3d3d3d",
+
+        color: "#3ae374",
         fontSize: "80px",
         left: "-55px",
+        transition: "all 0.5s",
+
+        "&:hover": {
+          color: "#ff9f1a",
+        },
       }}
       onClick={onClick}
     />
@@ -137,9 +102,6 @@ export default function Showing() {
 
   const settings = {
     dots: true,
-    customPaging: function () {
-      return <CustomDot></CustomDot>;
-    },
     infinite: true,
     speed: 500,
     slidesToShow: 4,
@@ -156,7 +118,7 @@ export default function Showing() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: false,
+          dots: true,
           nextArrow: <SampleNextArrow />,
           prevArrow: <SamplePrevArrow />,
         },
@@ -167,10 +129,11 @@ export default function Showing() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 2,
-          rows: 6,
+          rows: 1,
+
           nextArrow: <></>,
           prevArrow: <></>,
-          dots: false,
+          dots: true,
         },
       },
       {
@@ -178,96 +141,99 @@ export default function Showing() {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          rows: 6,
+          rows: 1,
+
           nextArrow: <></>,
           prevArrow: <></>,
-          dots: false,
+          dots: true,
         },
       },
     ],
   };
 
   return (
-    <Container
-      id="showing"
-      sx={{
-        position: "relative",
-        padding: "0",
-        marginTop: "60px",
-        boxShadow: "rgba(0, 0, 0, 0.45) 0px 25px 20px -20px",
-      }}
-    >
-      <SearchFilm movies={data} />
-      <Slider {...settings}>
-        {data.map((movie) => (
-          <Grid className={ShowingCss.item} key={movie.maPhim}>
-            <Grid
-              item
-              sx={{ margin: "10px" }}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Card key={movie.maPhim}>
-                <div
-                  className={ShowingCss.imageContainer}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                  onClick={() => handleOpenModal(movie.maPhim)}
-                >
-                  <CardMedia sx={{ height: 280 }} image={movie.hinhAnh} />
-                  <div className={ShowingCss.overlay}>
-                    {isButtonVisible && (
-                      <PlayCircleOutlineIcon
-                        variant="contained"
-                        className={ShowingCss.playButton}
-                        onClick={handleOpenModal}
-                      />
-                    )}
-                  </div>
-                </div>
-                <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    className={ShowingCss.title}
+    <CarouselContainer>
+      <Container
+        id="showing"
+        sx={{
+          position: "relative",
+          padding: "0",
+          marginTop: "60px",
+          boxShadow: "rgba(0, 0, 0, 0.45) 0px 25px 20px -20px",
+        }}
+      >
+        <SearchFilm movies={data} />
+        <Slider {...settings}>
+          {data.map((movie) => (
+            <Grid className={ShowingCss.item} key={movie.maPhim}>
+              <Grid
+                item
+                sx={{ margin: "10px" }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <Card key={movie.maPhim}>
+                  <div
+                    className={ShowingCss.imageContainer}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    onClick={() => handleOpenModal(movie.maPhim)}
                   >
-                    {movie.tenPhim}
-                  </Typography>
-                  <div className={ShowingCss.desc}>
-                    <Typography variant="body2" color="text.secondary">
-                      {movie.moTa}
+                    <CardMedia sx={{ height: 280 }} image={movie.hinhAnh} />
+                    <div className={ShowingCss.overlay}>
+                      {isButtonVisible && (
+                        <PlayCircleOutlineIcon
+                          variant="contained"
+                          className={ShowingCss.playButton}
+                          onClick={handleOpenModal}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="h6"
+                      className={ShowingCss.title}
+                    >
+                      {movie.tenPhim}
                     </Typography>
+                    <div className={ShowingCss.desc}>
+                      <Typography variant="body2" color="text.secondary">
+                        {movie.moTa}
+                      </Typography>
+                    </div>
+                  </CardContent>
+                  <CardActions>
+                    <ButtonMain
+                      style={{ width: "100%" }}
+                      className={ShowingCss.buttonBuy}
+                      onClick={() => navigate(`/movies/${movie.maPhim}`)}
+                    >
+                      Mua Vé
+                    </ButtonMain>
+                  </CardActions>
+                </Card>
+              </Grid>
+              <Modal
+                open={modalStates[movie.maPhim] || false}
+                aria-labelledby="video-modal"
+                aria-describedby="video-modal-description"
+              >
+                <div className={ShowingCss.modalContent}>
+                  <CloseIcon
+                    className={ShowingCss.icon}
+                    onClick={() => handleCloseModal(movie.maPhim)}
+                  />
+                  <div className={ShowingCss.videoContainer}>
+                    <ReactPlayer url={movie.trailer} controls={true} />
                   </div>
-                </CardContent>
-                <CardActions>
-                  <ButtonMain
-                    style={{ width: "100%" }}
-                    className={ShowingCss.buttonBuy}
-                    onClick={() => navigate(`/movies/${movie.maPhim}`)}
-                  >
-                    Mua Vé
-                  </ButtonMain>
-                </CardActions>
-              </Card>
-            </Grid>
-            <Modal
-              open={modalStates[movie.maPhim] || false}
-              aria-labelledby="video-modal"
-              aria-describedby="video-modal-description"
-            >
-              <div className={ShowingCss.modalContent}>
-                <CloseIcon
-                  className={ShowingCss.icon}
-                  onClick={() => handleCloseModal(movie.maPhim)}
-                />
-                <div className={ShowingCss.videoContainer}>
-                  <ReactPlayer url={movie.trailer} controls={true} />
                 </div>
-              </div>
-            </Modal>
-          </Grid>
-        ))}
-      </Slider>
-    </Container>
+              </Modal>
+            </Grid>
+          ))}
+        </Slider>
+      </Container>
+    </CarouselContainer>
   );
 }
