@@ -1,28 +1,40 @@
-import { Box, Grid, Modal, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import { ButtonMain } from "../../../Components/ButtonMain";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editPutUser } from "../../../APIs/userAPI";
-import { useUserContext } from "../../../context/UserContext/UserContext";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { editPutUser, getInfo } from "../../../APIs/userAPI";
 import { object, string } from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useEffect } from "react";
 
-export default function Account({ username }) {
+export default function Account() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { currentUser, handleChangeCurrentUser } = useUserContext();
 
-  const {
-    mutate: handleEditProfile,
-    error,
-    isLoading,
-  } = useMutation({
+  const { data: profile = [], isLoading } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getInfo(),
+  });
+
+  const { mutate: handleEditProfile, error } = useMutation({
     mutationFn: (username) => editPutUser(username),
     onSuccess: () => {
       queryClient.invalidateQueries("profile");
@@ -31,6 +43,12 @@ export default function Account({ username }) {
   });
 
   const profileSchema = object({
+    matKhau: string()
+      .required("Mật khấu không được để trống")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+        "Mật khẩu ít nhất 8 kí tự, 1 kí tự hoa, 1 kí tự thường và 1 số"
+      ),
     email: string()
       .required("Email không được để trống")
       .email("Email không đúng định dạng"),
@@ -43,9 +61,18 @@ export default function Account({ username }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
-    defaultValues: currentUser,
+    defaultValues: {
+      taiKhoan: "",
+      matKhau: "",
+      email: "",
+      hoTen: "",
+      soDT: "",
+      maLoaiNguoiDung: "",
+      maNhom: "",
+    },
     resolver: yupResolver(profileSchema),
     mode: "onTouched",
   });
@@ -54,7 +81,6 @@ export default function Account({ username }) {
     console.log(values);
 
     handleEditProfile(values);
-    handleChangeCurrentUser(values);
   };
 
   const handleOpenSuccess = () => {
@@ -65,6 +91,29 @@ export default function Account({ username }) {
     setOpenError(false);
   };
 
+  useEffect(() => {
+    if (!profile) {
+      return;
+    } else {
+      setValue("taiKhoan", profile.taiKhoan);
+      setValue("matKhau", profile.matKhau);
+      setValue("email", profile.email);
+      setValue("hoTen", profile.hoTen);
+      setValue("soDT", profile.soDT);
+      setValue("maLoaiNguoiDung", profile.maLoaiNguoiDung);
+      setValue("maNhom", profile.maNhom);
+    }
+  }, [profile, setValue]);
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <>
       <Box display={"flex"} alignItems={"center"} flexDirection={"column"}>
@@ -95,14 +144,12 @@ export default function Account({ username }) {
         sx={{
           "& > :not(style)": { m: 1, width: "100%" },
         }}
-        noValidate
         autoComplete="off"
         onSubmit={handleSubmit(onSubmit)}
       >
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
               label="Tài khoản"
               variant="outlined"
               disabled
@@ -114,7 +161,31 @@ export default function Account({ username }) {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
+              label="Mật khẩu"
+              color="info"
+              type={showPassword ? "text" : "password"}
+              variant="outlined"
+              fullWidth
+              {...register("matKhau")}
+              error={!!errors.matKhau}
+              helperText={errors.matKhau && errors.matKhau.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
               label="Email"
               variant="outlined"
               fullWidth
@@ -125,7 +196,6 @@ export default function Account({ username }) {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
               label="Họ tên"
               variant="outlined"
               fullWidth
@@ -136,7 +206,6 @@ export default function Account({ username }) {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
               label="Số điện thoại"
               variant="outlined"
               fullWidth
@@ -147,7 +216,6 @@ export default function Account({ username }) {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
               label="Loại người dùng"
               variant="outlined"
               disabled
@@ -159,7 +227,6 @@ export default function Account({ username }) {
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id="outlined-basic"
               label="Mã nhóm"
               variant="outlined"
               disabled

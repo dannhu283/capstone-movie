@@ -1,12 +1,11 @@
 import { Box, Container, Tab, Tabs } from "@mui/material";
-import React from "react";
-import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import Account from "./Account";
 import HistoryTicket from "./HistoryTicket/HistoryTicket";
 import { useQuery } from "@tanstack/react-query";
 import { getInfo } from "../../APIs/userAPI";
 import Loading from "../../Components/Loading";
+import { useState } from "react";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -37,9 +36,7 @@ function a11yProps(index) {
 }
 
 export default function Profile() {
-  const [tabBar, setTabBar] = React.useState(0);
-
-  const { username } = useParams();
+  const [tabBar, setTabBar] = useState(0);
 
   const { data: profile = [], isLoading } = useQuery({
     queryKey: ["profile"],
@@ -50,10 +47,6 @@ export default function Profile() {
   const handleChangeTabBar = (event, newValue) => {
     setTabBar(newValue);
   };
-
-  if (isLoading) {
-    <Loading />;
-  }
 
   return (
     <Box
@@ -88,13 +81,18 @@ export default function Profile() {
                 <Tab
                   sx={{ width: "100%" }}
                   label="Thông tin cá nhân"
+                  disabled={isLoading}
                   {...a11yProps(0)}
                 />
-                <Tab label="Lịch sử đặt vé" {...a11yProps(1)} />
+                <Tab
+                  label="Lịch sử đặt vé"
+                  disabled={isLoading}
+                  {...a11yProps(1)}
+                />
               </Tabs>
             </Box>
             <CustomTabPanel value={tabBar} index={0}>
-              <Account username={username} />
+              <Account />
             </CustomTabPanel>
             <CustomTabPanel value={tabBar} index={1}>
               <HistoryTicket infoTicket={infoTicket} />

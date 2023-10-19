@@ -43,9 +43,15 @@ export const editPutUser = async (payload) => {
 };
 
 export const getInfoUser = async (username) => {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
   try {
     const response = await fetcher.post(
       "/QuanLyNguoiDung/LayThongTinNguoiDung",
+      {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      },
       {
         params: {
           taiKhoan: username,
