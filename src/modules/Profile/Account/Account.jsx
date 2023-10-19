@@ -4,7 +4,7 @@ import { ButtonMain } from "../../../Components/ButtonMain";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editUser } from "../../../APIs/userAPI";
+import { editPutUser } from "../../../APIs/userAPI";
 import { useUserContext } from "../../../context/UserContext/UserContext";
 import { object, string } from "yup";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ export default function Account({ username }) {
     error,
     isLoading,
   } = useMutation({
-    mutationFn: (username) => editUser(username),
+    mutationFn: (username) => editPutUser(username),
     onSuccess: () => {
       queryClient.invalidateQueries("profile");
       setOpenSuccess(true);

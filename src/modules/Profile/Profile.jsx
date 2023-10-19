@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import Account from "./Account";
 import HistoryTicket from "./HistoryTicket/HistoryTicket";
 import { useQuery } from "@tanstack/react-query";
-import { getInfoUser } from "../../APIs/userAPI";
+import { getInfo } from "../../APIs/userAPI";
 import Loading from "../../Components/Loading";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,9 +42,8 @@ export default function Profile() {
   const { username } = useParams();
 
   const { data: profile = [], isLoading } = useQuery({
-    queryKey: ["profile", username],
-    queryFn: () => getInfoUser(username),
-    enabled: !!username,
+    queryKey: ["profile"],
+    queryFn: () => getInfo(),
   });
 
   const infoTicket = profile?.thongTinDatVe || undefined;
