@@ -84,7 +84,7 @@ export default function CreateShowtimes() {
     setSelectedCumRap(evt.target.value);
   };
 
-  const { mutate: onSubmit } = useMutation({
+  const { mutate: onSubmit, error } = useMutation({
     mutationFn: (values) => {
       return addShowtimes({ ...values, maPhim: movieId });
     },
@@ -210,7 +210,9 @@ export default function CreateShowtimes() {
                     helperText={errors.giaVe && errors.giaVe.message}
                   />
                 </FormControl>
+                <Typography color={"red"}>{error}</Typography>
               </Grid>
+
               <Grid item xs={12}>
                 <ButtonMain type="submit">Thêm Lịch Chiếu</ButtonMain>
               </Grid>
