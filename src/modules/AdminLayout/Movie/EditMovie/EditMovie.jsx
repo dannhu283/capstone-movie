@@ -194,7 +194,6 @@ export default function EditMovie() {
               variant="outlined"
               color="success"
               {...register("moTa")}
-              multiline
               error={!!errors.moTa}
               helperText={errors.moTa && errors.moTa.message}
             />
