@@ -3,14 +3,12 @@ import React, { useState } from "react";
 import { getMovieDetails } from "../../../APIs/movieAPI";
 import Loading from "../../../Components/Loading";
 import { Container, Typography, Chip, Grid, Paper, Modal } from "@mui/material";
-import { Link } from "react-router-dom";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import ReactPlayer from "react-player";
 import { Movieprofile } from "./index";
 import StylesProfile from "./StylesProfile.module.css";
 import dayjs from "dayjs";
-import { ButtonMain } from "../../../Components/ButtonMain";
 
 export default function MovieProfile({ movieId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

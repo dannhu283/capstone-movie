@@ -36,7 +36,7 @@ export default function Cinema({ theaterId }) {
     queryFn: () => getLogo(theaterId),
   });
 
-  const theaterSystems = data || [];
+  const theaterSystems = data;
 
   const handleChangeTab = async (theaterSystemsId) => {
     try {
