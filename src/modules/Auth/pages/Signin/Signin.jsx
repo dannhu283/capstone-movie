@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { object, string } from "yup";
 import { Navigate, useSearchParams, Link } from "react-router-dom";
 import {
   TextField,
