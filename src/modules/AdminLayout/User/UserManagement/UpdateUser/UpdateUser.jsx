@@ -65,6 +65,14 @@ export default function UpdateUser({ infoUser, onClose }) {
       //   navigate("/signin");
       queryClient.invalidateQueries("customer");
       setOpenSuccess(true);
+      setTimeout(() => {
+        handleCloseSuccess();
+      }, 2000);
+    },
+    onError: () => {
+      setTimeout(() => {
+        handleCloseError();
+      }, 2000);
     },
   });
 

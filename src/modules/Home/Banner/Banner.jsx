@@ -51,7 +51,7 @@ export default function Banner() {
               width="100%"
               src={banner.hinhAnh}
               alt={banner.maPhim}
-              style={{ height: "800px" }}
+              className="img-banner"
             />
             <Box
               onClick={() => {

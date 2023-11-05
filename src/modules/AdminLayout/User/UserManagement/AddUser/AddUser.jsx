@@ -253,7 +253,7 @@ export default function AddUser({ onClose }) {
               />
             </Box>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              Chỉnh sửa thông tin người dùng thành công
+              Thêm người dùng thành công
             </Typography>
           </Box>
         </Modal>

@@ -133,7 +133,7 @@ export default function Showing() {
 
           nextArrow: <></>,
           prevArrow: <></>,
-          dots: true,
+          dots: false,
         },
       },
       {
@@ -145,7 +145,7 @@ export default function Showing() {
 
           nextArrow: <></>,
           prevArrow: <></>,
-          dots: true,
+          dots: false,
         },
       },
     ],
@@ -210,7 +210,7 @@ export default function Showing() {
                       className={ShowingCss.buttonBuy}
                       onClick={() => navigate(`/movies/${movie.maPhim}`)}
                     >
-                      Mua Vé
+                      Chi tiết
                     </ButtonMain>
                   </CardActions>
                 </Card>

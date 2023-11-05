@@ -161,6 +161,7 @@ export default function UserManagement() {
 
   const handleOpenAddUser = () => {
     setOpenAddUser(true);
+    setPage(0);
   };
 
   const handleCloseAddUser = () => {
@@ -348,7 +349,7 @@ export default function UserManagement() {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={6}
-                count={customers.length}
+                count={filteredUsers.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{

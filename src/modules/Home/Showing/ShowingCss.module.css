@@ -6,6 +6,10 @@
   height: 7vh;
   color: #ff3838;
   font-weight: bold;
+  display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .desc {
   min-height: 40px;
@@ -53,3 +57,5 @@
   font-size: 40px;
   cursor: pointer;
 }
+
+

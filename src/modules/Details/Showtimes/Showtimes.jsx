@@ -50,7 +50,7 @@ export default function Showtimes({ movieId }) {
   return (
     <Container>
       <ShowTime>
-        {/* Neếu không có phim thì render ra DivNote */}
+        {/* Nếu không có phim thì render ra DivNote */}
         {cinemas.length === 0 ? (
           <DivNote>
             <img
