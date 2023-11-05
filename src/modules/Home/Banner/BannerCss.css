@@ -13,3 +13,26 @@
 .swiper-button-next:hover {
     color: #0051ff;
 }
+.img-banner{height: 800px;}
+
+@media screen and (max-width: 1024px) {
+
+    .img-banner {
+            height: 600px;
+        }
+}
+
+
+   @media screen and (max-width: 768px) {
+
+       .img-banner {
+           height: 450px;
+       }
+   }
+
+@media screen and (max-width: 600px) {
+
+    .img-banner {
+        height: 350px;
+    }
+}

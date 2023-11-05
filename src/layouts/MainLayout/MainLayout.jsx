@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import Header from "../../Components/Header";
 import Footer from "../../Components/Footer";
@@ -7,6 +7,7 @@ import { BackToTop } from "./index";
 
 export default function MainLayout() {
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +24,11 @@ export default function MainLayout() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    // Reset scroll position when location changes (page transition)
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const handleBackToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -23,16 +23,6 @@ import { signin } from "../../../../APIs/userAPI";
 import { useUserContext } from "../../../../context/UserContext/UserContext";
 import SigninCss from "./Singin.module.css";
 
-const signinShema = object({
-  taiKhoan: string().required("Tài khoản không được để trống"),
-  matKhau: string()
-    .required("Mật khấu không được để trống")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-      "Mật khẩu ít nhất 8 kí tự, 1 kí tự hoa, 1 kí tự thường và 1 số"
-    ),
-});
-
 export default function Signin() {
   const [showPassword, setShowPassword] = useState(false);
   const { currentUser, handleSignin: onSigninSuccess } = useUserContext();
@@ -48,7 +38,6 @@ export default function Signin() {
       taiKhoan: "",
       matKhau: "",
     },
-    resolver: yupResolver(signinShema),
     mode: "onTouched",
   });
 

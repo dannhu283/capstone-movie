@@ -83,9 +83,6 @@ export default function MovieProfile({ movieId }) {
             <Typography variant="h6" sx={{ fontWeight: "bold", color: "red" }}>
               Rating: {data?.danhGia}/10
             </Typography>
-            <Link>
-              <ButtonMain>ĐẶT VÉ NGAY</ButtonMain>
-            </Link>
 
             <Typography variant="h6" sx={{ mt: 2, color: "white" }}>
               Khởi chiếu: {dayjs(data.ngayKhoiChieu).format("DD/MM/YYYY")}
