@@ -36,12 +36,12 @@
     },
     {
         "biDanh":"beta",
-        "logo":"https://www.betacinemas.vn/Assets/Common/logo/logo.png",
+        "logo":"https://play-lh.googleusercontent.com/v55fqTyOJ1O0OxO6XnN5-NauNxBk-ov19gMgEI0cEDzgb-Zm1RaQY1Q3Ibrphn3VWA",
         "link":"https://www.betacinemas.vn/home.htm"
     },
     {
         "biDanh":"dongda",
-        "logo":"http://ddcinema.vn/Content/Img/logo.png",
+        "logo":"https://cdn.moveek.com/storage/media/cache/square/6397446bee6da982816422.png",
         "link":"http://ddcinema.vn/"
     },
     {
@@ -51,17 +51,17 @@
     },
     {
         "biDanh":"dcine",
-        "logo":"https://www.dcine.vn/Content/img/logo.png",
+        "logo":"https://media.diadiem247.com/uploads/w900/2021/04/11/DCINE_Ben_Thanh_2.png",
         "link":"https://www.dcine.vn/"
     },
     {
         "biDanh":"cinemas",
-        "logo":"https://theme.hstatic.net/1000296517/1000449871/14/logo.png?v=7333",
+        "logo":"https://homepage.momocdn.net/img/momo-upload-api-221108103212-638035003329486099.jpg",
         "link":"https://cinemaxvn.com/"
     },
     {
         "biDanh":"vcb",
-        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtgcVwwI0BC6xzw6c0Wg81uoypiN1dNO4lBg&usqp=CAU",
+        "logo":"https://admin.tamlyvietphap.vn/uploaded/Images/Original/2020/10/16/logo_vietcombank_1610091313.jpg",
         "link":"https://www.vietcombank.com.vn/"
     },
    
@@ -73,12 +73,12 @@
     },
     {
         "biDanh":"tpbank",
-        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk48UTtfMje_WFGDCCMS0iAEJXAfqpLoFuPw&usqp=CAU",
+        "logo":"https://thebank.vn/uploads/2020/05/02/thebank_logotpbank_1588408748.jpg",
         "link":"https://tpb.vn/ca-nhan"
     },
     {
         "biDanh":"zaloPay",
-        "logo":"https://simg.zalopay.com.vn/zlp-website/assets/logo1_ff390716a5.svg",
+        "logo":"https://dms.inet.vn/uploads/public/2021/06/03/1622682588188_zalopay.png",
         "link":"https://zalopay.vn/"
     },
     
@@ -90,7 +90,7 @@
   
     {
         "biDanh":"MUI",
-        "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6CY5okaihNPZJIw5tK0cCZd1JaiSsmcSRAA&usqp=CAU",
-        "link":"#"
+        "logo":"https://play-lh.googleusercontent.com/oXs9tsmauo4_xFDsovB7i3ONfNWZ9FR8shrnegcYC4tHCjybZexXa0fpe9N_3kYqw-U",
+        "link":"https://shopeepay.vn/"
     }
 ]

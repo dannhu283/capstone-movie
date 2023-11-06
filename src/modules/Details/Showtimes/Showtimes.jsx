@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { getMovieShowtimes } from "../../../APIs/cinemaAPI";
-import { Container, Tabs, Tab, Box, Typography, Button } from "@mui/material";
+import {
+  Container,
+  Tabs,
+  Tab,
+  Box,
+  Typography,
+  Button,
+  Avatar,
+} from "@mui/material";
 import { ShowTime, DivNote } from "./index";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
-import Loading from "../../../Components/Loading";
 import { ButtonCustom } from "../../../Components/ButtonMain";
 
-export default function Showtimes({ movieId }) {
+export default function Showtimes({ movieId, handleIsLoading }) {
   const navigate = useNavigate();
 
   const [cinemas, setCinemas] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["movieShowtimes", movieId],
     queryFn: () => getMovieShowtimes(movieId),
     enabled: !!movieId,
   });
 
-  const cinemaSystems = data?.heThongRapChieu || [];
+  const cinemaSystems = useMemo(() => data?.heThongRapChieu || [], [data]);
 
   const handleGetCinemaSystem = (cinemaSystemId) => {
     const found = cinemaSystems.find(
@@ -42,10 +49,6 @@ export default function Showtimes({ movieId }) {
     const selectedCinemaSystem = cinemaSystems[newValue];
     handleGetCinemaSystem(selectedCinemaSystem.maHeThongRap);
   };
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <Container>
@@ -79,17 +82,26 @@ export default function Showtimes({ movieId }) {
               variant="scrollable"
               scrollButtons="auto"
               aria-label="Cinema Systems"
-              sx={{ width: "20%" }}
+              sx={{ width: "20%", borderRight: "1px solid #8888885e" }}
             >
               {cinemaSystems.map((cinemaSystem, index) => (
                 <Tab
                   key={cinemaSystem.maHeThongRap}
+                  sx={{
+                    alignItems: {
+                      xs: "baseline",
+                      sm: "center",
+                    },
+                    padding: {
+                      xs: "12px 5px",
+                      sm: "12px 16px",
+                    },
+                    borderBottom: "1px solid #8888885e",
+                  }}
                   label={
-                    <img
+                    <Avatar
                       src={cinemaSystem.logo}
                       alt="logo"
-                      width={50}
-                      height={50}
                       style={{ cursor: "pointer" }}
                     />
                   }
@@ -101,7 +113,17 @@ export default function Showtimes({ movieId }) {
             <Box sx={{ width: "80%", margin: "15px 20px" }}>
               {cinemas.map((cinema) => (
                 <div key={cinema.maCumRap}>
-                  <Typography variant="h5" color={"#3ae374"}>
+                  <Typography
+                    variant="h5"
+                    color={"#3ae374"}
+                    sx={{
+                      fontSize: {
+                        xs: "16px",
+                        sm: "24px",
+                      },
+                      marginLeft: "10px",
+                    }}
+                  >
                     {cinema.tenCumRap}
                   </Typography>
                   {cinema.lichChieuPhim.map((showtime) => {

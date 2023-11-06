@@ -92,7 +92,7 @@ export default function New() {
             <Grid container spacing={2}>
               {/* row1 */}
               {news[0].dienAnh?.slice(0, 2).map((item) => (
-                <Grid item xs={6} key={item.id}>
+                <Grid item xs={12} sm={6} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -113,7 +113,7 @@ export default function New() {
               ))}
               {/* row2 */}
               {news[0].dienAnh?.slice(2, 4).map((item) => (
-                <Grid item md={4} xs={6} key={item.id}>
+                <Grid item xs={12} sm={6} md={4} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -140,7 +140,9 @@ export default function New() {
               >
                 {news[0].dienAnh?.slice(4).map((item) => (
                   <Grid item md={12} key={item.id} marginBottom={1}>
-                    <CardActionArea sx={{ display: "flex" }}>
+                    <CardActionArea
+                      sx={{ display: "flex", justifyContent: "start" }}
+                    >
                       <Box sx={{ display: "flex" }}>
                         <CardMedia
                           component="img"
@@ -164,7 +166,7 @@ export default function New() {
             <Grid container spacing={2}>
               {/* row1 */}
               {news[0].review?.slice(0, 2).map((item) => (
-                <Grid item xs={6} key={item.id}>
+                <Grid item xs={12} sm={6} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -185,7 +187,7 @@ export default function New() {
               ))}
               {/* row2 */}
               {news[0].review?.slice(2, 4).map((item) => (
-                <Grid item md={4} xs={6} key={item.id}>
+                <Grid item xs={12} sm={6} md={4} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -212,7 +214,9 @@ export default function New() {
               >
                 {news[0].review?.slice(4).map((item) => (
                   <Grid item xs={12} key={item.id} marginBottom={1}>
-                    <CardActionArea sx={{ display: "flex" }}>
+                    <CardActionArea
+                      sx={{ display: "flex", justifyContent: "start" }}
+                    >
                       <Box sx={{ display: "flex" }}>
                         <CardMedia
                           component="img"
@@ -236,7 +240,7 @@ export default function New() {
             <Grid container spacing={2}>
               {/* row1 */}
               {news[0].khuyenMai?.slice(0, 2).map((item) => (
-                <Grid item xs={6} key={item.id}>
+                <Grid item xs={12} sm={6} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -257,7 +261,7 @@ export default function New() {
               ))}
               {/* row2 */}
               {news[0].khuyenMai?.slice(2, 4).map((item) => (
-                <Grid item md={4} xs={6} key={item.id}>
+                <Grid item xs={12} sm={6} md={4} key={item.id}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -284,7 +288,9 @@ export default function New() {
               >
                 {news[0].khuyenMai?.slice(4).map((item) => (
                   <Grid item md={12} key={item.id} marginBottom={1}>
-                    <CardActionArea sx={{ display: "flex" }}>
+                    <CardActionArea
+                      sx={{ display: "flex", justifyContent: "start" }}
+                    >
                       <Box sx={{ display: "flex" }}>
                         <CardMedia
                           component="img"
