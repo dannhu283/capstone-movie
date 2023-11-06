@@ -74,12 +74,12 @@ export default function Header(props) {
 
   const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
-    navigate(`/`);
+    // navigate(`/`);
 
     // Check if the element exists before scrolling
     const element = document.getElementById(`${page.id}`);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 

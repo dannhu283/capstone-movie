@@ -4,8 +4,18 @@
 }
 .position {
   margin-top: 15%;
-  margin-left: 35%;
+  margin-left: 0;
 }
 .img {
   width: 300px;
+}
+
+@media screen and (max-width: 599.98px) {
+  .img {
+      width: 150px;
+    }
+        .position {
+          margin-top: 50%;
+          margin-left: 15%;
+        }
 }
