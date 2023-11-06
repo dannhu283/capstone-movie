@@ -17,6 +17,7 @@ import {
   Box,
   Divider,
   ListItemButton,
+  Avatar,
 } from "@mui/material";
 
 export default function Footer() {
@@ -46,11 +47,21 @@ export default function Footer() {
           </Typography>
           <Grid container spacing={2}>
             {data.map((cinema) => (
-              <Grid item xs={6} sm={4} md={3} lg={2} key={cinema.biDanh}>
+              <Grid item xs={4} sm={4} md={3} lg={2} key={cinema.biDanh}>
                 <IconButton variant="plain">
                   <div>
                     <a href={cinema.link} target="_blank" rel="noreferrer">
-                      <img src={cinema.logo} alt="..." width={40} />
+                      <Avatar
+                        srcSet={cinema.logo}
+                        alt="logo"
+                        sx={{
+                          transition: "all 1s",
+
+                          ":hover": {
+                            filter: "contrast(50%)  grayscale(60%)",
+                          },
+                        }}
+                      />
                     </a>
                   </div>
                 </IconButton>
@@ -147,7 +158,13 @@ export default function Footer() {
                     color: "white",
                   }}
                 >
-                  <FacebookIcon sx={{ fontSize: "25px", marginRight: "8px" }} />
+                  <FacebookIcon
+                    sx={{
+                      fontSize: "25px",
+                      marginRight: "8px",
+                      marginLeft: "-16px",
+                    }}
+                  />
                   FaceBook
                 </ListItemButton>
               </ListItem>
@@ -159,7 +176,13 @@ export default function Footer() {
                     "&:hover": { color: "#ff9f1a" },
                   }}
                 >
-                  <GitHubIcon sx={{ fontSize: "25px", marginRight: "8px" }} />
+                  <GitHubIcon
+                    sx={{
+                      fontSize: "25px",
+                      marginRight: "8px",
+                      marginLeft: "-16px",
+                    }}
+                  />
                   Github
                 </ListItemButton>
               </ListItem>
@@ -171,7 +194,13 @@ export default function Footer() {
                     "&:hover": { color: "#ff9f1a" },
                   }}
                 >
-                  <YouTubeIcon sx={{ fontSize: "25px", marginRight: "8px" }} />
+                  <YouTubeIcon
+                    sx={{
+                      fontSize: "25px",
+                      marginRight: "8px",
+                      marginLeft: "-16px",
+                    }}
+                  />
                   Youtube
                 </ListItemButton>
               </ListItem>

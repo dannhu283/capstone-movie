@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getMovieDetails } from "../../../APIs/movieAPI";
-import Loading from "../../../Components/Loading";
 import { Container, Typography, Chip, Grid, Paper, Modal } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import CloseIcon from "@mui/icons-material/Close";
@@ -14,14 +13,10 @@ export default function MovieProfile({ movieId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
 
-  const { data, isLoading } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["movieDetails", movieId],
     queryFn: () => getMovieDetails(movieId),
   });
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
