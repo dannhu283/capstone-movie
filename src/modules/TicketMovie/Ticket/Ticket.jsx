@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Divider, Paper, Typography } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import { ButtonMain } from "../../../Components/ButtonMain";
 import { Text, TextColor, Row, TextSeat } from "./index";
 import { useTicketContext } from "../../../context/TicketContext/TicketContext";
@@ -76,14 +76,14 @@ export default function Ticket({ ticketInfo }) {
         </Row>
         <Divider sx={{ marginY: "16px" }} />
         <Row>
-          <Text>
+          <Box>
             Ghế Đang Chọn
             <TextColor style={{ display: "inline", marginLeft: "10px" }}>
               {selectedSeats.length ? selectedSeats.length : ""}
             </TextColor>
             :
-          </Text>
-          <TextColor>
+          </Box>
+          <Box>
             {selectedSeats.map((item, index) => {
               const separator = index === selectedSeats.length - 1 ? "" : ", ";
               return (
@@ -92,7 +92,7 @@ export default function Ticket({ ticketInfo }) {
                 </TextSeat>
               );
             })}
-          </TextColor>
+          </Box>
         </Row>
 
         <Divider sx={{ marginY: "16px" }} />

@@ -28,7 +28,6 @@ export default function TicketMovie() {
       <Box
         sx={{
           backgroundImage: `url(${ticketInfo.hinhAnh})`,
-          height: "100vh",
           position: "relative",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
